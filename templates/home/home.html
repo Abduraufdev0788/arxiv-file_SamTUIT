@@ -4,125 +4,303 @@
     <meta charset="UTF-8">
     <title>SamTUIT | Bosh sahifa</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <!-- Tailwind CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        primary: '#0f4c81',
-                        secondary: '#0b6cb8',
-                    }
-                }
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #0f4c81;
+            --primary-light: #1565a3;
+            --primary-dark: #0a3d66;
+            --accent: #10b981;
+            --accent-dark: #059669;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .hero-gradient {
+            background: linear-gradient(135deg, #0f4c81 0%, #1565a3 50%, #0b6cb8 100%);
+        }
+        .card-shadow {
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        }
+        .card-shadow:hover {
+            box-shadow: 0 20px 25px -5px rgba(15, 76, 129, 0.1), 0 10px 10px -5px rgba(15, 76, 129, 0.04);
+        }
+        .icon-wrapper {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .card:hover .icon-wrapper {
+            transform: scale(1.1) rotate(5deg);
+        }
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2rem;
             }
         }
-    </script>
+    </style>
 </head>
+<body class="bg-slate-50 text-slate-900">
 
-<body class="bg-gray-100 text-gray-800">
-
-<!-- HEADER -->
-<header class="bg-gradient-to-r from-primary to-secondary text-white">
-    <div class="max-w-7xl mx-auto px-6 py-10 text-center">
-        <h1 class="text-4xl font-bold tracking-wide">SamTUIT</h1>
-        <p class="mt-2 text-lg opacity-90">
-            Samarqand Axborot Texnologiyalari Universiteti
-        </p>
-
-        <!-- SEARCH -->
-        <div class="mt-6">
-            <input
-                type="text"
-                placeholder="Qidirish..."
-                class="w-full md:w-2/3 lg:w-1/2 px-5 py-3 rounded-xl text-gray-700 focus:outline-none focus:ring-4 focus:ring-white/30"
-            >
+    <!-- NAVIGATION -->
+    <nav class="bg-white/90 backdrop-blur-md sticky top-0 z-50 border-b border-slate-200 shadow-sm">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex justify-between items-center">
+            <div class="flex items-center gap-4">
+                <div class="w-12 h-12 bg-gradient-to-br from-[#0f4c81] to-[#0b6cb8] rounded-xl flex items-center justify-center text-white font-black text-2xl shadow-lg">
+                    S
+                </div>
+                <div>
+                    <h1 class="text-xl font-black text-[#0f4c81] leading-none tracking-tight">SamTUIT</h1>
+                    <p class="text-[10px] text-slate-500 font-bold uppercase tracking-[0.15em] mt-0.5">Bosh Portal</p>
+                </div>
+            </div>
+            <div class="hidden md:flex items-center gap-8">
+                <a href="#" class="text-sm font-semibold text-slate-600 hover:text-[#0f4c81] transition-colors">Asosiy</a>
+                <a href="#" class="text-sm font-semibold text-slate-600 hover:text-[#0f4c81] transition-colors">Tuzilma</a>
+                <a href="#" class="text-sm font-semibold text-slate-600 hover:text-[#0f4c81] transition-colors">Yangiliklar</a>
+                <a href="#" class="text-sm font-semibold text-slate-600 hover:text-[#0f4c81] transition-colors">Bog'lanish</a>
+            </div>
+            
         </div>
-    </div>
-</header>
+    </nav>
 
-<!-- CARDS -->
-<section class="max-w-7xl mx-auto px-6 py-14 grid gap-8 md:grid-cols-2 lg:grid-cols-4">
-
-    <!-- Card 1 -->
-    <a href = "">
-        <div class="bg-white rounded-2xl shadow-xl p-6 hover:-translate-y-3 hover:shadow-2xl transition h-[250px]">
-        <div class="text-4xl mb-4">📄</div>
-        <h2 class="text-xl font-semibold text-primary mb-2">
-            Qaror va Farmoyishlar
-        </h2>
-        <p class="text-sm text-gray-600">
-            Universitet faoliyatiga oid rasmiy qarorlar, buyruqlar
-            va farmoyishlar bilan tanishing.
-        </p>
-    </div>
-    </a>
-
-    <!-- Card 2 -->
-    <a href = "">
-        <div class="bg-white rounded-2xl shadow-xl p-6 hover:-translate-y-3 hover:shadow-2xl transition h-[250px]">
-            <div class="text-4xl mb-4">🎓</div>
-            <h2 class="text-xl font-semibold text-primary mb-2">
-                Filialda taxsil olayotgan va bitirgan talabalar
+    <!-- HERO SECTION -->
+    <section class="hero-gradient text-white py-20 px-6 relative overflow-hidden">
+        <div class="absolute inset-0 opacity-10">
+            <div class="absolute top-10 left-10 w-72 h-72 bg-white rounded-full blur-3xl"></div>
+            <div class="absolute bottom-10 right-10 w-96 h-96 bg-emerald-400 rounded-full blur-3xl"></div>
+        </div>
+        <div class="max-w-5xl mx-auto text-center relative z-10">
+            <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 border border-white/20 text-xs font-bold uppercase tracking-[0.2em] mb-8 backdrop-blur-sm">
+                <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse shadow-lg shadow-emerald-400/50"></span>
+                Muhammad al-Xorazmiy nomidagi TATU Samarqand filiali
+            </div>
+            <h2 class="hero-title text-5xl md:text-6xl font-black mb-6 leading-[1.1] tracking-tight">
+                Raqamli Universitet <br class="hidden md:block"> 
+                <span class="bg-gradient-to-r from-emerald-300 to-teal-300 bg-clip-text text-transparent">Axborot Portali</span>
             </h2>
-            <p class="text-sm text-gray-600">
-                Talabalar, o‘qish jarayoni, reytinglar va akademik
-                ma’lumotlar shu bo‘limda.
+            <p class="text-lg md:text-xl text-blue-100/80 mb-12 max-w-2xl mx-auto font-medium leading-relaxed">
+                Filial faoliyatiga oid barcha rasmiy ma'lumotlar, talabalar va xodimlar uchun muhim resurslar jamlangan yagona platforma.
             </p>
-        </div>
-    </a>
 
-    <!-- Card 3 -->
-    <a href = "{% url "" %}">
-        <div class="bg-white rounded-2xl shadow-xl p-6 hover:-translate-y-3 hover:shadow-2xl transition h-[250px]">
-            <div class="text-4xl mb-4">📘</div>
-            <h2 class="text-xl font-semibold text-primary mb-2">
-                Bitiruv malakaviy ishlar
-            </h2>
-            <p class="text-sm text-gray-600">
-                Bitiruv malakaviy ishlari, mavzular va ilmiy rahbarlar
-                haqida to‘liq ma’lumot.
-            </p>
+            <!-- SEARCH BAR -->
+            <div class="max-w-2xl mx-auto relative group">
+                <div class="absolute -inset-1 bg-gradient-to-r from-emerald-500 to-teal-500 rounded-2xl blur opacity-25 group-hover:opacity-40 transition-opacity"></div>
+                <div class="relative flex flex-col md:flex-row items-center gap-3 md:gap-0 bg-white rounded-2xl p-2 shadow-2xl">
+                    <input 
+                        type="text" 
+                        placeholder="Qidiruv: hujjat nomi, xodim ismi, bo'lim..." 
+                        class="flex-1 px-6 py-4 md:py-3 rounded-xl md:rounded-l-xl md:rounded-r-none text-slate-900 text-base focus:outline-none placeholder:text-slate-400 w-full"
+                    >
+                    <button class="w-full md:w-auto px-8 py-4 md:py-3 bg-gradient-to-r from-emerald-500 to-teal-500 text-white rounded-xl font-bold hover:from-emerald-600 hover:to-teal-600 transition-all flex items-center justify-center gap-2 shadow-lg shadow-emerald-500/20">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                        </svg>
+                        <span>Qidirish</span>
+                    </button>
+                </div>
+            </div>
         </div>
-    </a>
-    <!-- Card 4 -->
-    <a href = "">
-        <div class="bg-white rounded-2xl shadow-xl p-6 hover:-translate-y-3 hover:shadow-2xl transition h-[250px]">
-            <div class="text-4xl mb-4">👨‍💻</div>
-            <h2 class="text-xl font-semibold text-primary mb-2">
-                Filial xodimlari xaqida
-            </h2>
-            <p class="text-sm text-gray-600">
-                Professor-o‘qituvchilar, mutaxassis ustozlar va ularning
-                ilmiy faoliyati bilan tanishing.
-            </p>
+    </section>
+
+    <!-- MAIN CARDS SECTION -->
+    <section class="max-w-7xl mx-auto px-6 py-20">
+        <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-12 gap-6">
+            <div>
+                <h3 class="text-3xl md:text-4xl font-black text-slate-900 mb-3">Portal bo'limlari</h3>
+                <p class="text-slate-500 font-medium">O'zingizga kerakli ma'lumotni tanlang va ko'ring</p>
+            </div>
+            
         </div>
-    </a>
 
+        <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
 
-    <!-- Card 4 -->
-    <a href = "">
-        <div class="bg-white rounded-2xl shadow-xl p-6 hover:-translate-y-3 hover:shadow-2xl transition h-[250px]">
-            <div class="text-4xl mb-4">👨‍🏫</div>
-            <h2 class="text-xl font-semibold text-primary mb-2">
-                Filial prafessor-o‘qituvchilari
-            </h2>
-            <p class="text-sm text-gray-600">
-                Professor-o‘qituvchilar, mutaxassis ustozlar va ularning
-                ilmiy faoliyati bilan tanishing.
-            </p>
+            <!-- Card 1: Qaror va Farmoyishlar -->
+            <a href="{% url "qarorlar:qarorlar_bosh" %}" class="card group bg-white rounded-3xl p-8 border border-slate-100 card-shadow hover:-translate-y-2 transition-all relative overflow-hidden min-h-[320px] flex flex-col">
+                <div class="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-blue-50 to-transparent rounded-bl-full opacity-50"></div>
+                <div class="icon-wrapper w-16 h-16 bg-gradient-to-br from-blue-50 to-blue-100 text-blue-600 rounded-2xl flex items-center justify-center mb-6 relative z-10 shadow-sm">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                    </svg>
+                </div>
+                <h2 class="text-xl font-bold text-slate-900 mb-3 group-hover:text-blue-600 transition-colors">Qaror va Farmoyishlar</h2>
+                <p class="text-sm text-slate-500 leading-relaxed font-medium mb-6 flex-1">
+                    Universitet faoliyatiga oid rasmiy qarorlar, buyruqlar va farmoyishlar bilan tanishing.
+                </p>
+                <div class="flex items-center gap-2 text-xs font-bold text-blue-600 opacity-0 group-hover:opacity-100 transition-opacity">
+                    BATAFSIL
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                    </svg>
+                </div>
+            </a>
+
+            <!-- Card 2: Talabalar -->
+            <a href="#" class="card group bg-white rounded-3xl p-8 border border-slate-100 card-shadow hover:-translate-y-2 transition-all relative overflow-hidden min-h-[320px] flex flex-col">
+                <div class="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-emerald-50 to-transparent rounded-bl-full opacity-50"></div>
+                <div class="icon-wrapper w-16 h-16 bg-gradient-to-br from-emerald-50 to-emerald-100 text-emerald-600 rounded-2xl flex items-center justify-center mb-6 relative z-10 shadow-sm">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5z" />
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z" />
+                    </svg>
+                </div>
+                <h2 class="text-xl font-bold text-slate-900 mb-3 group-hover:text-emerald-600 transition-colors">Filialda taxsil olayotgan va bitirgan talabalar</h2>
+                <p class="text-sm text-slate-500 leading-relaxed font-medium mb-6 flex-1">
+                    Talabalar, o'qish jarayoni, reytinglar va akademik ma'lumotlar shu bo'limda.
+                </p>
+                <div class="flex items-center gap-2 text-xs font-bold text-emerald-600 opacity-0 group-hover:opacity-100 transition-opacity">
+                    BATAFSIL
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                    </svg>
+                </div>
+            </a>
+
+            <!-- Card 3: BMI -->
+            <a href="#" class="card group bg-white rounded-3xl p-8 border border-slate-100 card-shadow hover:-translate-y-2 transition-all relative overflow-hidden min-h-[320px] flex flex-col">
+                <div class="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-amber-50 to-transparent rounded-bl-full opacity-50"></div>
+                <div class="icon-wrapper w-16 h-16 bg-gradient-to-br from-amber-50 to-amber-100 text-amber-600 rounded-2xl flex items-center justify-center mb-6 relative z-10 shadow-sm">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                    </svg>
+                </div>
+                <h2 class="text-xl font-bold text-slate-900 mb-3 group-hover:text-amber-600 transition-colors">Bitiruv malakaviy ishlar</h2>
+                <p class="text-sm text-slate-500 leading-relaxed font-medium mb-6 flex-1">
+                    Bitiruv malakaviy ishlari, mavzular va ilmiy rahbarlar haqida to'liq ma'lumot.
+                </p>
+                <div class="flex items-center gap-2 text-xs font-bold text-amber-600 opacity-0 group-hover:opacity-100 transition-opacity">
+                    BATAFSIL
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                    </svg>
+                </div>
+            </a>
+
+            <!-- Card 4: Xodimlar -->
+            <a href="#" class="card group bg-white rounded-3xl p-8 border border-slate-100 card-shadow hover:-translate-y-2 transition-all relative overflow-hidden min-h-[320px] flex flex-col">
+                <div class="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-indigo-50 to-transparent rounded-bl-full opacity-50"></div>
+                <div class="icon-wrapper w-16 h-16 bg-gradient-to-br from-indigo-50 to-indigo-100 text-indigo-600 rounded-2xl flex items-center justify-center mb-6 relative z-10 shadow-sm">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                    </svg>
+                </div>
+                <h2 class="text-xl font-bold text-slate-900 mb-3 group-hover:text-indigo-600 transition-colors">Filial xodimlari xaqida</h2>
+                <p class="text-sm text-slate-500 leading-relaxed font-medium mb-6 flex-1">
+                    Professor-o'qituvchilar, mutaxassis ustozlar va ularning ilmiy faoliyati bilan tanishing.
+                </p>
+                <div class="flex items-center gap-2 text-xs font-bold text-indigo-600 opacity-0 group-hover:opacity-100 transition-opacity">
+                    BATAFSIL
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                    </svg>
+                </div>
+            </a>
+
+            <!-- Card 5: Professor-o'qituvchilar -->
+            <a href="#" class="card group bg-white rounded-3xl p-8 border border-slate-100 card-shadow hover:-translate-y-2 transition-all relative overflow-hidden min-h-[320px] flex flex-col">
+                <div class="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-purple-50 to-transparent rounded-bl-full opacity-50"></div>
+                <div class="icon-wrapper w-16 h-16 bg-gradient-to-br from-purple-50 to-purple-100 text-purple-600 rounded-2xl flex items-center justify-center mb-6 relative z-10 shadow-sm">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                    </svg>
+                </div>
+                <h2 class="text-xl font-bold text-slate-900 mb-3 group-hover:text-purple-600 transition-colors">Filial prafessor-o'qituvchilari</h2>
+                <p class="text-sm text-slate-500 leading-relaxed font-medium mb-6 flex-1">
+                    Professor-o'qituvchilar, mutaxassis ustozlar va ularning ilmiy faoliyati bilan tanishing.
+                </p>
+                <div class="flex items-center gap-2 text-xs font-bold text-purple-600 opacity-0 group-hover:opacity-100 transition-opacity">
+                    BATAFSIL
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                    </svg>
+                </div>
+            </a>
+
+            <!-- Coming Soon Card -->
+            <div class="bg-gradient-to-br from-slate-50 to-slate-100 rounded-3xl p-8 border-2 border-dashed border-slate-300 flex flex-col justify-center items-center text-center min-h-[320px]">
+                <div class="w-16 h-16 bg-white rounded-2xl flex items-center justify-center text-slate-400 mb-4 shadow-sm">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                    </svg>
+                </div>
+                <p class="text-sm font-bold text-slate-400 uppercase tracking-widest mb-2">Yangi bo'limlar</p>
+                <p class="text-xs text-slate-400">Tez orada qo'shimcha imkoniyatlar qo'shiladi</p>
+            </div>
+
         </div>
-    </a>
-</section>
+    </section>
 
-<!-- FOOTER -->
-<footer class="bg-primary text-white text-center py-6">
-    <p class="text-sm">
-        © 2025 SamTUIT | Barcha huquqlar himoyalangan
-    </p>
-</footer>
+    <!-- FOOTER -->
+    <footer class="bg-slate-900 text-white pt-20 pb-10">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
+                <div class="col-span-1 md:col-span-2">
+                    <div class="flex items-center gap-4 mb-6">
+                        <div class="w-12 h-12 bg-gradient-to-br from-emerald-500 to-teal-500 rounded-xl flex items-center justify-center text-white font-black text-2xl shadow-lg">
+                            S
+                        </div>
+                        <h5 class="text-2xl font-black">SamTUIT Portal</h5>
+                    </div>
+                    <p class="text-slate-400 text-sm leading-relaxed max-w-sm font-medium mb-6">
+                        Muhammad al-Xorazmiy nomidagi Toshkent Axborot Texnologiyalari Universiteti Samarqand filiali rasmiy axborot portali.
+                    </p>
+                    <div class="flex flex-col gap-2 text-sm text-slate-400">
+                        <p class="flex items-center gap-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                            </svg>
+                            Samarqand shahri, Shoxrux ko'chasi, 37-uy
+                        </p>
+                        <p class="flex items-center gap-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                            </svg>
+                            +998 (66) 232-29-29
+                        </p>
+                        <p class="flex items-center gap-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                            </svg>
+                            info@samtuit.uz
+                        </p>
+                    </div>
+                </div>
+                <div>
+                    <h6 class="text-xs font-black uppercase tracking-[0.2em] text-slate-500 mb-6">Havolalar</h6>
+                    <ul class="space-y-4">
+                        <li><a href="#" class="text-slate-400 hover:text-white transition-colors text-sm font-medium">SamTUIT Rasmiy sayti</a></li>
+                        <li><a href="#" class="text-slate-400 hover:text-white transition-colors text-sm font-medium">Talabalar portali</a></li>
+                        <li><a href="#" class="text-slate-400 hover:text-white transition-colors text-sm font-medium">Elektron kutubxona</a></li>
+                        <li><a href="#" class="text-slate-400 hover:text-white transition-colors text-sm font-medium">Onlayn darslar</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h6 class="text-xs font-black uppercase tracking-[0.2em] text-slate-500 mb-6">Ijtimoiy tarmoqlar</h6>
+                    <div class="flex gap-3">
+                        <a href="#" class="w-11 h-11 bg-slate-800 rounded-xl flex items-center justify-center hover:bg-blue-500 transition-all font-bold hover:scale-110">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                        </a>
+                        <a href="#" class="w-11 h-11 bg-slate-800 rounded-xl flex items-center justify-center hover:bg-blue-600 transition-all font-bold hover:scale-110">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+                        </a>
+                        <a href="#" class="w-11 h-11 bg-slate-800 rounded-xl flex items-center justify-center hover:bg-pink-600 transition-all font-bold hover:scale-110">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                        </a>
+                        <a href="#" class="w-11 h-11 bg-slate-800 rounded-xl flex items-center justify-center hover:bg-blue-400 transition-all font-bold hover:scale-110">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="pt-8 border-t border-slate-800 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-slate-500">
+                <p class="font-bold uppercase tracking-widest">© 2025 SamTUIT | Barcha huquqlar himoyalangan</p>
+                <div class="flex gap-6">
+                    <a href="#" class="hover:text-emerald-400 transition-colors font-semibold">Maxfiylik siyosati</a>
+                    <a href="#" class="hover:text-emerald-400 transition-colors font-semibold">Foydalanish shartlari</a>
+                </div>
+            </div>
+        </div>
+    </footer>
 
 </body>
 </html>

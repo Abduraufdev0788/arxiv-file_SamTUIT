@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SamTUIT - Qarorlar va Farmoyishlar Elektron Portali</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --samtuit-blue: #003366;
+            --samtuit-blue-light: #004d99;
+            --samtuit-emerald: #059669;
+            --samtuit-emerald-dark: #047857;
+            --gray-50: #f9fafb;
+            --gray-100: #f3f4f6;
+            --gray-200: #e5e7eb;
+            --gray-300: #d1d5db;
+            --gray-400: #9ca3af;
+            --gray-500: #6b7280;
+            --gray-600: #4b5563;
+            --gray-700: #374151;
+            --gray-800: #1f2937;
+            --gray-900: #111827;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background-color: var(--gray-50);
+            color: var(--gray-900);
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        /* Header */
+        .header {
+            background-color: white;
+            border-bottom: 1px solid var(--gray-200);
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        }
+
+        .header-container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 5rem;
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo-icon {
+            width: 48px;
+            height: 48px;
+            background: var(--samtuit-blue);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 800;
+            font-size: 1.5rem;
+        }
+
+        .logo-text h1 {
+            font-size: 1.25rem;
+            font-weight: 800;
+            color: var(--samtuit-blue);
+            line-height: 1.2;
+            margin: 0;
+        }
+
+        .logo-text p {
+            font-size: 0.75rem;
+            color: var(--gray-500);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin: 0;
+        }
+
+        .nav {
+            display: none;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav a {
+            color: var(--gray-700);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.875rem;
+            transition: color 0.2s;
+        }
+
+        .nav a:hover {
+            color: var(--samtuit-blue);
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .btn-primary {
+            background: var(--samtuit-blue);
+            color: white;
+            padding: 0.625rem 1.25rem;
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: 0.875rem;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-primary:hover {
+            background: var(--samtuit-blue-light);
+            transform: translateY(-1px);
+        }
+
+        /* Hero */
+        .hero {
+            background: linear-gradient(135deg, var(--samtuit-blue) 0%, var(--samtuit-blue-light) 100%);
+            color: white;
+            padding: 4rem 1.5rem;
+            text-align: center;
+        }
+
+        .hero-container {
+            max-width: 1024px;
+            margin: 0 auto;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: #6ee7b7;
+            margin-bottom: 1.5rem;
+        }
+
+        .hero h2 {
+            font-size: 2.5rem;
+            font-weight: 900;
+            line-height: 1.2;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.125rem;
+            color: rgba(255, 255, 255, 0.85);
+            margin-bottom: 2rem;
+            max-width: 672px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .search-box {
+            max-width: 672px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 1rem 10rem 1rem 1.5rem;
+            border-radius: 1rem;
+            border: none;
+            font-size: 1rem;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3);
+        }
+
+        .search-input:focus {
+            outline: 2px solid var(--samtuit-emerald);
+        }
+
+        .search-btn {
+            position: absolute;
+            right: 0.5rem;
+            top: 50%;
+            transform: translateY(-50%);
+            background: var(--samtuit-emerald);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.75rem;
+            font-weight: 700;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .search-btn:hover {
+            background: var(--samtuit-emerald-dark);
+        }
+
+        /* Main Content */
+        .main-content {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 4rem 1.5rem;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2rem;
+            font-weight: 800;
+            margin-bottom: 3rem;
+            color: var(--samtuit-blue);
+        }
+
+        /* Cards Grid */
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .card {
+            background: white;
+            border-radius: 1rem;
+            padding: 2rem 1.5rem;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: 1px solid var(--gray-100);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+
+        .icon {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            line-height: 1;
+        }
+
+        .card h3 {
+            font-size: 1.25rem;
+            margin-bottom: 0.75rem;
+            color: var(--gray-900);
+            font-weight: 700;
+        }
+
+        .card p {
+            font-size: 0.875rem;
+            color: var(--gray-500);
+            line-height: 1.6;
+        }
+
+        /* Card Border Colors */
+        .president { 
+            border-top: 4px solid #2563eb; 
+        }
+
+        .president:hover {
+            border-top-color: #1d4ed8;
+        }
+
+        .vazirlik { 
+            border-top: 4px solid #16a34a; 
+        }
+
+        .vazirlik:hover {
+            border-top-color: #15803d;
+        }
+
+        .viloyat { 
+            border-top: 4px solid #ea580c; 
+        }
+
+        .viloyat:hover {
+            border-top-color: #c2410c;
+        }
+
+        .filial { 
+            border-top: 4px solid #7c3aed; 
+        }
+
+        .filial:hover {
+            border-top-color: #6d28d9;
+        }
+
+        /* Footer */
+        .footer {
+            background: #0f172a;
+            color: white;
+            padding: 3rem 1.5rem 2rem;
+        }
+
+        .footer-container {
+            max-width: 1280px;
+            margin: 0 auto;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-brand {
+            grid-column: 1 / -1;
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .footer-logo-icon {
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+        }
+
+        .footer h5 {
+            font-size: 1.25rem;
+            font-weight: 800;
+            margin: 0;
+        }
+
+        .footer-text {
+            color: #94a3b8;
+            line-height: 1.8;
+            margin-top: 0.5rem;
+        }
+
+        .footer-section h6 {
+            font-size: 0.75rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: #64748b;
+            margin-bottom: 1rem;
+        }
+
+        .footer-links {
+            list-style: none;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .footer-links a {
+            color: #94a3b8;
+            text-decoration: none;
+            font-size: 0.875rem;
+            transition: color 0.2s;
+        }
+
+        .footer-links a:hover {
+            color: white;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .social-btn {
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+            text-decoration: none;
+            color: white;
+            font-weight: 600;
+        }
+
+        .social-btn:hover {
+            background: var(--samtuit-blue);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            padding-top: 1.5rem;
+            text-align: center;
+            color: #64748b;
+            font-size: 0.875rem;
+        }
+
+        @media (min-width: 768px) {
+            .nav {
+                display: flex;
+            }
+
+            .hero h2 {
+                font-size: 3rem;
+            }
+
+            .footer-brand {
+                grid-column: span 2;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero h2 {
+                font-size: 2rem;
+            }
+
+            .search-input {
+                padding-right: 1.5rem;
+                padding-bottom: 4.5rem;
+            }
+
+            .search-btn {
+                right: 1rem;
+                left: 1rem;
+                top: auto;
+                bottom: 1rem;
+                transform: none;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .section-title {
+                font-size: 1.5rem;
+            }
+
+            .cards {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="header-container">
+            <div class="logo-section">
+                <div class="logo-icon">S</div>
+                <div class="logo-text">
+                    <h1>SamTUIT</h1>
+                    <p>Qarorlar Portali</p>
+                </div>
+            </div>
+            <nav class="nav">
+                <a href="#">Asosiy</a>
+                <a href="#">Qarorlar</a>
+                <a href="#">Farmoyishlar</a>
+                <a href="#">Yordam</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-container">
+            <span class="hero-badge">Muhammad al-Xorazmiy nomidagi TATU Samarqand filiali</span>
+            <h2>Qarorlar va Farmoyishlar<br>Elektron Portali</h2>
+            <p>Universitetning barcha me'yoriy hujjatlari, direktor qarorlari va rasmiy farmoyishlari bilan tanishing.</p>
+            <div class="search-box">
+                <input type="text" class="search-input" placeholder="Hujjat raqami yoki kalit so'z bo'yicha qidirish...">
+                <button class="search-btn">Qidirish</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <h1 class="section-title">Qaror va farmoyishlar</h1>
+
+        <div class="cards">
+            <a href = "{% url "qarorlar:prezident_qarorlari" %}" style = "text-decoration:none">
+                <div class="card president">
+                    <div class="icon">🏛️</div>
+                    <h3>Prezident qarori</h3>
+                    <p>
+                        O'zbekiston Respublikasi Prezidenti tomonidan
+                        qabul qilingan qaror va farmonlar.
+                    </p>
+                </div>
+            </a>
+
+
+            <div class="card vazirlik">
+                <div class="icon">📄</div>
+                <h3>Vazirlik qarori</h3>
+                <p>
+                    Vazirlik va idoralar tomonidan
+                    qabul qilingan rasmiy qarorlar.
+                </p>
+            </div>
+
+            <div class="card viloyat">
+                <div class="icon">🏢</div>
+                <h3>Viloyat hokimi qarori</h3>
+                <p>
+                    Viloyat hokimi tomonidan
+                    qabul qilingan qarorlar.
+                </p>
+            </div>
+
+            <div class="card filial">
+                <div class="icon">📝</div>
+                <h3>Filial direktori farmoyishi</h3>
+                <p>
+                    Filial direktori tomonidan
+                    berilgan farmoyish va buyruqlar.
+                </p>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <div class="footer-logo">
+                        <div class="footer-logo-icon">S</div>
+                        <h5>SamTUIT Portali</h5>
+                    </div>
+                    <p class="footer-text">
+                        Samarqand shahri, Ipak yo'li ko'chasi, 2-uy.<br>
+                        Aloqa: +998 (66) 232-29-29<br>
+                        Email: info@samtuit.uz
+                    </p>
+                </div>
+                <div class="footer-section">
+                    <h6>Havolalar</h6>
+                    <ul class="footer-links">
+                        <li><a href="#">SamTUIT Rasmiy sayti</a></li>
+                        <li><a href="#">Talabalar portali</a></li>
+                        <li><a href="#">Elektron kutubxona</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h6>Ijtimoiy tarmoqlar</h6>
+                    <div class="social-links">
+                        <a href="#" class="social-btn">T</a>
+                        <a href="#" class="social-btn">F</a>
+                        <a href="#" class="social-btn">I</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                &copy; 2023 SamTUIT. Barcha huquqlar himoyalangan.
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>
