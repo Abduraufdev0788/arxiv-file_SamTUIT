@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hokim Qarorlari - SamTUIT</title>
+    <title>Direktor Farmonlari va Buyruqlari - SamTUIT</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
         * {
@@ -17,8 +17,9 @@
             --samtuit-blue-light: #004d99;
             --samtuit-emerald: #059669;
             --samtuit-emerald-dark: #047857;
-            --hokim-orange: #ea580c;         /* Faqat hero va add-btn uchun */
-            --hokim-orange-dark: #dc4d01;
+            --director-purple: #7c3aed;        /* Asosiy rang */
+            --director-purple-light: #9f67ff;
+            --director-purple-dark: #6d28d9;
             --gray-50: #f9fafb;
             --gray-100: #f3f4f6;
             --gray-200: #e5e7eb;
@@ -117,9 +118,9 @@
             color: var(--samtuit-blue);
         }
 
-        /* Hero Section - Hokim to‘q sariq */
+        /* Hero Section */
         .hero {
-            background: linear-gradient(135deg, var(--hokim-orange) 0%, var(--hokim-orange-dark) 100%);
+            background: linear-gradient(135deg, var(--director-purple) 0%, var(--director-purple-light) 100%);
             color: white;
             padding: 3rem 1.5rem;
         }
@@ -197,6 +198,22 @@
             gap: 1rem;
         }
 
+        .search-box {
+            position: relative;
+            width: 100%;
+            max-width: 24rem;
+        }
+
+        .search-box svg {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 20px;
+            height: 20px;
+            color: var(--gray-400);
+        }
+
         .search-input {
             width: 100%;
             padding: 0.75rem 1rem 0.75rem 3rem;
@@ -209,8 +226,8 @@
 
         .search-input:focus {
             outline: none;
-            border-color: var(--hokim-orange);
-            box-shadow: 0 0 0 3px rgba(234, 88, 12, 0.1);
+            border-color: var(--director-purple);
+            box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.1);
             background: white;
         }
 
@@ -253,12 +270,17 @@
             box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
         }
 
+        .filter-btn svg {
+            width: 16px;
+            height: 16px;
+        }
+
         .add-btn {
             display: flex;
             align-items: center;
             gap: 0.5rem;
             padding: 0.75rem 1.25rem;
-            background: var(--hokim-orange);
+            background: var(--director-purple);
             color: white;
             border: none;
             border-radius: 0.75rem;
@@ -266,11 +288,11 @@
             font-size: 0.875rem;
             cursor: pointer;
             transition: all 0.2s;
-            box-shadow: 0 4px 14px rgba(234, 88, 12, 0.3);
+            box-shadow: 0 4px 14px rgba(124, 58, 237, 0.3);
         }
 
         .add-btn:hover {
-            background: var(--hokim-orange-dark);
+            background: var(--director-purple-dark);
             transform: translateY(-1px);
         }
 
@@ -304,7 +326,7 @@
             gap: 1.5rem;
         }
 
-        /* Decision Card - Prezident qarorlari bilan 100% bir xil */
+        /* Decision Card */
         .decision-card {
             background: white;
             border-radius: 1rem;
@@ -338,7 +360,7 @@
         .card-icon {
             width: 48px;
             height: 48px;
-            background: rgba(37, 99, 235, 0.1);
+            background: rgba(124, 58, 237, 0.1);
             border-radius: 0.75rem;
             display: flex;
             align-items: center;
@@ -348,13 +370,13 @@
         .card-icon svg {
             width: 24px;
             height: 24px;
-            color: #2563eb;
+            color: var(--director-purple);
         }
 
         .card-number {
             font-size: 0.75rem;
             font-weight: 700;
-            color: #2563eb;
+            color: var(--director-purple);
             text-transform: uppercase;
             letter-spacing: 0.05em;
         }
@@ -415,8 +437,6 @@
         }
 
         .card-actions {
-            gap: 13px;
-            margin-left: -17px;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -430,7 +450,7 @@
             align-items: center;
             gap: 0.5rem;
             padding: 0.65rem 1.1rem;
-            background: var(--samtuit-emerald);
+            background: var(--director-purple);
             color: white;
             border: none;
             border-radius: 0.75rem;
@@ -441,7 +461,7 @@
         }
 
         .download-btn:hover {
-            background: var(--samtuit-emerald-dark);
+            background: var(--director-purple-dark);
         }
 
         .download-btn svg {
@@ -449,9 +469,12 @@
             height: 16px;
         }
 
-        .edit-btn {
-            background: var(--samtuit-blue);
-            color: white;
+        .action-buttons {
+            display: flex;
+            gap: 0.75rem;
+        }
+
+        .edit-btn, .delete-btn {
             padding: 0.65rem 1rem;
             border-radius: 0.75rem;
             font-size: 0.875rem;
@@ -462,6 +485,11 @@
             display: flex;
             align-items: center;
             gap: 0.5rem;
+        }
+
+        .edit-btn {
+            background: var(--samtuit-blue);
+            color: white;
         }
 
         .edit-btn:hover {
@@ -471,16 +499,6 @@
         .delete-btn {
             background: var(--red-500);
             color: white;
-            padding: 0.65rem 1rem;
-            border-radius: 0.75rem;
-            font-size: 0.875rem;
-            font-weight: 600;
-            border: none;
-            cursor: pointer;
-            transition: all 0.2s;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
         }
 
         .delete-btn:hover {
@@ -618,6 +636,11 @@
                 gap: 1rem;
             }
 
+            .action-buttons {
+                width: 100%;
+                justify-content: stretch;
+            }
+
             .edit-btn, .delete-btn {
                 flex: 1;
                 justify-content: center;
@@ -656,10 +679,10 @@
                 Orqaga qaytish
             </a>
             <div class="hero-content">
-                <div class="hero-icon">🏢</div>
+                <div class="hero-icon">📜</div>
                 <div class="hero-text">
-                    <h2>Hokim qarorlari</h2>
-                    <p>Viloyat yoki shahar hokimi tomonidan qabul qilingan qarorlar</p>
+                    <h2>Direktor farmonlari va buyruqlari</h2>
+                    <p>SamTUIT direktori tomonidan chiqarilgan farmonlar va buyruqlar</p>
                 </div>
             </div>
         </div>
@@ -670,31 +693,31 @@
         <div class="controls-container">
             <form method="get">
                 <input type="text"
-                       name="q"
-                       class="search-input"
-                       placeholder="Qaror raqami yoki kalit so'z..."
-                       value="{{ request.GET.q }}">
+                    name="q"
+                    class="search-input"
+                    placeholder="Raqam yoki kalit so'z..."
+                    value="{{ request.GET.q }}">
             </form>
 
             <div class="controls-right">
                 <div class="filter-group">
-                    <a href="{% url 'qarorlar:hokim_qarorlari' %}"
-                       class="filter-btn {% if not request.GET.new %}active{% endif %}">
+                    <a href="{% url 'qarorlar:direktor_qarorlari' %}"
+                    class="filter-btn {% if not request.GET.new %}active{% endif %}">
                         Barchasi
                     </a>
 
-                    <a href="{% url 'qarorlar:hokim_qarorlari' %}?new=1"
-                       class="filter-btn {% if request.GET.new %}active{% endif %}">
+                    <a href="{% url 'qarorlar:direktor_qarorlari' %}?new=1"
+                    class="filter-btn {% if request.GET.new %}active{% endif %}">
                         Yangilari
                     </a>
                 </div>
 
-                <a href="{% url 'qarorlar:hqaror_add' %}" style="text-decoration:none">
+                <a href="{% url 'qarorlar:dqaror_add' %}" style="text-decoration:none">
                     <button class="add-btn">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
                         </svg>
-                        <span>Qaror qo'shish</span>
+                        <span>Farmon qo'shish</span>
                     </button>
                 </a>
             </div>
@@ -704,7 +727,7 @@
     <!-- Main Content - Cardlar -->
     <div class="main-content">
         <div class="results-info">
-            Jami <span>{{ len }}</span> ta qaror topildi
+            Jami <span>{{ len }}</span> ta hujjat topildi
         </div>
 
         <div class="cards-grid">
@@ -715,7 +738,7 @@
                         <div class="card-icon">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
-                                      d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2-2z"/>
+                                      d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
                             </svg>
                         </div>
                         <div>
@@ -750,7 +773,7 @@
                         Yuklash
                     </a>
 
-                    <form method="GET" action="{% url 'qarorlar:hqaror_edit' data.id %}" style="display:inline;">
+                    <form method="GET" action="{% url 'qarorlar:dqaror_edit' data.id %}" style="display:inline;">
                         <button type="submit" class="edit-btn">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
@@ -760,7 +783,7 @@
                         </button>
                     </form>
 
-                    <form method="POST" action="{% url 'qarorlar:hqaror_delete' data.id %}" style="display:inline;">
+                    <form method="POST" action="{% url 'qarorlar:dqaror_delete' data.id %}" style="display:inline;">
                         {% csrf_token %}
                         <button type="submit" class="delete-btn">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -774,7 +797,7 @@
             </div>
             {% empty %}
             <div style="grid-column: 1 / -1; text-align: center; padding: 4rem; color: var(--gray-500); font-size: 1.125rem;">
-                Hozircha qarorlar mavjud emas
+                Hozircha farmon va buyruqlar mavjud emas
             </div>
             {% endfor %}
         </div>
@@ -805,7 +828,7 @@
                 </div>
             </div>
             <div class="footer-bottom">
-                &copy; 2025 SamTUIT. Barcha huquqlar himoyalangan.
+                &copy; 2024 SamTUIT. Barcha huquqlar himoyalangan.
             </div>
         </div>
     </footer>

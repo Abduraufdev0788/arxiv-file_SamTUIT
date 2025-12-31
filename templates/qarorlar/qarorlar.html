@@ -295,6 +295,7 @@
         }
 
         .viloyat { 
+            height:100%;
             border-top: 4px solid #ea580c; 
         }
 
@@ -493,10 +494,6 @@
             <span class="hero-badge">Muhammad al-Xorazmiy nomidagi TATU Samarqand filiali</span>
             <h2>Qarorlar va Farmoyishlar<br>Elektron Portali</h2>
             <p>Universitetning barcha me'yoriy hujjatlari, direktor qarorlari va rasmiy farmoyishlari bilan tanishing.</p>
-            <div class="search-box">
-                <input type="text" class="search-input" placeholder="Hujjat raqami yoki kalit so'z bo'yicha qidirish...">
-                <button class="search-btn">Qidirish</button>
-            </div>
         </div>
     </section>
 
@@ -539,14 +536,16 @@
                 </div>
             </a>
 
-            <div class="card filial">
-                <div class="icon">📝</div>
-                <h3>Filial direktori farmoyishi</h3>
-                <p>
-                    Filial direktori tomonidan
-                    berilgan farmoyish va buyruqlar.
-                </p>
-            </div>
+            <a href = "{% url "qarorlar:direktor_qarorlari" %}" style = "text-decoration:none">
+                <div class="card filial">
+                    <div class="icon">📝</div>
+                    <h3>Filial direktori farmoyishi</h3>
+                    <p>
+                        Filial direktori tomonidan
+                        berilgan farmoyish va buyruqlar.
+                    </p>
+                </div>
+            </a>
         </div>
     </main>
 

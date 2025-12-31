@@ -12,6 +12,11 @@ from .views import (QarorlarView,
                     HQarorQoshish,
                     HQarorView,
                     HQarorTahrirlash,
+                    DQarorlar,
+                    DQarorTahrirlash,
+                    DQarorView,
+                    DQarorQoshish,
+
 )
 
 app_name = "qarorlar"
@@ -38,4 +43,12 @@ urlpatterns = [
     path("hadd_qaror/", HQarorQoshish.as_view(), name="hqaror_add"),
     path('tahrirlash_h/<int:pk>/', HQarorTahrirlash.as_view(), name='hqaror_edit'),
     path('ochirish_h/<int:pk>/', HQarorView.as_view(), name='hqaror_delete'),
+
+
+    #ddirektor qarorlari uchun url lar shu yerda joylashadi
+
+    path("direktor-qarorlari/", DQarorlar.as_view(), name="direktor_qarorlari"),
+    path("dadd_qaror/", DQarorQoshish.as_view(), name="dqaror_add"),
+    path('tahrirlash_d/<int:pk>/', DQarorTahrirlash.as_view(), name='dqaror_edit'),
+    path('ochirish_d/<int:pk>/', DQarorView.as_view(), name='dqaror_delete'),
 ]
