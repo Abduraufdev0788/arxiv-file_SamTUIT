@@ -40,13 +40,16 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    'rest_framework',
+    'django_filters',
+
     "apps.login.apps.LoginConfig",
     "apps.utils.apps.UtilsConfig",
     "apps.bmi.apps.BmiConfig",
     "apps.talabalar.apps.TalabalarConfig",
     "apps.oqituvchilar.apps.OqituvchilarConfig",
     "apps.professorlar.apps.ProfessorlarConfig",
-    "apps.qarorlar.apps.QarorlarConfig"
+    "apps.qarorlar.apps.QarorlarConfig",
 ]
 
 MIDDLEWARE = [
