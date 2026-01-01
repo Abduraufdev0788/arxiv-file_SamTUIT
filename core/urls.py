@@ -22,8 +22,10 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include("apps.utils.urls")),
-    path('royxatdan_otish/', include("apps.login.urls")),
-    path("qarorlar/", include("apps.qarorlar.urls"))
+    path('api/royxatdan_otish/', include("apps.login.urls")),
+    path("api/qarorlar/", include("apps.qarorlar.urls")),
+    #BMI APP NIKI Ukam ❤️ 
+    path("api/bmi/", include("apps.bmi.urls")),
 
 ]
 
