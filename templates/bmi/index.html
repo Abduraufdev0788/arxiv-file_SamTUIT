@@ -15,113 +15,176 @@
     <style>
         body {
             background-color: #f1f3f5;
+            font-family: Inter, system-ui, sans-serif;
         }
+
+        /* ===== HEADER ===== */
+        .samtuit-header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(8px);
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .samtuit-container {
+            max-width: 1280px;
+            margin: auto;
+            padding: 0 24px;
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .samtuit-logo {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .samtuit-logo-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            background: #0d6efd;
+            color: white;
+            font-weight: 900;
+            font-size: 22px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .samtuit-logo-text h1 {
+            font-size: 20px;
+            font-weight: 900;
+            color: #0d6efd;
+            margin: 0;
+        }
+
+        .samtuit-logo-text p {
+            font-size: 11px;
+            color: #6b7280;
+            font-weight: 700;
+            text-transform: uppercase;
+            margin: 0;
+        }
+
+        .samtuit-nav {
+            display: flex;
+            gap: 32px;
+        }
+
+        .samtuit-nav a {
+            text-decoration: none;
+            color: #374151;
+            font-weight: 600;
+        }
+
+        .samtuit-action {
+            background: #0d6efd;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 10px;
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        /* ===== CONTENT ===== */
         .search-box, .table-wrapper {
             background: #fff;
             border-radius: 14px;
             padding: 20px;
             box-shadow: 0 2px 12px rgba(0,0,0,0.08);
         }
+
+        /* ===== TABLE FIX ===== */
+        .table-fixed {
+            table-layout: fixed;
+            width: 100%;
+        }
+
+        .table-fixed th,
+        .table-fixed td {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            vertical-align: middle;
+        }
+
+        .col-name { width: 160px; }
+        .col-faculty { width: 160px; }
+        .col-group { width: 90px; }
+        .col-theme { width: 320px; }
+        .col-year { width: 90px; }
+        .col-file { width: 70px; text-align: center; }
+
         table thead {
             background: #0d6efd;
             color: white;
         }
-        table tbody tr:hover {
-            background-color: #f8f9fa;
-        }
+
         .badge-box {
             padding: 6px 10px;
             border-radius: 6px;
             font-size: 13px;
-            background: #e9ecef;
+            
         }
-        .action-btn {
-            width: 36px;
-            height: 36px;
-            border-radius: 8px;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-        }
-        .edit-btn { background: #0d6efd; }
-        .delete-btn { background: #dc3545; }
-        .edit-btn:hover { background: #0b5ed7; }
-        .delete-btn:hover { background: #bb2d3b; }
     </style>
 </head>
 
 <body>
 
+<!-- ===== HEADER ===== -->
+<header class="samtuit-header">
+    <div class="samtuit-container">
+        <div class="samtuit-logo">
+            <div class="samtuit-logo-icon">S</div>
+            <div class="samtuit-logo-text">
+                <h1>SamTUIT</h1>
+                <p>Talabalar portali</p>
+            </div>
+        </div>
+
+        <nav class="samtuit-nav">
+            <a href="#" class="fw-bold text-primary">Talabalar</a>
+            <a href="#">Xodimlar</a>
+            <a href="#">Qarorlar</a>
+            <a href="#">Bog‘lanish</a>
+        </nav>
+
+        <a href="#" class="samtuit-action">🔍 Qidirish</a>
+    </div>
+</header>
+
 <div class="container py-5">
 
-    <!-- HEADER -->
+    <!-- TITLE -->
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h2 class="fw-bold">🎓 TATU Talabalari ro‘yxati</h2>
-        <a href="{% url 'talabalar:talabalar_add' %}" class="btn btn-primary btn-lg">
+        <a href="{% url 'talabalar:talabalar_add' %}" class="btn btn-primary">
             ➕ Talaba qo‘shish
         </a>
     </div>
 
-    <!-- SEARCH -->
-    <form method="get" class="search-box mb-4">
-        <div class="row g-3">
-            <div class="col-md-3">
-                <input type="text" name="full_name" class="form-control"
-                       placeholder="F.I.Sh"
-                       value="{{ filters.full_name }}">
-            </div>
-
-            <div class="col-md-3">
-                <select name="faculty" class="form-control">
-                    <option value="">Fakultet</option>
-                    <option value="Kompyuter injiniring"
-                        {% if filters.faculty == "Kompyuter injiniring" %}selected{% endif %}>
-                        Kompyuter injiniring
-                    </option>
-                    <option value="Axborot texnologiyalari"
-                        {% if filters.faculty == "Axborot texnologiyalari" %}selected{% endif %}>
-                        Axborot texnologiyalari
-                    </option>
-                </select>
-            </div>
-
-            <div class="col-md-2">
-                <input type="text" name="group" class="form-control"
-                       placeholder="Guruh"
-                       value="{{ filters.group }}">
-            </div>
-
-            <div class="col-md-2">
-                <input type="text" name="admission_year" class="form-control"
-                       placeholder="Qabul yili"
-                       value="{{ filters.admission_year }}">
-            </div>
-
-            <div class="col-md-2 d-grid">
-                <button type="submit" class="btn btn-success">
-                    🔍 Izlash
-                </button>
-            </div>
-        </div>
-    </form>
-
-    <!-- TABLE -->
+    <!-- LIST VIEW -->
     <div class="table-wrapper">
         {% if talabalar %}
-        <table class="table table-bordered table-hover align-middle">
+        <table class="table table-bordered table-hover align-middle table-fixed">
             <thead>
                 <tr class="text-center">
-                    <th>#</th>
-                    <th>F.I.Sh</th>
-                    <th>Qabul yili</th>
-                    <th>Passport</th>
-                    <th>Fakultet</th>
-                    <th>Guruh</th>
-                    <th>Holati</th>
-                    <th>Amallar</th>
+                    <th style="width:50px">#</th>
+                    <th class="col-name">F.I.Sh</th>
+                    <th class="col-faculty">Fakultet</th>
+                    <th class="col-group">Guruh</th>
+                    <th class="col-theme">Mavzu</th>
+                    <th class="col-year">O‘quv yili</th>
+                    <th class="col-file">Fayl</th>
                 </tr>
             </thead>
+
             <tbody>
                 {% for talaba in talabalar %}
                 <tr>
@@ -129,282 +192,43 @@
                         {{ forloop.counter0|add:page_obj.start_index }}
                     </td>
 
-                    <td><strong>{{ talaba.full_name }}</strong></td>
-
-                    <td class="text-center">{{ talaba.qabul_yili }}</td>
-                    <td class="text-center">{{ talaba.pasport }}</td>
-
-                    <td class="text-center">
-                        <span class="badge-box">
-                            <i class="fa-solid fa-building"></i>
-                            {{ talaba.faculty }}
-                        </span>
+                    <td class="col-name">
+                        {{ talaba.first_name }} {{ talaba.last_name }}
                     </td>
 
-                    <td class="text-center fw-bold text-primary">
-                        {{ talaba.group }}
+                    <td class="col-faculty">
+                        <span class="badge-box">{{ talaba.faculty }}</span>
                     </td>
 
-                    <td class="text-center">
-                        <span class="badge-box">
-                            {{ talaba.status }}
-                        </span>
+                    <td class="col-group fw-bold text-primary">
+                        {{ talaba.group_name }}
                     </td>
 
-                    <td class="text-center">
-                        <a href="{% url 'talabalar:talabalar_update' talaba.id %}"
-                           class="action-btn edit-btn me-1"
-                           title="Tahrirlash">
-                            <i class="fa-solid fa-pen"></i>
+                    <td class="col-theme" title="{{ talaba.theme_name }}">
+                        {{ talaba.theme_name }}
+                    </td>
+
+                    <td class="col-year text-center">
+                        {{ talaba.years }}
+                    </td>
+
+                    <td class="col-file">
+                        {% if talaba.files %}
+                        <a href="{{ talaba.files.url }}" class="btn btn-sm btn-success">
+                            <i class="fa-solid fa-download"></i>
                         </a>
-
-                        <form action="{% url 'talabalar:talaba_delete' talaba.id %}"
-                              method="post"
-                              class="d-inline"
-                              onsubmit="return confirm('Rostdan ham o‘chirmoqchimisiz?')">
-                            {% csrf_token %}
-                            <button type="submit"
-                                    class="action-btn delete-btn"
-                                    title="O‘chirish">
-                                <i class="fa-solid fa-trash"></i>
-                            </button>
-                        </form>
-                    </td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>{% load static %}
-<!DOCTYPE html>
-<html lang="uz">
-<head>
-    <meta charset="UTF-8">
-    <title>TATU | Talabalar ro‘yxati</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <!-- Bootstrap -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- FontAwesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-
-    <style>
-        body {
-            background-color: #f1f3f5;
-        }
-        .search-box, .table-wrapper {
-            background: #fff;
-            border-radius: 14px;
-            padding: 20px;
-            box-shadow: 0 2px 12px rgba(0,0,0,0.08);
-        }
-        table thead {
-            background: #0d6efd;
-            color: white;
-        }
-        table tbody tr:hover {
-            background-color: #f8f9fa;
-        }
-        .badge-box {
-            padding: 6px 10px;
-            border-radius: 6px;
-            font-size: 13px;
-            background: #e9ecef;
-        }
-        .action-btn {
-            width: 36px;
-            height: 36px;
-            border-radius: 8px;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-        }
-        .edit-btn { background: #0d6efd; }
-        .delete-btn { background: #dc3545; }
-        .edit-btn:hover { background: #0b5ed7; }
-        .delete-btn:hover { background: #bb2d3b; }
-    </style>
-</head>
-
-<body>
-
-<div class="container py-5">
-
-    <!-- HEADER -->
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <h2 class="fw-bold">🎓 TATU Talabalari ro‘yxati</h2>
-        <a href="{% url 'talabalar:talabalar_add' %}" class="btn btn-primary btn-lg">
-            ➕ Talaba qo‘shish
-        </a>
-    </div>
-
-    <!-- SEARCH -->
-    <form method="get" class="search-box mb-4">
-        <div class="row g-3">
-            <div class="col-md-3">
-                <input type="text" name="full_name" class="form-control"
-                       placeholder="F.I.Sh"
-                       value="{{ filters.full_name }}">
-            </div>
-
-            <div class="col-md-3">
-                <select name="faculty" class="form-control">
-                    <option value="">Fakultet</option>
-                    <option value="Kompyuter injiniring"
-                        {% if filters.faculty == "Kompyuter injiniring" %}selected{% endif %}>
-                        Kompyuter injiniring
-                    </option>
-                    <option value="Axborot texnologiyalari"
-                        {% if filters.faculty == "Axborot texnologiyalari" %}selected{% endif %}>
-                        Axborot texnologiyalari
-                    </option>
-                </select>
-            </div>
-
-            <div class="col-md-2">
-                <input type="text" name="group" class="form-control"
-                       placeholder="Guruh"
-                       value="{{ filters.group }}">
-            </div>
-
-            <div class="col-md-2">
-                <input type="text" name="admission_year" class="form-control"
-                       placeholder="Qabul yili"
-                       value="{{ filters.admission_year }}">
-            </div>
-
-            <div class="col-md-2 d-grid">
-                <button type="submit" class="btn btn-success">
-                    🔍 Izlash
-                </button>
-            </div>
-        </div>
-    </form>
-
-    <!-- TABLE -->
-    <div class="table-wrapper">
-        {% if talabalar %}
-        <table class="table table-bordered table-hover align-middle">
-            <thead>
-                <tr class="text-center">
-                    <th>#</th>
-                    <th>F.I.Sh</th>
-                    <th>Qabul yili</th>
-                    <th>Passport</th>
-                    <th>Fakultet</th>
-                    <th>Guruh</th>
-                    <th>Holati</th>
-                    <th>Amallar</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for talaba in talabalar %}
-                <tr>
-                    <td class="text-center fw-bold">
-                        {{ forloop.counter0|add:page_obj.start_index }}
-                    </td>
-
-                    <td><strong>{{ talaba.full_name }}</strong></td>
-
-                    <td class="text-center">{{ talaba.qabul_yili }}</td>
-                    <td class="text-center">{{ talaba.pasport }}</td>
-
-                    <td class="text-center">
-                        <span class="badge-box">
-                            <i class="fa-solid fa-building"></i>
-                            {{ talaba.faculty }}
-                        </span>
-                    </td>
-
-                    <td class="text-center fw-bold text-primary">
-                        {{ talaba.group }}
-                    </td>
-
-                    <td class="text-center">
-                        <span class="badge-box">
-                            {{ talaba.status }}
-                        </span>
-                    </td>
-
-                    <td class="text-center">
-                        <a href="{% url 'talabalar:talabalar_update' talaba.id %}"
-                           class="action-btn edit-btn me-1"
-                           title="Tahrirlash">
-                            <i class="fa-solid fa-pen"></i>
-                        </a>
-
-                        <form action="{% url 'talabalar:talaba_delete' talaba.id %}"
-                              method="post"
-                              class="d-inline"
-                              onsubmit="return confirm('Rostdan ham o‘chirmoqchimisiz?')">
-                            {% csrf_token %}
-                            <button type="submit"
-                                    class="action-btn delete-btn"
-                                    title="O‘chirish">
-                                <i class="fa-solid fa-trash"></i>
-                            </button>
-                        </form>
+                        {% else %}
+                        —
+                        {% endif %}
                     </td>
                 </tr>
                 {% endfor %}
             </tbody>
         </table>
         {% else %}
-            <p class="text-center text-muted fs-5">
-                Talaba topilmadi
-            </p>
+            <p class="text-center text-muted fs-5">Talaba topilmadi</p>
         {% endif %}
     </div>
-
-    <!-- PAGINATION -->
-    {% if page_obj.has_other_pages %}
-    <div class="d-flex justify-content-center mt-4 gap-3">
-        {% if page_obj.has_previous %}
-        <a href="?page={{ page_obj.previous_page_number }}&{{ filters.urlencode }}"
-           class="btn btn-outline-secondary">⬅ Oldingi</a>
-        {% endif %}
-
-        <span class="align-self-center fw-bold">
-            {{ page_obj.number }} / {{ page_obj.paginator.num_pages }}
-        </span>
-
-        {% if page_obj.has_next %}
-        <a href="?page={{ page_obj.next_page_number }}&{{ filters.urlencode }}"
-           class="btn btn-outline-secondary">Keyingi ➡</a>
-        {% endif %}
-    </div>
-    {% endif %}
-
-</div>
-
-</body>
-</html>
-
-        {% else %}
-            <p class="text-center text-muted fs-5">
-                Talaba topilmadi
-            </p>
-        {% endif %}
-    </div>
-
-    <!-- PAGINATION -->
-    {% if page_obj.has_other_pages %}
-    <div class="d-flex justify-content-center mt-4 gap-3">
-        {% if page_obj.has_previous %}
-        <a href="?page={{ page_obj.previous_page_number }}&{{ filters.urlencode }}"
-           class="btn btn-outline-secondary">⬅ Oldingi</a>
-        {% endif %}
-
-        <span class="align-self-center fw-bold">
-            {{ page_obj.number }} / {{ page_obj.paginator.num_pages }}
-        </span>
-
-        {% if page_obj.has_next %}
-        <a href="?page={{ page_obj.next_page_number }}&{{ filters.urlencode }}"
-           class="btn btn-outline-secondary">Keyingi ➡</a>
-        {% endif %}
-    </div>
-    {% endif %}
 
 </div>
 

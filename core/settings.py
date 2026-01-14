@@ -46,7 +46,7 @@ INSTALLED_APPS = [
     "apps.talabalar.apps.TalabalarConfig",
     "apps.oqituvchilar.apps.OqituvchilarConfig",
     "apps.professorlar.apps.ProfessorlarConfig",
-    "apps.qarorlar.apps.QarorlarConfig"
+    "apps.qarorlar.apps.QarorlarConfig",
 ]
 
 MIDDLEWARE = [

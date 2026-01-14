@@ -25,6 +25,7 @@ urlpatterns = [
     path('royxatdan_otish/', include("apps.login.urls")),
     path("qarorlar/", include("apps.qarorlar.urls")),
     path("talabalar/", include("apps.talabalar.urls")),
+    path("bmi/", include("apps.bmi.urls")),
 
 ]
 

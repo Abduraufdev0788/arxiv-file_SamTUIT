@@ -5,12 +5,13 @@ class BmiTalaba(models.Model):
         ("Kompyuter_inginiringi", "Kompyuter_inginiringi"),
         ("Axborot_texnologiyalar", "Axborot_texnologiyalar")
         )
-    name = models.CharField(max_length=128)
+    first_name = models.CharField(max_length=128)
     last_name = models.CharField(max_length=128)
     faculty = models.CharField(choices=choises)
     group_name = models.CharField(max_length=64)
     theme_name = models.TextField()
     years = models.CharField(max_length=32)
+    total_ball = models.FloatField()
     files = models.FileField(upload_to='student_files/')
 
     def __str__(self):
