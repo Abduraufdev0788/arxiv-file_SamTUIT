@@ -2,6 +2,7 @@ asgiref==3.11.0
 Django==5.2.9
 greenlet==3.3.0
 psycopg2-binary==2.9.11
+python-decouple==3.8
 python-dotenv==1.2.1
 SQLAlchemy==2.0.45
 sqlparse==0.5.5
