@@ -23,7 +23,7 @@
             position: sticky;
             top: 0;
             z-index: 100;
-            background: rgba(255,255,255,0.94);
+            background: rgba(255,255,255,0.95);
             backdrop-filter: blur(12px);
             border-bottom: 1px solid #e5e7eb;
         }
@@ -31,11 +31,11 @@
         .samtuit-container {
             max-width: 1280px;
             margin: auto;
-            padding: 0 24px;
-            height: 82px;
+            padding: 16px 24px;
             display: flex;
             align-items: center;
             gap: 24px;
+            flex-wrap: wrap;
         }
 
         .samtuit-logo {
@@ -46,8 +46,8 @@
         }
 
         .samtuit-logo-icon {
-            width: 46px;
-            height: 46px;
+            width: 44px;
+            height: 44px;
             border-radius: 12px;
             background: #0d6efd;
             color: white;
@@ -59,7 +59,7 @@
         }
 
         .samtuit-logo-text h1 {
-            font-size: 20px;
+            font-size: 18px;
             font-weight: 900;
             color: #0d6efd;
             margin: 0;
@@ -68,13 +68,13 @@
         .samtuit-logo-text p {
             font-size: 11px;
             color: #6b7280;
-            font-weight: 700;
             margin: 0;
         }
 
         .samtuit-nav {
             display: flex;
-            gap: 28px;
+            gap: 22px;
+            flex-wrap: wrap;
         }
 
         .samtuit-nav a {
@@ -85,9 +85,9 @@
 
         .samtuit-nav a.active {
             color: #0d6efd;
-            font-weight: 800;
             border-bottom: 3px solid #0d6efd;
             padding-bottom: 6px;
+            font-weight: 800;
         }
 
         .header-search {
@@ -118,13 +118,20 @@
             border-radius: 10px;
             font-weight: 700;
             text-decoration: none;
+            white-space: nowrap;
         }
 
+        /* ================= CONTENT ================= */
         .table-wrapper {
             background: #fff;
             border-radius: 14px;
             padding: 20px;
-            box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            overflow-x: auto;
+        }
+
+        table {
+            min-width: 900px;
         }
 
         table thead {
@@ -137,7 +144,34 @@
             border-radius: 6px;
             font-size: 13px;
             font-weight: 600;
-          
+            background: #e0edff;
+            color: #0d6efd;
+        }
+
+        /* ================= RESPONSIVE ================= */
+        @media (max-width: 768px) {
+            .header-search,
+            .samtuit-action {
+                width: 100%;
+            }
+
+            .samtuit-nav {
+                width: 100%;
+                justify-content: center;
+                border-top: 1px solid #e5e7eb;
+                padding-top: 12px;
+            }
+
+            h2 {
+                font-size: 20px;
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .samtuit-logo-text p {
+                display: none;
+            }
         }
     </style>
 </head>
@@ -179,6 +213,7 @@
     <h2 class="fw-bold mb-4">🎓 TATU Talabalari ro‘yxati</h2>
 
     <div class="table-wrapper">
+
         {% if talabalar %}
         <table class="table table-bordered table-hover align-middle">
             <thead>
@@ -194,6 +229,7 @@
                     <th>Amallar</th>
                 </tr>
             </thead>
+
             <tbody>
             {% for talaba in talabalar %}
                 <tr>
@@ -204,6 +240,7 @@
                     <td title="{{ talaba.theme_name }}">{{ talaba.theme_name|truncatechars:40 }}</td>
                     <td class="text-center">{{ talaba.years }}</td>
                     <td class="text-center fw-bold text-success">{{ talaba.total_ball }}</td>
+
                     <td class="text-center">
                         {% if talaba.files %}
                         <a href="{{ talaba.files.url }}" class="btn btn-sm btn-success">
@@ -212,87 +249,60 @@
                         {% else %}—{% endif %}
                     </td>
 
-                    <!-- CRUD ACTIONS -->
                     <td class="text-center">
                         <div class="d-flex justify-content-center gap-1">
-
-                            <a href="{% url 'bitiruv:edit' talaba.id %}"
-                               class="btn btn-sm btn-warning text-white">
+                            <a href="{% url 'bitiruv:edit' talaba.id %}" class="btn btn-sm btn-warning text-white">
                                 <i class="fa-solid fa-pen"></i>
                             </a>
 
-                            <form method="post"
-                                  action="{% url 'bitiruv:delete' talaba.id %}"
+                            <form method="post" action="{% url 'bitiruv:delete' talaba.id %}"
                                   onsubmit="return confirm('Rostdan ham o‘chirmoqchimisiz?');">
                                 {% csrf_token %}
                                 <button class="btn btn-sm btn-danger">
                                     <i class="fa-solid fa-trash"></i>
                                 </button>
                             </form>
-
                         </div>
                     </td>
                 </tr>
             {% endfor %}
             </tbody>
         </table>
-                    {% if page_obj.has_other_pages %}
-            <nav class="mt-4">
-                <ul class="pagination justify-content-center">
 
-                    <!-- PREVIOUS -->
-                    {% if page_obj.has_previous %}
-                    <li class="page-item">
-                        <a class="page-link"
-                        href="?page={{ page_obj.previous_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">
-                            ⬅️
-                        </a>
-                    </li>
+        <!-- PAGINATION -->
+        {% if page_obj.has_other_pages %}
+        <nav class="mt-4">
+            <ul class="pagination justify-content-center">
+                {% if page_obj.has_previous %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.previous_page_number }}">⬅️</a>
+                </li>
+                {% endif %}
+
+                {% for num in page_obj.paginator.page_range %}
+                    {% if page_obj.number == num %}
+                    <li class="page-item active"><span class="page-link">{{ num }}</span></li>
                     {% else %}
-                    <li class="page-item disabled">
-                        <span class="page-link">⬅️</span>
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ num }}">{{ num }}</a>
                     </li>
                     {% endif %}
+                {% endfor %}
 
-                    <!-- PAGE NUMBERS -->
-                    {% for num in page_obj.paginator.page_range %}
-                        {% if page_obj.number == num %}
-                        <li class="page-item active">
-                            <span class="page-link">{{ num }}</span>
-                        </li>
-                        {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
-                        <li class="page-item">
-                            <a class="page-link"
-                            href="?page={{ num }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">
-                                {{ num }}
-                            </a>
-                        </li>
-                        {% endif %}
-                    {% endfor %}
-
-                    <!-- NEXT -->
-                    {% if page_obj.has_next %}
-                    <li class="page-item">
-                        <a class="page-link"
-                        href="?page={{ page_obj.next_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">
-                            ➡️
-                        </a>
-                    </li>
-                    {% else %}
-                    <li class="page-item disabled">
-                        <span class="page-link">➡️</span>
-                    </li>
-                    {% endif %}
-
-                </ul>
-            </nav>
-            {% endif %}
+                {% if page_obj.has_next %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.next_page_number }}">➡️</a>
+                </li>
+                {% endif %}
+            </ul>
+        </nav>
+        {% endif %}
 
         {% else %}
         <p class="text-center text-muted fs-5">Talaba topilmadi</p>
         {% endif %}
-    </div>
 
+    </div>
 </div>
 
 </body>
