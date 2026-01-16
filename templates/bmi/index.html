@@ -18,13 +18,13 @@
             font-family: Inter, system-ui, sans-serif;
         }
 
-        /* ===== HEADER ===== */
+        /* ================= HEADER ================= */
         .samtuit-header {
             position: sticky;
             top: 0;
             z-index: 100;
-            background: rgba(255,255,255,0.95);
-            backdrop-filter: blur(8px);
+            background: rgba(255,255,255,0.94);
+            backdrop-filter: blur(12px);
             border-bottom: 1px solid #e5e7eb;
         }
 
@@ -32,21 +32,22 @@
             max-width: 1280px;
             margin: auto;
             padding: 0 24px;
-            height: 80px;
+            height: 82px;
             display: flex;
             align-items: center;
-            justify-content: space-between;
+            gap: 24px;
         }
 
         .samtuit-logo {
             display: flex;
             align-items: center;
             gap: 14px;
+            text-decoration: none;
         }
 
         .samtuit-logo-icon {
-            width: 48px;
-            height: 48px;
+            width: 46px;
+            height: 46px;
             border-radius: 12px;
             background: #0d6efd;
             color: white;
@@ -68,13 +69,12 @@
             font-size: 11px;
             color: #6b7280;
             font-weight: 700;
-            text-transform: uppercase;
             margin: 0;
         }
 
         .samtuit-nav {
             display: flex;
-            gap: 32px;
+            gap: 28px;
         }
 
         .samtuit-nav a {
@@ -83,43 +83,49 @@
             font-weight: 600;
         }
 
+        .samtuit-nav a.active {
+            color: #0d6efd;
+            font-weight: 800;
+            border-bottom: 3px solid #0d6efd;
+            padding-bottom: 6px;
+        }
+
+        .header-search {
+            flex: 1;
+            max-width: 420px;
+            position: relative;
+        }
+
+        .header-search i {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #9ca3af;
+        }
+
+        .header-search input {
+            width: 100%;
+            padding: 10px 14px 10px 42px;
+            border-radius: 12px;
+            border: 1px solid #e5e7eb;
+        }
+
         .samtuit-action {
             background: #0d6efd;
             color: white;
-            padding: 10px 20px;
+            padding: 10px 18px;
             border-radius: 10px;
             font-weight: 700;
             text-decoration: none;
         }
 
-        /* ===== CONTENT ===== */
-        .search-box, .table-wrapper {
+        .table-wrapper {
             background: #fff;
             border-radius: 14px;
             padding: 20px;
             box-shadow: 0 2px 12px rgba(0,0,0,0.08);
         }
-
-        /* ===== TABLE FIX ===== */
-        .table-fixed {
-            table-layout: fixed;
-            width: 100%;
-        }
-
-        .table-fixed th,
-        .table-fixed td {
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            vertical-align: middle;
-        }
-
-        .col-name { width: 160px; }
-        .col-faculty { width: 160px; }
-        .col-group { width: 90px; }
-        .col-theme { width: 320px; }
-        .col-year { width: 90px; }
-        .col-file { width: 70px; text-align: center; }
 
         table thead {
             background: #0d6efd;
@@ -130,103 +136,160 @@
             padding: 6px 10px;
             border-radius: 6px;
             font-size: 13px;
-            
+            font-weight: 600;
+          
         }
     </style>
 </head>
 
 <body>
 
-<!-- ===== HEADER ===== -->
+<!-- ================= HEADER ================= -->
 <header class="samtuit-header">
     <div class="samtuit-container">
-        <div class="samtuit-logo">
+
+        <a href="/" class="samtuit-logo">
             <div class="samtuit-logo-icon">S</div>
             <div class="samtuit-logo-text">
                 <h1>SamTUIT</h1>
                 <p>Talabalar portali</p>
             </div>
-        </div>
+        </a>
 
         <nav class="samtuit-nav">
-            <a href="#" class="fw-bold text-primary">Talabalar</a>
+            <a href="#" class="active">Talabalar</a>
             <a href="#">Xodimlar</a>
             <a href="#">Qarorlar</a>
-            <a href="#">Bog‘lanish</a>
         </nav>
 
-        <a href="#" class="samtuit-action">🔍 Qidirish</a>
-    </div>
-</header>
+        <form method="GET" class="header-search">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input type="text" name="q" placeholder="Qidirish..." value="{{ request.GET.q }}">
+        </form>
 
-<div class="container py-5">
-
-    <!-- TITLE -->
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <h2 class="fw-bold">🎓 TATU Talabalari ro‘yxati</h2>
-        <a href="{% url 'talabalar:talabalar_add' %}" class="btn btn-primary">
+        <a href="{% url 'bitiruv:add' %}" class="samtuit-action">
             ➕ Talaba qo‘shish
         </a>
     </div>
+</header>
 
-    <!-- LIST VIEW -->
+<!-- ================= CONTENT ================= -->
+<div class="container py-5">
+
+    <h2 class="fw-bold mb-4">🎓 TATU Talabalari ro‘yxati</h2>
+
     <div class="table-wrapper">
         {% if talabalar %}
-        <table class="table table-bordered table-hover align-middle table-fixed">
+        <table class="table table-bordered table-hover align-middle">
             <thead>
                 <tr class="text-center">
-                    <th style="width:50px">#</th>
-                    <th class="col-name">F.I.Sh</th>
-                    <th class="col-faculty">Fakultet</th>
-                    <th class="col-group">Guruh</th>
-                    <th class="col-theme">Mavzu</th>
-                    <th class="col-year">O‘quv yili</th>
-                    <th class="col-file">Fayl</th>
+                    <th>#</th>
+                    <th>F.I.Sh</th>
+                    <th>Fakultet</th>
+                    <th>Guruh</th>
+                    <th>Mavzu</th>
+                    <th>O‘quv yili</th>
+                    <th>Ball</th>
+                    <th>Fayl</th>
+                    <th>Amallar</th>
                 </tr>
             </thead>
-
             <tbody>
-                {% for talaba in talabalar %}
+            {% for talaba in talabalar %}
                 <tr>
-                    <td class="text-center fw-bold">
-                        {{ forloop.counter0|add:page_obj.start_index }}
-                    </td>
-
-                    <td class="col-name">
-                        {{ talaba.first_name }} {{ talaba.last_name }}
-                    </td>
-
-                    <td class="col-faculty">
-                        <span class="badge-box">{{ talaba.faculty }}</span>
-                    </td>
-
-                    <td class="col-group fw-bold text-primary">
-                        {{ talaba.group_name }}
-                    </td>
-
-                    <td class="col-theme" title="{{ talaba.theme_name }}">
-                        {{ talaba.theme_name }}
-                    </td>
-
-                    <td class="col-year text-center">
-                        {{ talaba.years }}
-                    </td>
-
-                    <td class="col-file">
+                    <td class="text-center">{{ forloop.counter }}</td>
+                    <td>{{ talaba.first_name }} {{ talaba.last_name }}</td>
+                    <td><span class="badge-box">{{ talaba.faculty }}</span></td>
+                    <td class="fw-bold text-primary">{{ talaba.group_name }}</td>
+                    <td title="{{ talaba.theme_name }}">{{ talaba.theme_name|truncatechars:40 }}</td>
+                    <td class="text-center">{{ talaba.years }}</td>
+                    <td class="text-center fw-bold text-success">{{ talaba.total_ball }}</td>
+                    <td class="text-center">
                         {% if talaba.files %}
                         <a href="{{ talaba.files.url }}" class="btn btn-sm btn-success">
                             <i class="fa-solid fa-download"></i>
                         </a>
-                        {% else %}
-                        —
-                        {% endif %}
+                        {% else %}—{% endif %}
+                    </td>
+
+                    <!-- CRUD ACTIONS -->
+                    <td class="text-center">
+                        <div class="d-flex justify-content-center gap-1">
+
+                            <a href="{% url 'bitiruv:edit' talaba.id %}"
+                               class="btn btn-sm btn-warning text-white">
+                                <i class="fa-solid fa-pen"></i>
+                            </a>
+
+                            <form method="post"
+                                  action="{% url 'bitiruv:delete' talaba.id %}"
+                                  onsubmit="return confirm('Rostdan ham o‘chirmoqchimisiz?');">
+                                {% csrf_token %}
+                                <button class="btn btn-sm btn-danger">
+                                    <i class="fa-solid fa-trash"></i>
+                                </button>
+                            </form>
+
+                        </div>
                     </td>
                 </tr>
-                {% endfor %}
+            {% endfor %}
             </tbody>
         </table>
+                    {% if page_obj.has_other_pages %}
+            <nav class="mt-4">
+                <ul class="pagination justify-content-center">
+
+                    <!-- PREVIOUS -->
+                    {% if page_obj.has_previous %}
+                    <li class="page-item">
+                        <a class="page-link"
+                        href="?page={{ page_obj.previous_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">
+                            ⬅️
+                        </a>
+                    </li>
+                    {% else %}
+                    <li class="page-item disabled">
+                        <span class="page-link">⬅️</span>
+                    </li>
+                    {% endif %}
+
+                    <!-- PAGE NUMBERS -->
+                    {% for num in page_obj.paginator.page_range %}
+                        {% if page_obj.number == num %}
+                        <li class="page-item active">
+                            <span class="page-link">{{ num }}</span>
+                        </li>
+                        {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                        <li class="page-item">
+                            <a class="page-link"
+                            href="?page={{ num }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">
+                                {{ num }}
+                            </a>
+                        </li>
+                        {% endif %}
+                    {% endfor %}
+
+                    <!-- NEXT -->
+                    {% if page_obj.has_next %}
+                    <li class="page-item">
+                        <a class="page-link"
+                        href="?page={{ page_obj.next_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">
+                            ➡️
+                        </a>
+                    </li>
+                    {% else %}
+                    <li class="page-item disabled">
+                        <span class="page-link">➡️</span>
+                    </li>
+                    {% endif %}
+
+                </ul>
+            </nav>
+            {% endif %}
+
         {% else %}
-            <p class="text-center text-muted fs-5">Talaba topilmadi</p>
+        <p class="text-center text-muted fs-5">Talaba topilmadi</p>
         {% endif %}
     </div>
 

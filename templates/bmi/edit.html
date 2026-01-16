@@ -1,0 +1,183 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <title>TATU | Talabani tahrirlash</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <style>
+        body {
+            background-color: #f1f3f5;
+            font-family: Inter, system-ui, sans-serif;
+        }
+
+        /* HEADER */
+        .page-header {
+            background: white;
+            border-bottom: 1px solid #e5e7eb;
+            padding: 18px 0;
+        }
+
+        .page-header h1 {
+            font-size: 22px;
+            font-weight: 900;
+            color: #0d6efd;
+        }
+
+        /* CARD */
+        .form-card {
+            background: white;
+            border-radius: 14px;
+            padding: 28px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+        }
+
+        .form-label {
+            font-weight: 700;
+            color: #374151;
+        }
+
+        .form-control, .form-select {
+            border-radius: 10px;
+            padding: 10px 14px;
+        }
+
+        .form-control:focus,
+        .form-select:focus {
+            border-color: #0d6efd;
+            box-shadow: 0 0 0 3px rgba(13,110,253,0.15);
+        }
+
+        .btn-save {
+            background: #0d6efd;
+            color: white;
+            font-weight: 800;
+            padding: 12px 22px;
+            border-radius: 12px;
+        }
+
+        .btn-cancel {
+            background: #e5e7eb;
+            color: #374151;
+            font-weight: 700;
+            padding: 12px 22px;
+            border-radius: 12px;
+        }
+
+        .file-preview {
+            font-size: 14px;
+            margin-top: 6px;
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- HEADER -->
+<div class="page-header">
+    <div class="container d-flex justify-content-between align-items-center">
+        <h1>✏️ Talabani tahrirlash</h1>
+        <a href="{% url 'bitiruv:bmi' %}" class="btn btn-outline-secondary">
+            ⬅️ Orqaga
+        </a>
+    </div>
+</div>
+
+<!-- CONTENT -->
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+
+            <div class="form-card">
+
+                <form method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+
+                    <div class="row g-4">
+
+                        <!-- FIRST NAME -->
+                        <div class="col-md-6">
+                            <label class="form-label">Ism</label>
+                            {{ form.first_name }}
+                        </div>
+
+                        <!-- LAST NAME -->
+                        <div class="col-md-6">
+                            <label class="form-label">Familiya</label>
+                            {{ form.last_name }}
+                        </div>
+
+                        <!-- FACULTY -->
+                        <div class="col-md-6">
+                            <label class="form-label">Fakultet</label>
+                            {{ form.faculty }}
+                        </div>
+
+                        <!-- GROUP -->
+                        <div class="col-md-6">
+                            <label class="form-label">Guruh</label>
+                            {{ form.group_name }}
+                        </div>
+
+                        <!-- THEME -->
+                        <div class="col-12">
+                            <label class="form-label">Bitiruv ishi mavzusi</label>
+                            {{ form.theme_name }}
+                        </div>
+
+                        <!-- YEARS -->
+                        <div class="col-md-6">
+                            <label class="form-label">O‘quv yili</label>
+                            {{ form.years }}
+                        </div>
+
+                        <!-- BALL -->
+                        <div class="col-md-6">
+                            <label class="form-label">Umumiy ball</label>
+                            {{ form.total_ball }}
+                        </div>
+
+                        <!-- FILE -->
+                        <div class="col-12">
+                            <label class="form-label">Fayl (PDF, DOCX)</label>
+                            {{ form.files }}
+
+                            {% if object.files %}
+                            <div class="file-preview">
+                                📎 Joriy fayl:
+                                <a href="{{ object.files.url }}" target="_blank">
+                                    Yuklab olish
+                                </a>
+                            </div>
+                            {% endif %}
+                        </div>
+
+                    </div>
+
+                    <!-- ACTIONS -->
+                    <div class="d-flex justify-content-end gap-3 mt-5">
+                        <a href="{% url 'bitiruv:bmi' %}" class="btn btn-cancel">
+                            Bekor qilish
+                        </a>
+                        <button type="submit" class="btn btn-save">
+                            💾 Saqlash
+                        </button>
+                    </div>
+
+                </form>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
