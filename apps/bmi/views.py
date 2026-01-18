@@ -7,9 +7,10 @@ from .models import BmiTalaba
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, UpdateView, DeleteView
 from .forms import BmiTalabaForm
+from apps.login.mixins import JWTLoginRequiredMixin
 
 
-class TableView(View):
+class TableView(JWTLoginRequiredMixin, View):
     def get(self, request: HttpRequest) -> HttpResponse:
   
         q = request.GET.get("q", "").strip()
@@ -42,20 +43,20 @@ class TableView(View):
 
 
 
-class BmiTalabaCreateView(CreateView):
+class BmiTalabaCreateView(JWTLoginRequiredMixin, CreateView):
     model = BmiTalaba
     form_class = BmiTalabaForm
     template_name = 'bmi/create.html'
     success_url = reverse_lazy('bitiruv:bmi')
 
 
-class BmiTalabaUpdateView(UpdateView):
+class BmiTalabaUpdateView(JWTLoginRequiredMixin, UpdateView):
     model = BmiTalaba
     form_class = BmiTalabaForm
     template_name = 'bmi/edit.html'
     success_url = reverse_lazy('bitiruv:bmi')
 
-class BmiTalabaDeleteView(DeleteView):
+class BmiTalabaDeleteView(JWTLoginRequiredMixin, DeleteView):
     model = BmiTalaba
     success_url = reverse_lazy('bitiruv:bmi')
     def post(self, request, *args, **kwargs):

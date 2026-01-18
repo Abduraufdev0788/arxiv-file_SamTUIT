@@ -5,20 +5,14 @@ from django.utils import timezone
 
 from apps.login.models import Registration
 from .models import Talabalar
+from apps.login.mixins import JWTLoginRequiredMixin
 
 from django.core.paginator import Paginator
 
 
 
-class TalabalarView(View):
+class TalabalarView(JWTLoginRequiredMixin, View):
     def get(self, request:HttpRequest) -> HttpResponse:
-        user_id = request.session.get("user_id")
-
-        if not user_id:
-            return HttpResponse("Login topilmadi", status=401)
-
-        if not Registration.objects.filter(id=user_id).exists():
-            return HttpResponse("Foydalanuvchi topilmadi", status=403)
 
         talabalar = Talabalar.objects.all().order_by("-id")
 
@@ -52,28 +46,13 @@ class TalabalarView(View):
 
 
 
-class AddTalaba(View):
+class AddTalaba(JWTLoginRequiredMixin, View):
 
     def get(self, request: HttpRequest) -> HttpResponse:
-        user_id = request.session.get("user_id")
-
-        if not user_id:
-            return HttpResponse("Login topilmadi", status=401)
-
-        if not Registration.objects.filter(id=user_id).exists():
-            return HttpResponse("Foydalanuvchi topilmadi", status=403)
-
         return render(request, "ftot/talaba_qoshish.html")
 
 
     def post(self, request: HttpRequest) -> HttpResponse:
-        user_id = request.session.get("user_id")
-
-        if not user_id:
-            return HttpResponse("Login topilmadi", status=401)
-
-        if not Registration.objects.filter(id=user_id).exists():
-            return HttpResponse("Foydalanuvchi topilmadi", status=403)
 
         full_name = request.POST.get("full_name")
         pasport = request.POST.get("passport")
@@ -146,17 +125,8 @@ class AddTalaba(View):
 
         return redirect("talabalar:talabalar")
     
-class DeleteTalaba(View):
+class DeleteTalaba(JWTLoginRequiredMixin, View):
     def post(self, request: HttpRequest, talaba_id: int)-> HttpResponse:
-        user_id = request.session.get("user_id")
-
-        user_id = request.session.get("user_id")
-
-        if not user_id:
-            return HttpResponse("Login topilmadi", status=401)
-
-        if not Registration.objects.filter(id=user_id).exists():
-            return HttpResponse("Foydalanuvchi topilmadi", status=403)
 
         talaba = Talabalar.objects.filter(id = talaba_id).first()
         if not talaba:
@@ -166,16 +136,9 @@ class DeleteTalaba(View):
         return redirect("talabalar:talabalar")
     
 
-class TalabaUpdateView(View):
+class TalabaUpdateView(JWTLoginRequiredMixin, View):
 
     def get(self, request: HttpRequest, talaba_id: int) -> HttpResponse:
-        user_id = request.session.get("user_id")
-
-        if not user_id:
-            return HttpResponse("Login topilmadi", status=401)
-
-        if not Registration.objects.filter(id=user_id).exists():
-            return HttpResponse("Foydalanuvchi topilmadi", status=403)
 
         talaba = Talabalar.objects.filter(id=talaba_id).first()
         if not talaba:
@@ -188,13 +151,6 @@ class TalabaUpdateView(View):
         })
 
     def post(self, request: HttpRequest, talaba_id: int) -> HttpResponse:
-        user_id = request.session.get("user_id")
-
-        if not user_id:
-            return HttpResponse("Login topilmadi", status=401)
-
-        if not Registration.objects.filter(id=user_id).exists():
-            return HttpResponse("Foydalanuvchi topilmadi", status=403)
 
         talaba = Talabalar.objects.filter(id=talaba_id).first()
         if not talaba:

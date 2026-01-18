@@ -17,6 +17,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 import os
 from dotenv import load_dotenv
 from decouple import config, Csv
+from datetime import timedelta
 
 load_dotenv()
 
@@ -48,6 +49,8 @@ INSTALLED_APPS = [
     "apps.oqituvchilar.apps.OqituvchilarConfig",
     "apps.professorlar.apps.ProfessorlarConfig",
     "apps.qarorlar.apps.QarorlarConfig",
+
+    "rest_framework"
 ]
 
 MIDDLEWARE = [
@@ -58,7 +61,10 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
+    "apps.login.middleware.JWTAuthMiddleware",
 ]
+
 
 ROOT_URLCONF = 'core.urls'
 
@@ -149,3 +155,16 @@ EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD")
 
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
+
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
+}
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=30),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
+    'AUTH_HEADER_TYPES': ('Bearer',),
+}

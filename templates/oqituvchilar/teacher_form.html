@@ -1,0 +1,186 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <title>SamTUIT | O‘qituvchi qo‘shish</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Tailwind -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .hero-gradient {
+            background: linear-gradient(135deg, #0f4c81 0%, #1565a3 50%, #0b6cb8 100%);
+        }
+
+        /* MAJBURIY BORDER */
+        input, select {
+            border: 1px solid #cbd5e1 !important;
+            border-radius: 0.75rem;
+            padding: 0.75rem 1rem;
+            width: 100%;
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: #0f4c81;
+            box-shadow: 0 0 0 2px rgba(15, 76, 129, 0.2);
+        }
+    </style>
+</head>
+
+<body class="bg-slate-50 text-slate-900">
+    <style>
+    input,
+    select,
+    textarea {
+        height: 44px;
+        border: 1px solid #cbd5e1;
+        border-radius: 0.75rem;
+        padding: 0 1rem;
+        width: 100%;
+    }
+
+    input[type="file"] {
+        height: auto; /* file input buzilmasin */
+        padding: 0.5rem;
+    }
+
+    input[type="checkbox"] {
+        height: auto;
+        width: auto;
+        padding: 0;
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus {
+        outline: none;
+        border-color: #0f4c81;
+        box-shadow: 0 0 0 2px rgba(15, 76, 129, 0.2);
+    }
+</style>
+
+
+<!-- ================= HERO ================= -->
+<section class="hero-gradient text-white py-20 px-6">
+    <div class="max-w-5xl mx-auto text-center">
+        <h2 class="text-5xl font-black mb-4">
+            <!-- ================= TITLE ================= -->
+            <h1 class="text-5xl font-black text-slate-800 mb-8 text-center">
+                {% if object %}
+                    O‘qituvchini tahrirlash
+                {% else %}
+                    Yangi o‘qituvchi qo‘shish
+                {% endif %}
+            </h1>
+
+        </h2>
+        <p class="text-blue-100/80">
+            O‘qituvchi haqidagi rasmiy ma’lumotlarni kiriting
+        </p>
+    </div>
+</section>
+
+<!-- ================= FORM ================= -->
+<section class="max-w-4xl mx-auto px-6 -mt-16 pb-20">
+    <form method="post" enctype="multipart/form-data"
+          class="bg-white rounded-3xl shadow-2xl p-10 space-y-8">
+
+        {% csrf_token %}
+
+        <!-- Ism / Familiya -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+                <label class="block text-sm font-bold mb-1">Ism</label>
+                {{ form.first_name }}
+            </div>
+            <div>
+                <label class="block text-sm font-bold mb-1">Familiya</label>
+                {{ form.last_name }}
+            </div>
+        </div>
+
+        <!-- Qabul / Chiqish -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+                <label class="block text-sm font-bold mb-1">Qabul sanasi</label>
+                {{ form.qabul_sana }}
+            </div>
+            <div>
+                <label class="block text-sm font-bold mb-1">Chiqish sanasi</label>
+                {{ form.chiqish_sana }}
+            </div>
+        </div>
+
+        <!-- Shartnoma -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+                <label class="block text-sm font-bold mb-1">Shartnoma raqami</label>
+                {{ form.shartnoma_raqami }}
+            </div>
+            <div>
+                <label class="block text-sm font-bold mb-1">Bekor qilingan sana</label>
+                {{ form.shartnoma_bekor_sana }}
+            </div>
+        </div>
+
+        <!-- Bo‘lim / Lavozim -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+                <label class="block text-sm font-bold mb-1">Bo‘lim</label>
+                {{ form.ishlagan_bolimi }}
+            </div>
+            <div>
+                <label class="block text-sm font-bold mb-1">Lavozim</label>
+                {{ form.ishlagan_lavozimi }}
+            </div>
+        </div>
+
+        <!-- Pasport -->
+        <div>
+            <label class="block text-sm font-bold mb-1">Pasport</label>
+            {{ form.pasport }}
+            <p class="text-xs text-slate-500 mt-1">Masalan: AA1234567</p>
+        </div>
+
+        <!-- Buyruq -->
+        <div>
+            <label class="block text-sm font-bold mb-1">Buyruq fayli</label>
+            {{ form.buyruq }}
+        </div>
+
+        <!-- IS ACTIVE -->
+        <div class="flex items-center gap-3 pt-2">
+            {{ form.is_active }}
+            <label class="text-sm font-bold">
+                O‘qituvchi faol (aktiv)
+            </label>
+        </div>
+
+        <!-- ACTIONS -->
+        <div class="flex flex-col sm:flex-row gap-4 pt-6">
+            <button type="submit"
+                    class="px-8 py-4 rounded-xl font-black text-white
+                           bg-gradient-to-r from-emerald-500 to-teal-500
+                           hover:scale-105 transition shadow-lg">
+                💾 Saqlash
+            </button>
+
+            <a href="{% url 'teachers:teacher_list' %}"
+               class="px-8 py-4 rounded-xl font-black text-slate-700
+                      bg-slate-200 hover:bg-slate-300 transition text-center">
+                Bekor qilish
+            </a>
+        </div>
+
+    </form>
+</section>
+
+</body>
+</html>

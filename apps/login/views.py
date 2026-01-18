@@ -1,224 +1,237 @@
 from random import randint
+import json
 
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpRequest, HttpResponse, JsonResponse
 from django.views import View
 from django.core.mail import send_mail
-from django.contrib.auth.hashers import make_password
-from django.contrib.auth.hashers import check_password
-from django.shortcuts import get_object_or_404
+from django.contrib.auth.hashers import make_password, check_password
+
+from rest_framework.views import APIView
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
+from rest_framework_simplejwt.tokens import RefreshToken
 
 from .models import Registration
+from apps.login.jwt_utils import generate_tokens
 
 
-class Login(View):
-    def get(self,request:HttpRequest)->HttpResponse:
-        return render(request=request, template_name="login/login.html")
-    
+def generate_tokens(user: Registration) -> dict:
+    refresh = RefreshToken()
+    refresh['user_id'] = user.id
+    refresh['email'] = user.email
+
+    return {
+        "access": str(refresh.access_token),
+        "refresh": str(refresh),
+    }
+
 class Register(View):
     def get(self, request: HttpRequest) -> HttpResponse:
         return render(request, "login/register.html")
-    
+
     def post(self, request: HttpRequest) -> HttpResponse:
-        name = request.POST.get("name")
-        surname = request.POST.get("surname")
-        email = request.POST.get("email")
-        password = request.POST.get("password")
-        confirm_password = request.POST.get("confirm_password")
+        try:
+            data = json.loads(request.body)
+        except json.JSONDecodeError:
+            return JsonResponse({"message": "Invalid JSON"}, status=400)
 
-      
-        if not name:
-            return JsonResponse({"message": "name required"}, status=401)
-        if len(name) < 3 or len(name) > 200:
-            return JsonResponse({"message": "name: min 3, max 200 characters"}, status=401)
+        name = data.get("name")
+        surname = data.get("surname")
+        email = data.get("email")
+        password = data.get("password")
+        confirm_password = data.get("confirm_password")
 
-        if not surname:
-            return JsonResponse({"message": "surname required"}, status=401)
-        if len(surname) < 3 or len(surname) > 200:
-            return JsonResponse({"message": "surname: min 3, max 200 characters"}, status=401)
+        if not all([name, surname, email, password, confirm_password]):
+            return JsonResponse({"message": "All fields required"}, status=400)
 
-        if not email:
-            return JsonResponse({"message": "email required"}, status=401)
         if Registration.objects.filter(email=email).exists():
-            return JsonResponse({"message": "email already exists"}, status=401)
+            return JsonResponse({"message": "Email already exists"}, status=409)
 
-        if not password:
-            return JsonResponse({"message": "password required"}, status=401)
-        if len(password) > 256:
-            return JsonResponse({"message": "password max 256 characters"}, status=401)
+        if password != confirm_password:
+            return JsonResponse({"message": "Passwords do not match"}, status=400)
 
-        if confirm_password != password:
-            return JsonResponse({"message": "passwords must match"}, status=401)
+        # sessionga saqlaymiz (verify uchun)
+        request.session['reg_data'] = {
+            "name": name,
+            "surname": surname,
+            "email": email,
+            "password": make_password(password),
+        }
 
- 
-        request.session['name'] = name
-        request.session['surname'] = surname
-        request.session['email'] = email
-        request.session['password'] = make_password(password)
+        code = randint(100000, 999999)
+        request.session['verify_code'] = str(code)
 
-      
-        verification_code = randint(100000, 999999)
         send_mail(
             subject="Verification Code",
-            message=f"Your verification code is {verification_code}",
+            message=f"Your verification code is {code}",
             from_email="turkeynumber063@gmail.com",
             recipient_list=[email],
-            fail_silently=False,
         )
-        request.session['verification_code'] = verification_code
+
+        # ❗ fetch ishlatyapmiz, redirect emas JSON qaytaramiz
+        return JsonResponse({"message": "Verification code sent"}, status=200)
 
 
-        return redirect("registratsiya:veritfy")
-    
 class VerifyEmail(View):
-    def get(self, request: HttpRequest) -> HttpResponse:
+    def get(self, request):
         return render(request, "login/veritfy.html")
 
-    def post(self, request: HttpRequest) -> HttpResponse:
-        d1 = request.POST.get("d1")
-        d2 = request.POST.get("d2")
-        d3 = request.POST.get("d3")
-        d4 = request.POST.get("d4")
-        d5 = request.POST.get("d5")
-        d6 = request.POST.get("d6")
-        input_code = f"{d1}{d2}{d3}{d4}{d5}{d6}"
-        session_code = str(request.session.get("verification_code"))
+    def post(self, request):
+        try:
+            data = json.loads(request.body)
+        except json.JSONDecodeError:
+            return JsonResponse({"message": "Invalid JSON"}, status=400)
 
-        if input_code != session_code:
-            return JsonResponse({"error": "Kod notogri!"}, status=401)
-
-
-        name = request.session.get("name")
-        surname = request.session.get("surname")
-        email = request.session.get("email")
-        password = request.session.get("password")
-
-        new_user = Registration.objects.create(
-            name=name,
-            surname=surname,
-            email=email,
-            password=password
-        )
-
-    
-        request.session['user_id'] = new_user.id
-
-        for key in ["name", "surname", "email", "password", "verification_code"]:
-            if key in request.session:
-                del request.session[key]
-
-        return redirect("index:home_page")
-    
-
-class Login(View):
-    def get(self, request: HttpRequest) -> HttpResponse:
-        return render(request, "login/login.html")
-
-    def post(self, request: HttpRequest) -> HttpResponse:
-        email = request.POST.get("email")
-        password = request.POST.get("password")
-
-        if not email:
-            return JsonResponse({"message": "email required"})
-        
-
-        if not Registration.objects.filter(email=email).exists():
-            return JsonResponse({"message": "email not found"})
-
-        if not password:
-            return JsonResponse({"message": "password required"})
-
-        if len(password) > 256:
-            return JsonResponse({"message": "max 256 characters"})
-
-        base_user = Registration.objects.get(email=email)
-
-        if not check_password(password, base_user.password):
-            return JsonResponse({"message": "incorrect password"})
-
-
-        request.session['user_id'] = base_user.id
-
-        return redirect("index:home_page")
-    
-
-
-class Forget_password(View):
-    def get(self, request:HttpRequest)->HttpResponse:
-        return render(request=request, template_name="login/forget_password.html")
-    
-    def post(self,request: HttpRequest)-> HttpResponse:
-        email = request.POST.get("email")
-
-        if not email:
-            return JsonResponse({"message":"email required"}, status = 401)
-        if not Registration.objects.filter(email=email).exists:
-            return JsonResponse({"message":"email not found"}, status = 404)
-        
-        verification_code = randint(100000, 999999)
-        send_mail(
-            subject="Verification Code",
-            message=f"Your verification code is {verification_code}",
-            from_email="turkeynumber063@gmail.com",
-            recipient_list=[email],
-            fail_silently=False,
-        )
-        request.session['code'] = verification_code
-        request.session['email'] = email
-
-        return redirect("registratsiya:sendcode")
-
-class SendCode(View):
-    def get(self, request: HttpRequest)->HttpResponse:
-        return render(request=request, template_name="login/reset_code.html")
-    
-    def post(self, request: HttpRequest) -> HttpResponse:
-        email = request.session.get("email")
-        if not email:
-            return JsonResponse({"message":"login not found"}, status = 401)
-        d1 = request.POST.get("d1")
-        d2 = request.POST.get("d2")
-        d3 = request.POST.get("d3")
-        d4 = request.POST.get("d4")
-        d5 = request.POST.get("d5")
-        d6 = request.POST.get("d6")
-        input_code = f"{d1}{d2}{d3}{d4}{d5}{d6}"
-        session_code = str(request.session.get("code"))
+        input_code = data.get("code")
+        session_code = request.session.get("verify_code")
 
         if not input_code:
-            return JsonResponse({"error":"kodni kiriting"}, status = 401)
-        if len(input_code) < 6:
-            return JsonResponse({"message":"parolni toliq kiriting"}, status = 401)
+            return JsonResponse({"message": "Code required"}, status=400)
 
         if input_code != session_code:
-            return JsonResponse({"error": "Kod notogri!"}, status=401)
-        
-        return redirect("registratsiya:update_password")
+            return JsonResponse({"message": "Invalid code"}, status=401)
+
+        reg_data = request.session.get("reg_data")
+        if not reg_data:
+            return JsonResponse({"message": "Session expired"}, status=401)
+
+        Registration.objects.create(**reg_data)
+
+        # session tozalaymiz
+        request.session.flush()
+
+        return JsonResponse({"message": "Account verified"}, status=200)
 
 
+class Login(View):
+    def get(self, request):
+        return render(request, "login/login.html")
+
+    def post(self, request):
+        data = json.loads(request.body)
+
+        email = data.get("email")
+        password = data.get("password")
+
+        user = Registration.objects.filter(email=email).first()
+        if not user:
+            return JsonResponse({"message": "Email not found"}, status=404)
+
+        if not check_password(password, user.password):
+            return JsonResponse({"message": "Incorrect password"}, status=401)
+
+        tokens = generate_tokens(user)
+
+        response = JsonResponse({"message": "Login successful"})
+
+        response.set_cookie(
+            "access_token",
+            tokens["access"],
+            httponly=True,
+            samesite="Lax"
+        )
+
+        return response
+
+
+
+class ForgetPassword(View):
+    def get(self, request):
+        return render(request, "login/forget_password.html")
+
+    def post(self, request):
+        try:
+            data = json.loads(request.body)
+        except json.JSONDecodeError:
+            return JsonResponse({"message": "Invalid JSON"}, status=400)
+
+        email = data.get("email")
+
+        if not email:
+            return JsonResponse({"message": "Email required"}, status=400)
+
+        try:
+            user = Registration.objects.get(email=email)
+        except Registration.DoesNotExist:
+            return JsonResponse({"message": "Email not found"}, status=404)
+
+        code = randint(100000, 999999)
+        request.session["reset_code"] = str(code)
+        request.session["reset_email"] = email
+
+        send_mail(
+            subject="Password reset code",
+            message=f"Your reset code is {code}",
+            from_email="turkeynumber063@gmail.com",
+            recipient_list=[email],
+        )
+
+        return JsonResponse({"message": "Reset code sent"}, status=200)
+
+
+class SendCode(View):
+    def get(self, request):
+        return render(request, "login/reset_code.html")
+
+    def post(self, request):
+        try:
+            data = json.loads(request.body)
+        except json.JSONDecodeError:
+            return JsonResponse({"message": "Invalid JSON"}, status=400)
+
+        input_code = data.get("code")
+        session_code = request.session.get("reset_code")
+
+        if not input_code:
+            return JsonResponse({"message": "Code required"}, status=400)
+
+        if not session_code:
+            return JsonResponse({"message": "Session expired"}, status=401)
+
+        if input_code != session_code:
+            return JsonResponse({"message": "Invalid code"}, status=401)
+
+        return JsonResponse({"message": "Code verified"}, status=200)
 
 class UpdatePassword(View):
     def get(self, request):
         return render(request, "login/new_password.html")
-    
+
     def post(self, request):
-        email = request.session.get("email")
+        try:
+            data = json.loads(request.body)
+        except json.JSONDecodeError:
+            return JsonResponse({"message": "Invalid JSON"}, status=400)
+
+        password = data.get("password")
+        confirm_password = data.get("confirm_password")
+
+        if not password or not confirm_password:
+            return JsonResponse({"message": "Invalid data"}, status=400)
+
+        if password != confirm_password:
+            return JsonResponse({"message": "Passwords do not match"}, status=400)
+
+        email = request.session.get("reset_email")
         if not email:
-            return JsonResponse({"message": "Sessiya eskirgan"}, status=401)
-
-        password = request.POST.get("password")
-        confirm_password = request.POST.get("confirm_password")
-
-        if not password or password != confirm_password:
-            return JsonResponse({"message": "Parollar mos emas yoki bo'sh"}, status=401)
+            return JsonResponse({"message": "Session expired"}, status=401)
 
         user = get_object_or_404(Registration, email=email)
         user.password = make_password(password)
         user.save()
-        print(user)
 
-      
-        for key in ["code", "email"]:
-            request.session.pop(key, None)
 
-        return redirect("registratsiya:login")
+        request.session.pop("reset_email", None)
+        request.session.pop("reset_code", None)
+
+        return JsonResponse({"message": "Password updated"}, status=200)
+
+
+class LogoutView(View):
+    def get(self, request):
+        response = redirect("registratsiya:login")
+
+        response.delete_cookie("access_token")
+
+        return response

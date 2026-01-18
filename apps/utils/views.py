@@ -1,18 +1,19 @@
 from django.shortcuts import render, redirect
-from django.http import HttpRequest, HttpResponse, JsonResponse
 from django.views import View
+from django.http import HttpRequest, HttpResponse
 
-from apps.login.models import Registration
 
 class IndexView(View):
-    def get(self, request:HttpRequest)->HttpResponse:
-        return render(request=request, template_name="index.html")
-    
+    def get(self, request: HttpRequest) -> HttpResponse:
+        return render(request, "index.html")
+
+
 class HomeView(View):
-    def get(self, request:HttpRequest)->HttpResponse:
-        user_id = request.session.get('user_id')
-        if not user_id:
-            return JsonResponse({"message":"login not defound"})
-        if not Registration.objects.filter(id = user_id):
-            return redirect("registratsiya:register")
-        return render(request=request, template_name="home/home.html")
+    def get(self, request):
+        if not getattr(request, "user_jwt", None):
+            return redirect("registratsiya:login")
+
+        return render(request, "home/home.html", {
+            "user": request.user_jwt
+        })
+

@@ -1,15 +1,26 @@
 from django.urls import path
-
-from .views import Login, Register, Forget_password, SendCode, UpdatePassword, VerifyEmail
+from .views import (
+    Register,
+    VerifyEmail,
+    Login,
+    ForgetPassword,
+    SendCode,
+    UpdatePassword,
+    LogoutView
+)
 
 app_name = "registratsiya"
 
 urlpatterns = [
-    path("login/", Login.as_view(), name="login"),
+    # ================= AUTH =================
     path("register/", Register.as_view(), name="register"),
-    path("forget_password/", Forget_password.as_view(), name="forget_password" ),
-    path("send_code/", SendCode.as_view(), name="sendcode"),
-    path("update_password/", UpdatePassword.as_view(), name="update_password" ),
-    path("verify/", VerifyEmail.as_view(), name="veritfy"),
+    path("verify/", VerifyEmail.as_view(), name="verify"),
+    path("login/", Login.as_view(), name="login"),
+    path("logout/", LogoutView.as_view(), name="logout"),
+
+    # ================= PASSWORD RESET =================
+    path("forget-password/", ForgetPassword.as_view(), name="forget_password"),
+    path("send-code/", SendCode.as_view(), name="send_code"),
+    path("update-password/", UpdatePassword.as_view(), name="update_password"),
 
 ]

@@ -8,24 +8,15 @@ from datetime import timedelta
 
 from apps.login.models import Registration
 from .models import PQaror
+from apps.login.mixins import JWTLoginRequiredMixin
 
-class QarorlarView(View):
+class QarorlarView(JWTLoginRequiredMixin,View):
     def get(self, request):
-        user_id = request.session.get('user_id')
-        if not user_id:
-            return JsonResponse({"message":"login not defound"})
-        if not Registration.objects.filter(id = user_id):
-            return redirect("registratsiya:register")
         return render(request=request, template_name="qarorlar/qarorlar.html")
     
-class PQarorlar(View):
+class PQarorlar(JWTLoginRequiredMixin, View):
     def get(self, request: HttpRequest) -> HttpResponse:
-        user_id = request.session.get('user_id')
-
-        if not user_id:
-            return JsonResponse({"message": "Login topilmadi"}, status=401)
-        if not Registration.objects.filter(id=user_id).exists():
-            return redirect("registratsiya:register")
+        
 
         q = request.GET.get("q")          # qidiruv
         new = request.GET.get("new")      # yangilari
@@ -56,23 +47,11 @@ class PQarorlar(View):
             "qarorlar/prezident_qarorlari/index.html",
             context
         )
-class QarorQoshish(View):
+class QarorQoshish(JWTLoginRequiredMixin, View):
     def get(self, request:HttpRequest)->HttpResponse:
-        user_id = request.session.get('user_id')
-        if not user_id:
-            return JsonResponse({"message":"login not defound"})
-        if not Registration.objects.filter(id = user_id):
-            return redirect("registratsiya:register")
         return render(request=request, template_name="qarorlar/prezident_qarorlari/qaror_qoshish.html")
     
-    def post(self, request:HttpRequest)->HttpResponse:
-
-        user_id = request.session.get('user_id')
-        if not user_id:
-            return JsonResponse({"message":"login not defound"})
-        if not Registration.objects.filter(id = user_id):
-            return redirect("registratsiya:register")
-        
+    def post(self, request:HttpRequest)->HttpResponse:        
         qaror_num = request.POST.get("qaror_num")
         title = request.POST.get("title")
         created_at = request.POST.get("created_at")
@@ -107,16 +86,8 @@ class QarorQoshish(View):
         new_qaror.save()
         return redirect("qarorlar:prezident_qarorlari")
 
-class QarorView(View):
-    def post(self,request:HttpRequest, pk)-> HttpResponse:
-        user_id = request.session.get("user_id")
-
-        if not user_id:
-            return JsonResponse({"message":"login not defound"})
-        
-        if not Registration.objects.filter(id = user_id):
-            return redirect("registratsiya:register")
-        
+class QarorView(JWTLoginRequiredMixin, View):
+    def post(self,request:HttpRequest, pk)-> HttpResponse:        
         qaror_delete = PQaror.objects.get(id = pk)
         if not qaror_delete:
             return JsonResponse({"error":"bunday qaror mavjud emas"})
@@ -126,14 +97,7 @@ class QarorView(View):
     
 
     def get(self, request:HttpRequest, pk)->HttpResponse:
-        user_id = request.session.get("user_id")
 
-        if not user_id:
-            return JsonResponse({"message":"login not defound"})
-        
-        if not Registration.objects.filter(id = user_id):
-            return redirect("registratsiya:register")
-        
         qaror = PQaror.objects.get(id = pk)
         if not qaror:
             return JsonResponse({"error":"bunday qaror mavjud emas"})
@@ -147,16 +111,9 @@ class QarorView(View):
             context=context
         )
     
-class QarorTahrirlash(View):
+class QarorTahrirlash(JWTLoginRequiredMixin, View):
     def get(self, request:HttpRequest, pk)->HttpResponse:
-        user_id = request.session.get("user_id")
 
-        if not user_id:
-            return JsonResponse({"message":"login not defound"})
-        
-        if not Registration.objects.filter(id = user_id):
-            return redirect("registratsiya:register")
-        
         qaror = PQaror.objects.get(id = pk)
         if not qaror:
             return JsonResponse({"error":"bunday qaror mavjud emas"})
@@ -172,13 +129,6 @@ class QarorTahrirlash(View):
     
 
     def post(self, request:HttpRequest, pk)->HttpResponse:
-        user_id = request.session.get("user_id")
-
-        if not user_id:
-            return JsonResponse({"message":"login not defound"})
-        
-        if not Registration.objects.filter(id = user_id):
-            return redirect("registratsiya:register")
         
         qaror_edit = PQaror.objects.get(id = pk)
         if not qaror_edit:
@@ -212,14 +162,8 @@ from .models_vazir import VQaror
 
 
 
-class VQarorlar(View):
+class VQarorlar(JWTLoginRequiredMixin, View):
     def get(self, request: HttpRequest) -> HttpResponse:
-        user_id = request.session.get('user_id')
-
-        if not user_id:
-            return JsonResponse({"message": "Login topilmadi"}, status=401)
-        if not Registration.objects.filter(id=user_id).exists():
-            return redirect("registratsiya:register")
 
         q = request.GET.get("q")         
         new = request.GET.get("new")     
@@ -252,22 +196,11 @@ class VQarorlar(View):
         )
 
 
-class VQarorQoshish(View):
+class VQarorQoshish(JWTLoginRequiredMixin, View):
     def get(self, request:HttpRequest)->HttpResponse:
-        user_id = request.session.get('user_id')
-        if not user_id:
-            return JsonResponse({"message":"login not defound"})
-        if not Registration.objects.filter(id = user_id):
-            return redirect("registratsiya:register")
         return render(request=request, template_name="qarorlar/vazirlik_qarorlari/qaror_qoshish.html")
     
     def post(self, request:HttpRequest)->HttpResponse:
-
-        user_id = request.session.get('user_id')
-        if not user_id:
-            return JsonResponse({"message":"login not defound"})
-        if not Registration.objects.filter(id = user_id):
-            return redirect("registratsiya:register")
         
         qaror_num = request.POST.get("qaror_num")
         title = request.POST.get("title")
@@ -305,15 +238,8 @@ class VQarorQoshish(View):
     
 
 
-class VQarorView(View):
+class VQarorView(JWTLoginRequiredMixin, View):
     def post(self,request:HttpRequest, pk)-> HttpResponse:
-        user_id = request.session.get("user_id")
-
-        if not user_id:
-            return JsonResponse({"message":"login not defound"})
-        
-        if not Registration.objects.filter(id = user_id):
-            return redirect("registratsiya:register")
         
         qaror_delete = VQaror.objects.get(id = pk)
         if not qaror_delete:
@@ -324,13 +250,6 @@ class VQarorView(View):
     
 
     def get(self, request:HttpRequest, pk)->HttpResponse:
-        user_id = request.session.get("user_id")
-
-        if not user_id:
-            return JsonResponse({"message":"login not defound"})
-        
-        if not Registration.objects.filter(id = user_id):
-            return redirect("registratsiya:register")
         
         qaror = VQaror.objects.get(id = pk)
         if not qaror:
@@ -346,15 +265,8 @@ class VQarorView(View):
         )
     
 
-class VQarorTahrirlash(View):
+class VQarorTahrirlash(JWTLoginRequiredMixin, View):
     def get(self, request:HttpRequest, pk)->HttpResponse:
-        user_id = request.session.get("user_id")
-
-        if not user_id:
-            return JsonResponse({"message":"login not defound"})
-        
-        if not Registration.objects.filter(id = user_id):
-            return redirect("registratsiya:register")
         
         qaror = VQaror.objects.get(id = pk)
         if not qaror:
@@ -371,13 +283,6 @@ class VQarorTahrirlash(View):
     
 
     def post(self, request:HttpRequest, pk)->HttpResponse:
-        user_id = request.session.get("user_id")
-
-        if not user_id:
-            return JsonResponse({"message":"login not defound"})
-        
-        if not Registration.objects.filter(id = user_id):
-            return redirect("registratsiya:register")
         
         qaror_edit = VQaror.objects.get(id = pk)
         if not qaror_edit:
@@ -407,14 +312,8 @@ class VQarorTahrirlash(View):
 
 from .models_hokim import HQaror
 
-class HQarorlar(View):
+class HQarorlar(JWTLoginRequiredMixin, View):
     def get(self, request: HttpRequest) -> HttpResponse:
-        user_id = request.session.get('user_id')
-
-        if not user_id:
-            return JsonResponse({"message": "Login topilmadi"}, status=401)
-        if not Registration.objects.filter(id=user_id).exists():
-            return redirect("registratsiya:register")
 
         q = request.GET.get("q")         
         new = request.GET.get("new")     
@@ -447,22 +346,12 @@ class HQarorlar(View):
         )
 
 
-class HQarorQoshish(View):
+class HQarorQoshish(JWTLoginRequiredMixin, View):
     def get(self, request:HttpRequest)->HttpResponse:
-        user_id = request.session.get('user_id')
-        if not user_id:
-            return JsonResponse({"message":"login not defound"})
-        if not Registration.objects.filter(id = user_id):
-            return redirect("registratsiya:register")
+
         return render(request=request, template_name="qarorlar/hokim_qarorlari/qaror_add.html")
     
     def post(self, request:HttpRequest)->HttpResponse:
-
-        user_id = request.session.get('user_id')
-        if not user_id:
-            return JsonResponse({"message":"login not defound"})
-        if not Registration.objects.filter(id = user_id):
-            return redirect("registratsiya:register")
         
         qaror_num = request.POST.get("qaror_num")
         title = request.POST.get("title")
@@ -500,15 +389,8 @@ class HQarorQoshish(View):
     
 
 
-class HQarorView(View):
+class HQarorView(JWTLoginRequiredMixin, View):
     def post(self,request:HttpRequest, pk)-> HttpResponse:
-        user_id = request.session.get("user_id")
-
-        if not user_id:
-            return JsonResponse({"message":"login not defound"})
-        
-        if not Registration.objects.filter(id = user_id):
-            return redirect("registratsiya:register")
         
         qaror_delete = HQaror.objects.get(id = pk)
         if not qaror_delete:
@@ -519,13 +401,6 @@ class HQarorView(View):
     
 
     def get(self, request:HttpRequest, pk)->HttpResponse:
-        user_id = request.session.get("user_id")
-
-        if not user_id:
-            return JsonResponse({"message":"login not defound"})
-        
-        if not Registration.objects.filter(id = user_id):
-            return redirect("registratsiya:register")
         
         qaror = HQaror.objects.get(id = pk)
         if not qaror:
@@ -541,16 +416,9 @@ class HQarorView(View):
         )
     
 
-class HQarorTahrirlash(View):
+class HQarorTahrirlash(JWTLoginRequiredMixin, View):
     def get(self, request:HttpRequest, pk)->HttpResponse:
-        user_id = request.session.get("user_id")
 
-        if not user_id:
-            return JsonResponse({"message":"login not defound"})
-        
-        if not Registration.objects.filter(id = user_id):
-            return redirect("registratsiya:register")
-        
         qaror = HQaror.objects.get(id = pk)
         if not qaror:
             return JsonResponse({"error":"bunday qaror mavjud emas"})
@@ -566,13 +434,6 @@ class HQarorTahrirlash(View):
     
 
     def post(self, request:HttpRequest, pk)->HttpResponse:
-        user_id = request.session.get("user_id")
-
-        if not user_id:
-            return JsonResponse({"message":"login not defound"})
-        
-        if not Registration.objects.filter(id = user_id):
-            return redirect("registratsiya:register")
         
         qaror_edit = HQaror.objects.get(id = pk)
         if not qaror_edit:
@@ -607,14 +468,8 @@ class HQarorTahrirlash(View):
 
 from .models_direktor import DQaror
 
-class DQarorlar(View):
+class DQarorlar(JWTLoginRequiredMixin, View):
     def get(self, request: HttpRequest) -> HttpResponse:
-        user_id = request.session.get('user_id')
-
-        if not user_id:
-            return JsonResponse({"message": "Login topilmadi"}, status=401)
-        if not Registration.objects.filter(id=user_id).exists():
-            return redirect("registratsiya:register")
 
         q = request.GET.get("q")         
         new = request.GET.get("new")     
@@ -647,13 +502,9 @@ class DQarorlar(View):
         )
 
 
-class DQarorQoshish(View):
+class DQarorQoshish(JWTLoginRequiredMixin, View):
     def get(self, request:HttpRequest)->HttpResponse:
-        user_id = request.session.get('user_id')
-        if not user_id:
-            return JsonResponse({"message":"login not defound"})
-        if not Registration.objects.filter(id = user_id):
-            return redirect("registratsiya:register")
+
         return render(request=request, template_name="qarorlar/direktor_qarorlari/qaror_qoshish.html")
     
     def post(self, request:HttpRequest)->HttpResponse:
@@ -700,15 +551,8 @@ class DQarorQoshish(View):
     
 
 
-class DQarorView(View):
+class DQarorView(JWTLoginRequiredMixin, View):
     def post(self,request:HttpRequest, pk)-> HttpResponse:
-        user_id = request.session.get("user_id")
-
-        if not user_id:
-            return JsonResponse({"message":"login not defound"})
-        
-        if not Registration.objects.filter(id = user_id):
-            return redirect("registratsiya:register")
         
         qaror_delete = DQaror.objects.get(id = pk)
         if not qaror_delete:
@@ -719,13 +563,6 @@ class DQarorView(View):
     
 
     def get(self, request:HttpRequest, pk)->HttpResponse:
-        user_id = request.session.get("user_id")
-
-        if not user_id:
-            return JsonResponse({"message":"login not defound"})
-        
-        if not Registration.objects.filter(id = user_id):
-            return redirect("registratsiya:register")
         
         qaror = DQaror.objects.get(id = pk)
         if not qaror:
@@ -741,15 +578,8 @@ class DQarorView(View):
         )
     
 
-class DQarorTahrirlash(View):
+class DQarorTahrirlash(JWTLoginRequiredMixin, View):
     def get(self, request:HttpRequest, pk)->HttpResponse:
-        user_id = request.session.get("user_id")
-
-        if not user_id:
-            return JsonResponse({"message":"login not defound"})
-        
-        if not Registration.objects.filter(id = user_id):
-            return redirect("registratsiya:register")
         
         qaror = DQaror.objects.get(id = pk)
         if not qaror:
@@ -766,13 +596,6 @@ class DQarorTahrirlash(View):
     
 
     def post(self, request:HttpRequest, pk)->HttpResponse:
-        user_id = request.session.get("user_id")
-
-        if not user_id:
-            return JsonResponse({"message":"login not defound"})
-        
-        if not Registration.objects.filter(id = user_id):
-            return redirect("registratsiya:register")
         
         qaror_edit = DQaror.objects.get(id = pk)
         if not qaror_edit:

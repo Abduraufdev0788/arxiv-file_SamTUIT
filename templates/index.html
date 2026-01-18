@@ -5,33 +5,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TATU Samarqand Filiali - Talaba Fayllari</title>
     <script src="https://cdn.tailwindcss.com"></script>
+
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         :root {
             --primary: #0052cc;
             --primary-dark: #0042a8;
             --secondary: #667eea;
             --neutral-900: #1a1a1a;
-            --neutral-800: #2d2d2d;
             --neutral-700: #404040;
             --neutral-100: #f5f5f5;
             --white: #ffffff;
-            --success: #10b981;
-            --accent: #f59e0b;
-        }
-
-        html {
-            scroll-behavior: smooth;
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-            background-color: var(--white);
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI';
+            background: var(--white);
             color: var(--neutral-900);
         }
 
@@ -42,22 +32,21 @@
             width: 100%;
             top: 0;
             z-index: 1000;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
         }
 
         .header-content {
             max-width: 1200px;
-            margin: 0 auto;
+            margin: auto;
+            padding: 1rem 2rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 1rem 2rem;
         }
 
         .logo {
             display: flex;
-            align-items: center;
-            gap: 0.75rem;
+            gap: .75rem;
             font-size: 1.5rem;
             font-weight: 700;
             color: var(--primary);
@@ -72,37 +61,21 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            color: white;
-            font-weight: 900;
-        }
-
-        .nav-buttons {
-            display: flex;
-            gap: 1rem;
-            align-items: center;
+            color: #fff;
         }
 
         .btn {
-            padding: 0.625rem 1.25rem;
+            padding: .6rem 1.25rem;
             border-radius: 6px;
             font-weight: 500;
-            font-size: 0.95rem;
-            border: none;
             cursor: pointer;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            display: inline-block;
+            border: none;
+            transition: .3s;
         }
 
         .btn-login {
-            background: transparent;
-            color: var(--neutral-900);
             border: 1px solid #e5e7eb;
-        }
-
-        .btn-login:hover {
-            background: var(--neutral-100);
-            border-color: #d1d5db;
+            background: transparent;
         }
 
         .btn-signup {
@@ -110,382 +83,178 @@
             color: white;
         }
 
-        .btn-signup:hover {
-            background: var(--primary-dark);
-        }
+        .btn-login:hover { background: var(--neutral-100); }
+        .btn-signup:hover { background: var(--primary-dark); }
 
-        /* Hero Section */
         .hero {
-            margin-top: 70px;
+            margin-top: 80px;
             padding: 4rem 2rem;
-            text-align: center;
-            background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
-            min-height: calc(100vh - 70px);
+            min-height: calc(100vh - 80px);
+            background: linear-gradient(135deg, #f3f4f6, #e5e7eb);
             display: flex;
-            flex-direction: column;
+            align-items: center;
             justify-content: center;
+            text-align: center;
         }
 
         .hero h1 {
-            font-size: 3.5rem;
+            font-size: 3rem;
             font-weight: 800;
-            color: var(--neutral-900);
             margin-bottom: 1rem;
-            line-height: 1.2;
-            letter-spacing: -0.02em;
         }
 
         .hero p {
-            font-size: 1.25rem;
-            color: var(--neutral-700);
             max-width: 600px;
-            margin: 0 auto 2rem;
-            line-height: 1.6;
+            margin: auto;
+            font-size: 1.2rem;
+            color: var(--neutral-700);
         }
 
         .hero-buttons {
+            margin-top: 2rem;
             display: flex;
             gap: 1rem;
             justify-content: center;
-            flex-wrap: wrap;
-            margin-bottom: 2rem;
         }
 
         .btn-primary {
-            padding: 0.875rem 2rem;
-            font-size: 1rem;
+            padding: .8rem 2rem;
             border-radius: 8px;
             font-weight: 600;
-            border: none;
             cursor: pointer;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            display: inline-block;
         }
 
-        .btn-primary-filled {
+        .btn-filled {
             background: var(--primary);
             color: white;
         }
 
-        .btn-primary-filled:hover {
-            background: var(--primary-dark);
-            transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(0, 82, 204, 0.2);
-        }
-
-        .btn-primary-outline {
-            background: white;
-            color: var(--primary);
+        .btn-outline {
             border: 2px solid var(--primary);
+            color: var(--primary);
+            background: white;
         }
 
-        .btn-primary-outline:hover {
-            background: var(--primary);
-            color: white;
-            transform: translateY(-2px);
-        }
-
-        /* Features Section */
         .features {
             padding: 5rem 2rem;
-            background: var(--white);
         }
 
-        .features-container {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .section-title {
-            font-size: 2.5rem;
-            font-weight: 800;
-            color: var(--neutral-900);
+        .features h2 {
             text-align: center;
+            font-size: 2.4rem;
+            font-weight: 800;
             margin-bottom: 3rem;
-            letter-spacing: -0.02em;
         }
 
         .features-grid {
+            max-width: 1200px;
+            margin: auto;
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 2rem;
         }
 
         .feature-card {
             padding: 2rem;
-            background: linear-gradient(135deg, #f9fafb 0%, #f3f4f6 100%);
+            background: #f9fafb;
             border-radius: 12px;
             border: 1px solid #e5e7eb;
-            transition: all 0.3s ease;
+            transition: .3s;
         }
 
         .feature-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
-            border-color: var(--primary);
+            transform: translateY(-6px);
+            box-shadow: 0 12px 30px rgba(0,0,0,.1);
         }
 
-        .feature-icon {
-            width: 48px;
-            height: 48px;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
-        }
-
-        .feature-card h3 {
-            font-size: 1.25rem;
-            font-weight: 700;
-            margin-bottom: 0.75rem;
-            color: var(--neutral-900);
-        }
-
-        .feature-card p {
-            color: var(--neutral-700);
-            line-height: 1.6;
-            font-size: 0.95rem;
-        }
-
-        /* CTA Section */
-        .cta {
-            padding: 4rem 2rem;
-            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
-            text-align: center;
-            color: white;
-        }
-
-        .cta h2 {
-            font-size: 2.5rem;
-            font-weight: 800;
-            margin-bottom: 1rem;
-            letter-spacing: -0.02em;
-        }
-
-        .cta p {
-            font-size: 1.125rem;
-            max-width: 500px;
-            margin: 0 auto 2rem;
-            opacity: 0.95;
-            line-height: 1.6;
-        }
-
-        .btn-cta {
-            padding: 0.875rem 2rem;
-            background: white;
-            color: var(--primary);
-            font-weight: 600;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 1rem;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            display: inline-block;
-        }
-
-        .btn-cta:hover {
-            transform: scale(1.05);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-        }
-
-        /* Footer */
         footer {
-            background: var(--neutral-900);
+            background: #1a1a1a;
             color: #d1d5db;
             padding: 3rem 2rem;
         }
 
-        .footer-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-            margin-bottom: 2rem;
-        }
-
-        .footer-column h4 {
-            color: white;
-            margin-bottom: 1rem;
-            font-weight: 600;
-        }
-
-        .footer-column ul {
-            list-style: none;
-        }
-
-        .footer-column ul li {
-            margin-bottom: 0.75rem;
-        }
-
-        .footer-column a {
-            color: #d1d5db;
-            text-decoration: none;
-            transition: color 0.3s ease;
-            font-size: 0.95rem;
-        }
-
-        .footer-column a:hover {
-            color: white;
-        }
-
-        .footer-bottom {
-            border-top: 1px solid #404040;
-            padding-top: 2rem;
+        footer p {
             text-align: center;
+            margin-top: 2rem;
             color: #9ca3af;
-        }
-
-        @media (max-width: 768px) {
-            .header-content {
-                padding: 1rem;
-            }
-
-            .hero h1 {
-                font-size: 2.25rem;
-            }
-
-            .hero p {
-                font-size: 1.125rem;
-            }
-
-            .section-title {
-                font-size: 2rem;
-            }
-
-            .cta h2 {
-                font-size: 2rem;
-            }
         }
     </style>
 </head>
+
 <body>
-    <!-- Header -->
-    <header>
-        <div class="header-content">
-            <a href="#" class="logo">
-                <div class="logo-icon">📁</div>
-                <span>TATU</span>
-            </a>
-            <nav class="nav-buttons">
-                <button class="btn btn-login" onclick="window.location.href='{% url 'registratsiya:login' %}'">Kirish</button>
-                <button class="btn btn-signup" onclick="window.location.href='{% url 'registratsiya:register' %}'">Ro'yxatdan o'tish</button>
-            </nav>
+
+<!-- ================= HEADER ================= -->
+<header>
+    <div class="header-content">
+        <a href="/" class="logo">
+            <div class="logo-icon">📁</div>
+            <span>TATU</span>
+        </a>
+
+        <nav id="authButtons" class="flex gap-3"></nav>
+    </div>
+</header>
+
+<!-- ================= HERO ================= -->
+<section class="hero">
+    <div>
+        <h1>Talaba Fayllari Tizimi</h1>
+        <p>TATU Samarqand filiali talabalarining hujjatlarini xavfsiz va qulay saqlash platformasi</p>
+
+        <div class="hero-buttons">
+            <button class="btn-primary btn-filled" onclick="goStart()">Boshlash</button>
+            <button class="btn-primary btn-outline">Batafsil</button>
         </div>
-    </header>
+    </div>
+</section>
 
-    <!-- Hero Section -->
-    <section class="hero">
-        <div style="max-width: 800px; margin: 0 auto;">
-            <h1>Talaba Fayllari Tizimi</h1>
-            <p>TATU Samarqand Filiali talabalarining barcha hujjatlarini xavfsiz va tartibli saqlash uchun zamonaviy platforma</p>
-            <div class="hero-buttons">
-                <button class="btn-primary btn-primary-filled" onclick="window.location.href='{% url 'registratsiya:register' %}'">Boshlash</button>
-                <button class="btn-primary btn-primary-outline">Batafsil ma'lumot</button>
-            </div>
-        </div>
-    </section>
+<!-- ================= FEATURES ================= -->
+<section class="features">
+    <h2>Asosiy Xususiyatlar</h2>
+    <div class="features-grid">
+        <div class="feature-card">🔒 <b>Xavfsizlik</b><br>Ma'lumotlar shifrlanadi</div>
+        <div class="feature-card">⚡ <b>Tezkorlik</b><br>Bulut asosida</div>
+        <div class="feature-card">👥 <b>Hamkorlik</b><br>Oson ulashish</div>
+        <div class="feature-card">📊 <b>Nazorat</b><br>Versiya tarixi</div>
+    </div>
+</section>
 
-    <!-- Features Section -->
-    <section class="features">
-        <div class="features-container">
-            <h2 class="section-title">Asosiy Xususiyatlar</h2>
-            <div class="features-grid">
-                <div class="feature-card">
-                    <div class="feature-icon">🔒</div>
-                    <h3>Xavfsizlik</h3>
-                    <p>Barcha fayllaring shifrlangan va xavfsiz saqlansa, sizning shaxsiy ma'lumotlaringiz har doim muhofaza qilinadi.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">⚡</div>
-                    <h3>Tez Ishlash</h3>
-                    <p>Bulutdan foydalanib, istalgan joydan istalgan vaqtda fayllarga tezda kirish imkoniyati.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">👥</div>
-                    <h3>Hamkorlik</h3>
-                    <p>O'qituvchilar va boshqa talabalar bilan fayllani osonlikcha ulashish va hamkorlikda ishlash.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">📊</div>
-                    <h3>Tarjimai Hol</h3>
-                    <p>Barcha fayl versiyaları va o'zgarishlari qo'lqo'lga saqlanib, kerak bo'lganda qayta tiklash mumkin.</p>
-                </div>
-            </div>
-        </div>
-    </section>
+<!-- ================= FOOTER ================= -->
+<footer>
+    <p>&copy; 2025 TATU Samarqand Filiali. Barcha huquqlar himoyalangan.</p>
+</footer>
 
-    <!-- CTA Section -->
-    <section class="cta">
-        <h2>Hoziroq Boshlang</h2>
-        <p>Bepul hisob ochib, talaba fayllariashini saqlashni boshlang</p>
-        <button class="btn-cta" onclick="window.location.href='{% url 'registratsiya:register' %}'">Ro'yxatdan O'tish</button>
-    </section>
+<!-- ================= JWT LOGIC ================= -->
+<script>
+function getToken() {
+    return localStorage.getItem("access_token");
+}
 
-    <!-- Footer -->
-    <footer>
-        <div class="footer-content">
-            <div class="footer-column">
-                <h4>Mahsulot</h4>
-                <ul>
-                    <li><a href="#features">Xususiyatlar</a></li>
-                    <li><a href="#pricing">Narxlar</a></li>
-                    <li><a href="#security">Xavfsizlik</a></li>
-                </ul>
-            </div>
-            <div class="footer-column">
-                <h4>Kompaniya</h4>
-                <ul>
-                    <li><a href="#">Biz Haqimizda</a></li>
-                    <li><a href="#">Blog</a></li>
-                    <li><a href="#">Karyera</a></li>
-                </ul>
-            </div>
-            <div class="footer-column">
-                <h4>Qo'llab-Quvvatlash</h4>
-                <ul>
-                    <li><a href="#">Yordam Markazi</a></li>
-                    <li><a href="#">Murojaat Qiling</a></li>
-                    <li><a href="#">Tez-tez so'raladigan savollar</a></li>
-                </ul>
-            </div>
-            <div class="footer-column">
-                <h4>Huquqiy</h4>
-                <ul>
-                    <li><a href="#">Shartlar</a></li>
-                    <li><a href="#">Maxfiylik Siyosati</a></li>
-                    <li><a href="#">Cookie Siyosati</a></li>
-                </ul>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            <p>&copy; 2025 TATU Samarqand Filiali. Barcha huquqlar himoyalangan.</p>
-        </div>
-    </footer>
+function logout() {
+    localStorage.removeItem("access_token");
+    localStorage.removeItem("refresh_token");
+    location.reload();
+}
 
-    <script>
-        // Smooth button functionality
-        document.querySelectorAll('button[class*="btn"]').forEach(button => {
-            button.addEventListener('click', function() {
-                console.log('Button clicked:', this.textContent);
-            });
-        });
+function goStart() {
+    if (getToken()) {
+        window.location.href = "/dashboard/";
+    } else {
+        window.location.href = "{% url 'registratsiya:register' %}";
+    }
+}
 
-        // Responsive menu toggle
-        window.addEventListener('scroll', function() {
-            const header = document.querySelector('header');
-            if (window.scrollY > 10) {
-                header.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.1)';
-            } else {
-                header.style.boxShadow = '0 1px 3px rgba(0, 0, 0, 0.08)';
-            }
-        });
-    </script>
+function renderHeader() {
+    const el = document.getElementById("authButtons");
+     el.innerHTML = `
+        <button class="btn btn-login" onclick="location.href='{% url 'registratsiya:login' %}'">Kirish</button>
+        <button class="btn btn-signup" onclick="location.href='{% url 'registratsiya:register' %}'">Ro‘yxatdan o‘tish</button>
+    `;
+    
+}
+
+renderHeader();
+</script>
+
 </body>
 </html>

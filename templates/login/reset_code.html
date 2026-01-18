@@ -90,55 +90,98 @@
             text-decoration: none;
             color: #2d5be5;
         }
-    </style>
 
+        .error {
+            margin-top: 12px;
+            font-size: 14px;
+            color: red;
+        }
+    </style>
 </head>
 <body>
 
-    <div class="verify-container">
-        <h2>Tasdiqlash Kodingiz</h2>
-        <p>Iltimos emailga yuborilgan 6 xonali kodni kiriting.</p>
+<div class="verify-container">
+    <h2>Tasdiqlash Kodingiz</h2>
+    <p>Iltimos emailga yuborilgan 6 xonali kodni kiriting.</p>
 
-        <form action="{% url 'registratsiya:sendcode' %}" method="POST">
-            {% csrf_token %}
+    <form id="codeForm">
+        {% csrf_token %}
 
-            <div class="otp-inputs">
-                <input type="text" maxlength="1" name="d1" required>
-                <input type="text" maxlength="1" name="d2" required>
-                <input type="text" maxlength="1" name="d3" required>
-                <input type="text" maxlength="1" name="d4" required>
-                <input type="text" maxlength="1" name="d5" required>
-                <input type="text" maxlength="1" name="d6" required>
-            </div>
-
-            <button type="submit">Tasdiqlash</button>
-
-        </form>
-
-        <div class="resend">
-            Kod kelmadimi? <a href="/resend/">Qayta yuborish</a>
+        <div class="otp-inputs">
+            <input type="text" maxlength="1" id="d1" required>
+            <input type="text" maxlength="1" id="d2" required>
+            <input type="text" maxlength="1" id="d3" required>
+            <input type="text" maxlength="1" id="d4" required>
+            <input type="text" maxlength="1" id="d5" required>
+            <input type="text" maxlength="1" id="d6" required>
         </div>
+
+        <div class="error" id="errorBox"></div>
+
+        <button type="submit">Tasdiqlash</button>
+    </form>
+
+    <div class="resend">
+        Kod kelmadimi?
+        <a href="{% url 'registratsiya:forget_password' %}">Qayta yuborish</a>
     </div>
+</div>
 
+<script>
+/* OTP avtomatik o‘tish */
+const inputs = document.querySelectorAll(".otp-inputs input");
+inputs.forEach((input, index) => {
+    input.addEventListener("input", () => {
+        if (input.value.length === 1 && index < inputs.length - 1) {
+            inputs[index + 1].focus();
+        }
+    });
 
-    <script>
-        // OTP avtomatik o'tish
-        const inputs = document.querySelectorAll(".otp-inputs input");
+    input.addEventListener("keydown", (e) => {
+        if (e.key === "Backspace" && index > 0 && input.value === "") {
+            inputs[index - 1].focus();
+        }
+    });
+});
 
-        inputs.forEach((input, index) => {
-            input.addEventListener("input", () => {
-                if (input.value.length === 1 && index < inputs.length - 1) {
-                    inputs[index + 1].focus();
-                }
-            });
+/* FETCH orqali yuborish */
+const form = document.getElementById("codeForm");
+const errorBox = document.getElementById("errorBox");
 
-            input.addEventListener("keydown", (e) => {
-                if (e.key === "Backspace" && index > 0 && input.value === "") {
-                    inputs[index - 1].focus();
-                }
-            });
+form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    errorBox.textContent = "";
+
+    const code = [
+        d1.value, d2.value, d3.value,
+        d4.value, d5.value, d6.value
+    ].join("");
+
+    try {
+        const response = await fetch("{% url 'registratsiya:send_code' %}", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "X-CSRFToken": document.querySelector('[name=csrfmiddlewaretoken]').value
+            },
+            body: JSON.stringify({ code })
         });
-    </script>
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            errorBox.textContent = data.message || "Kod noto‘g‘ri";
+            return;
+        }
+
+        // ✅ KOD TO‘G‘RI → PAROL YANGILASH SAHIFASI
+        window.location.href = "{% url 'registratsiya:update_password' %}";
+
+    } catch (err) {
+        errorBox.textContent = "Server bilan aloqa yo‘q";
+    }
+});
+</script>
 
 </body>
 </html>

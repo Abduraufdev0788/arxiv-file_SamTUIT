@@ -44,6 +44,8 @@ class BmiTalabaForm(forms.ModelForm):
             'total_ball': forms.NumberInput(attrs={
                 'class': 'form-control',
                 'step': '0.01',
+                'min':'0',
+                'max':'100',
                 'placeholder': 'Masalan: 86.5'
             }),
             'files': forms.ClearableFileInput(attrs={
