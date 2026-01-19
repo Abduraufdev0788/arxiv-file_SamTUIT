@@ -1,4 +1,3 @@
-from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
 from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
@@ -7,7 +6,7 @@ from .models import Teacher
 from .forms import TeacherForm
 from apps.login.mixins import JWTLoginRequiredMixin
 
-class TeacherListView(JWTLoginRequiredMixin, LoginRequiredMixin, ListView):
+class TeacherListView(JWTLoginRequiredMixin, ListView):
     model = Teacher
     template_name = 'oqituvchilar/teacher_list.html'
     context_object_name = 'teachers'
@@ -48,8 +47,6 @@ class TeacherListView(JWTLoginRequiredMixin, LoginRequiredMixin, ListView):
 
 class TeacherCreateView(
     JWTLoginRequiredMixin,
-    LoginRequiredMixin,
-    PermissionRequiredMixin,
     SuccessMessageMixin,
     CreateView
 ):
@@ -66,8 +63,6 @@ class TeacherCreateView(
 
 class TeacherUpdateView(
     JWTLoginRequiredMixin,
-    LoginRequiredMixin,
-    PermissionRequiredMixin,
     SuccessMessageMixin,
     UpdateView
 ):
@@ -81,8 +76,6 @@ class TeacherUpdateView(
 
 class TeacherDeleteView(
     JWTLoginRequiredMixin,
-    LoginRequiredMixin,
-    PermissionRequiredMixin,
     DeleteView
 ):
     model = Teacher
