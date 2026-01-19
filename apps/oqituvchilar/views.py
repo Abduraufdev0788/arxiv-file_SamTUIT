@@ -5,8 +5,9 @@ from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 
 from .models import Teacher
 from .forms import TeacherForm
+from apps.login.mixins import JWTLoginRequiredMixin
 
-class TeacherListView(LoginRequiredMixin, ListView):
+class TeacherListView(JWTLoginRequiredMixin, LoginRequiredMixin, ListView):
     model = Teacher
     template_name = 'oqituvchilar/teacher_list.html'
     context_object_name = 'teachers'
@@ -46,6 +47,7 @@ class TeacherListView(LoginRequiredMixin, ListView):
         return context
 
 class TeacherCreateView(
+    JWTLoginRequiredMixin,
     LoginRequiredMixin,
     PermissionRequiredMixin,
     SuccessMessageMixin,
@@ -63,6 +65,7 @@ class TeacherCreateView(
 
 
 class TeacherUpdateView(
+    JWTLoginRequiredMixin,
     LoginRequiredMixin,
     PermissionRequiredMixin,
     SuccessMessageMixin,
@@ -77,6 +80,7 @@ class TeacherUpdateView(
 
 
 class TeacherDeleteView(
+    JWTLoginRequiredMixin,
     LoginRequiredMixin,
     PermissionRequiredMixin,
     DeleteView
