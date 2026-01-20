@@ -27,6 +27,7 @@ urlpatterns = [
     path("talabalar/", include("apps.talabalar.urls")),
     path("bmi/", include("apps.bmi.urls")),
     path("xodimlar/", include("apps.oqituvchilar.urls")),
+    path("professorlar/", include("apps.professorlar.urls")),
 
 ]
 

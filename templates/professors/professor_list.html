@@ -2,7 +2,7 @@
 <html lang="uz">
 <head>
     <meta charset="UTF-8">
-    <title>SamTUIT | O‘qituvchilar</title>
+    <title>SamTUIT | Professorlar</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- Tailwind -->
@@ -34,7 +34,7 @@
             <div>
                 <h1 class="text-xl font-black text-[#0f4c81] leading-none">SamTUIT</h1>
                 <p class="text-[10px] text-slate-500 font-bold uppercase tracking-widest">
-                    O‘qituvchilar bo‘limi
+                    Professorlar bo‘limi
                 </p>
             </div>
         </div>
@@ -43,7 +43,8 @@
             <a href="{% url 'index:home_page' %}" class="font-semibold text-slate-600 hover:text-[#0f4c81]">Asosiy</a>
             <a href="{% url 'qarorlar:qarorlar_bosh' %}" class="font-semibold text-slate-600 hover:text-[#0f4c81]">Qarorlar</a>
             <a href="#" class="font-semibold text-slate-600 hover:text-[#0f4c81]">Talabalar</a>
-            <a href="#" class="font-semibold text-[#0f4c81] border-b-2 border-[#0f4c81] pb-1">O‘qituvchilar</a>
+            <a href="#" class="font-semibold text-slate-600 hover:text-[#0f4c81]">O'qituvchilar</a>
+            <a href="#" class="font-semibold text-[#0f4c81] border-b-2 border-[#0f4c81] pb-1">Professorlar</a>
             <a href="#" class="font-semibold text-slate-600 hover:text-[#0f4c81]">Bog‘lanish</a>
         </div>
     </div>
@@ -55,11 +56,11 @@
         <h2 class="text-5xl font-black mb-6 leading-tight">
             Filialdagi faol <br>
             <span class="bg-gradient-to-r from-emerald-300 to-teal-300 bg-clip-text text-transparent">
-                o‘qituvchilar ro‘yxati
+                Professorlar ro‘yxati
             </span>
         </h2>
         <p class="text-blue-100/80 max-w-2xl mx-auto font-medium">
-            Professor-o‘qituvchilar va ularning xizmat faoliyati
+            Professorlarning xizmat faoliyati
         </p>
     </div>
 </section>
@@ -89,12 +90,12 @@
         </select>
 
         <!-- LAVOZIM (🔥 SHU YERDA OPTION BOR) -->
-        <select name="ishlagan_lavozimi"
+        <select name="ishlagan_fakultet"
                 class="border rounded-xl px-4 py-3">
-            <option value="">Lavozim</option>
-            {% for key, value in lavozimlar %}
+            <option value="">Fakultet</option>
+            {% for key, value in fakultetlar %}
                 <option value="{{ key }}"
-                    {% if request.GET.ishlagan_lavozimi == key %}selected{% endif %}>
+                    {% if request.GET.ishlagan_fakultet == key %}selected{% endif %}>
                     {{ value }}
                 </option>
             {% endfor %}
@@ -120,17 +121,17 @@
 <div class="flex justify-between items-center mb-6 mt-10" style = "justify-content:space-around;">
 
     <h2 class="text-2xl font-black text-slate-800">
-        O‘qituvchilar ro‘yxati
+        Professorlar ro‘yxati
     </h2>
 
-    <a href="{% url 'teachers:teacher_create' %}"
+    <a href="{% url 'professors:professor_create' %}"
        class="inline-flex items-center gap-2
               px-6 py-3 rounded-xl
               bg-gradient-to-r from-emerald-500 to-teal-500
               text-white font-black shadow-lg
               hover:scale-105 transition">
 
-        ➕ O‘qituvchi qo‘shish
+        ➕ Professor qo‘shish
     </a>
 
 </div>
@@ -146,7 +147,7 @@
                     <th class="px-4 py-3">Ism</th>
                     <th class="px-4 py-3">Familiya</th>
                     <th class="px-4 py-3">Bo‘lim</th>
-                    <th class="px-4 py-3">Lavozim</th>
+                    <th class="px-4 py-3">Fakultet</th>
                     <th class="px-4 py-3">Qabul sana</th>
                     <th class="px-4 py-3">Chiqish sana</th>
                     <th class="px-4 py-3">Shartnoma №</th>
@@ -159,52 +160,52 @@
             </thead>
 
             <tbody class="divide-y">
-                {% for teacher in teachers %}
+                {% for professor in professors %}
                 <tr class="hover:bg-blue-50">
                     <td class="px-4 py-2 text-center font-bold">{{ forloop.counter }}</td>
 
-                    <td class="px-4 py-2">{{ teacher.first_name }}</td>
-                    <td class="px-4 py-2">{{ teacher.last_name }}</td>
+                    <td class="px-4 py-2">{{ professor.first_name }}</td>
+                    <td class="px-4 py-2">{{ professor.last_name }}</td>
 
                     <td class="px-4 py-2 text-center">
-                        {{ teacher.ishlagan_bolimi }}
+                        {{ professor.ishlagan_bolimi }}
                     </td>
 
                     <td class="px-4 py-2 text-center font-bold text-blue-700">
-                        {{ teacher.ishlagan_lavozimi }}
+                        {{ professor.ishlagan_fakultet }}
                     </td>
 
                     <td class="px-4 py-2 text-center">
-                        {{ teacher.qabul_sana|date:"d.m.Y" }}
+                        {{ professor.qabul_sana|date:"d.m.Y" }}
                     </td>
 
                     <td class="px-4 py-2 text-center">
-                        {% if teacher.chiqish_sana %}
-                            {{ teacher.chiqish_sana|date:"d.m.Y" }}
+                        {% if professor.chiqish_sana %}
+                            {{ professor.chiqish_sana|date:"d.m.Y" }}
                         {% else %}
                             —
                         {% endif %}
                     </td>
 
                     <td class="px-4 py-2 text-center font-mono">
-                        {{ teacher.shartnoma_raqami }}
+                        {{ professor.shartnoma_raqami }}
                     </td>
 
                     <td class="px-4 py-2 text-center">
-                        {% if teacher.shartnoma_bekor_sana %}
-                            {{ teacher.shartnoma_bekor_sana|date:"d.m.Y" }}
+                        {% if professor.shartnoma_bekor_sana %}
+                            {{ professor.shartnoma_bekor_sana|date:"d.m.Y" }}
                         {% else %}
                             —
                         {% endif %}
                     </td>
 
                     <td class="px-4 py-2 text-center">
-                        {{ teacher.pasport }}
+                        {{ professor.pasport }}
                     </td>
 
                     <td class="px-4 py-2 text-center">
-                        {% if teacher.buyruq %}
-                            <a href="{{ teacher.buyruq.url }}"
+                        {% if professor.buyruq %}
+                            <a href="{{ professor.buyruq.url }}"
                             class="text-blue-600 underline font-bold"
                             target="_blank">
                                 Yuklab olish
@@ -215,7 +216,7 @@
                     </td>
 
                     <td class="px-4 py-2 text-center">
-                        {% if teacher.is_active %}
+                        {% if professor.is_active %}
                             <span class="px-3 py-1 rounded-full bg-emerald-100 text-emerald-700 text-xs font-black">
                                 Faol
                             </span>
@@ -228,13 +229,13 @@
 
                     <td class="px-4 py-2 text-center">
                         <div class="flex justify-center gap-2">
-                            <a href="{% url 'teachers:teacher_update' teacher.id %}"
+                            <a href="{% url 'professors:professor_update' professor.id %}"
                             class="px-3 py-1 bg-blue-100 text-blue-700 rounded">
                                 ✏️
                             </a>
 
                             <form method="post"
-                                action="{% url 'teachers:teacher_delete' teacher.id %}"
+                                action="{% url 'professors:professor_delete' professor.id %}"
                                 onsubmit="return confirm('O‘chirasanmi?')">
                                 {% csrf_token %}
                                 <button class="px-3 py-1 bg-red-100 text-red-700 rounded">
@@ -247,7 +248,7 @@
                 {% empty %}
                 <tr>
                     <td colspan="15" class="text-center py-10 font-bold text-slate-500">
-                        O‘qituvchi topilmadi
+                        Professorlar topilmadi
                     </td>
                 </tr>
                 {% endfor %}

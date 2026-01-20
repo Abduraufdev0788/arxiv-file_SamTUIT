@@ -3,7 +3,7 @@
 <html lang="uz">
 <head>
     <meta charset="UTF-8">
-    <title>SamTUIT | O‘qituvchi qo‘shish</title>
+    <title>SamTUIT | Professorlar qo‘shish</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- Tailwind -->
@@ -73,16 +73,41 @@
         <h2 class="text-5xl font-black mb-4">
             <!-- ================= TITLE ================= -->
             <h1 class="text-5xl font-black text-slate-800 mb-8 text-center">
-                {% if object %}
-                    O‘qituvchini tahrirlash
-                {% else %}
-                    Yangi o‘qituvchi qo‘shish
-                {% endif %}
+                <div class="flex items-center justify-center text-center gap-3 mb-6">
+                    {% if object %}
+                        <div class="flex items-center justify-center w-11 h-11 rounded-xl bg-amber-100 text-amber-600">
+                            <!-- Edit Icon -->
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none"
+                                viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M16.862 3.487a2.1 2.1 0 113.651 2.053L7.5 18.553 3 21l2.447-4.5L16.862 3.487z"/>
+                            </svg>
+                        </div>
+
+                        <h1 class="text-5xl font-bold text-slate-800 text-center">
+                            Professor ma’lumotlarini tahrirlash
+                        </h1>
+                    {% else %}
+                        <div class="flex items-center justify-center w-11 h-11 rounded-xl bg-emerald-100 text-emerald-600">
+                            <!-- Add Icon -->
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none"
+                                viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M12 4v16m8-8H4"/>
+                            </svg>
+                        </div>
+
+                        <h1 class="text-5xl font-bold text-slate-800 text-center">
+                            Yangi professor qo‘shish
+                        </h1>
+                    {% endif %}
+                </div>
+
             </h1>
 
         </h2>
         <p class="text-blue-100/80">
-            O‘qituvchi haqidagi rasmiy ma’lumotlarni kiriting
+            Professor haqidagi rasmiy ma’lumotlarni kiriting
         </p>
     </div>
 </section>
@@ -137,8 +162,8 @@
                 {{ form.ishlagan_bolimi }}
             </div>
             <div>
-                <label class="block text-sm font-bold mb-1">Lavozim</label>
-                {{ form.ishlagan_lavozimi }}
+                <label class="block text-sm font-bold mb-1">Fakultet</label>
+                {{ form.ishlagan_fakultet }}
             </div>
         </div>
 
@@ -159,7 +184,7 @@
         <div class="flex items-center gap-3 pt-2">
             {{ form.is_active }}
             <label class="text-sm font-bold">
-                O‘qituvchi faol (aktiv)
+                Professor faol (aktiv)
             </label>
         </div>
 
@@ -172,7 +197,7 @@
                 💾 Saqlash
             </button>
 
-            <a href="{% url 'teachers:teacher_list' %}"
+            <a href="{% url 'professors:professor_list' %}"
                class="px-8 py-4 rounded-xl font-black text-slate-700
                       bg-slate-200 hover:bg-slate-300 transition text-center">
                 Bekor qilish

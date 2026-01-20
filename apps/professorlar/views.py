@@ -6,7 +6,7 @@ from .models import Professor
 from .forms import ProfessorForm
 from apps.login.mixins import JWTLoginRequiredMixin
 
-class TeacherListView(JWTLoginRequiredMixin, ListView):
+class ProfessorListView(JWTLoginRequiredMixin, ListView):
     model = Professor
     template_name = 'professors/professor_list.html'
     context_object_name = 'professors'
@@ -42,10 +42,10 @@ class TeacherListView(JWTLoginRequiredMixin, ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["kafedralar"] = Professor.choises_kafedra
-        context["Fakultetlar"] = Professor.choises_fakutet
+        context["fakultetlar"] = Professor.choises_fakutet
         return context
 
-class TeacherCreateView(
+class ProfessorCreateView(
     JWTLoginRequiredMixin,
     SuccessMessageMixin,
     CreateView
@@ -61,7 +61,7 @@ class TeacherCreateView(
         return super().form_valid(form)
 
 
-class TeacherUpdateView(
+class ProfessorUpdateView(
     JWTLoginRequiredMixin,
     SuccessMessageMixin,
     UpdateView
@@ -74,7 +74,7 @@ class TeacherUpdateView(
     success_message = "Professor ma’lumotlari yangilandi ✏️"
 
 
-class TeacherDeleteView(
+class ProfessorDeleteView(
     JWTLoginRequiredMixin,
     DeleteView
 ):
