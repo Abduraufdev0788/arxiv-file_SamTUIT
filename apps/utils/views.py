@@ -16,4 +16,11 @@ class HomeView(View):
         return render(request, "home/home.html", {
             "user": request.user_jwt
         })
+    
+class ContactView(View):
+    def get(self, request:HttpRequest)->HttpResponse:
+        return render(request=request, template_name="home/contacts.html")
+    
+    def post(self, request:HttpRequest)->HttpResponse:
+        pass
 
