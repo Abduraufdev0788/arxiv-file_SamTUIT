@@ -121,17 +121,20 @@ form.addEventListener("submit", async (e) => {
             return;
         }
 
-        // ✅ JWT TOKENLARNI SAQLASH
-        localStorage.setItem("access_token", data.access);
-        localStorage.setItem("refresh_token", data.refresh);
-
-        // ✅ DASHBOARDGA O‘TISH
-        window.location.href = "{% url 'index:home_page' %}";
+        // 🔥 ROLE BO‘YICHA YO‘NALTIRISH
+        if (data.role === "Admin") {
+            window.location.href = "{% url 'index:home_page' %}";
+        } else if (data.role === "Custom") {
+            window.location.href = "{% url 'user:user_home' %}";
+        } else {
+            errorBox.textContent = "Noma’lum role";
+        }
 
     } catch (error) {
         errorBox.textContent = "Server bilan aloqa yo‘q";
     }
 });
+
 </script>
 
 

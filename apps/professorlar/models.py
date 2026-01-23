@@ -47,4 +47,4 @@ class Professor(models.Model):
     is_active = models.BooleanField(null=True, default=True)
 
     def __str__(self):
-        return f"{self.first_name} {self.last_name} — {self.ishlagan_bolimi} ({self.ishlagan_lavozimi})"
+        return f"{self.first_name} {self.last_name} — {self.ishlagan_bolimi} ({self.ishlagan_fakultet})"

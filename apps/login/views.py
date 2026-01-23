@@ -123,7 +123,10 @@ class Login(View):
 
         tokens = generate_tokens(user)
 
-        response = JsonResponse({"message": "Login successful"})
+        response = JsonResponse({
+            "message": "Login successful",
+            "role": user.role   # 🔥 MUHIM
+        })
 
         response.set_cookie(
             "access_token",
@@ -133,6 +136,7 @@ class Login(View):
         )
 
         return response
+
 
 
 

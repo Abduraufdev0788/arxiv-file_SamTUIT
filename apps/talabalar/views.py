@@ -5,13 +5,13 @@ from django.utils import timezone
 
 from apps.login.models import Registration
 from .models import Talabalar
-from apps.login.mixins import JWTLoginRequiredMixin
+from apps.login.mixins import JWTLoginRequiredMixin, AdminOnlyMixin
 
 from django.core.paginator import Paginator
 
 
 
-class TalabalarView(JWTLoginRequiredMixin, View):
+class TalabalarView(JWTLoginRequiredMixin, AdminOnlyMixin, View):
     def get(self, request:HttpRequest) -> HttpResponse:
 
         talabalar = Talabalar.objects.all().order_by("-id")
@@ -46,7 +46,7 @@ class TalabalarView(JWTLoginRequiredMixin, View):
 
 
 
-class AddTalaba(JWTLoginRequiredMixin, View):
+class AddTalaba(JWTLoginRequiredMixin, AdminOnlyMixin, View):
 
     def get(self, request: HttpRequest) -> HttpResponse:
         return render(request, "ftot/talaba_qoshish.html")
@@ -125,7 +125,7 @@ class AddTalaba(JWTLoginRequiredMixin, View):
 
         return redirect("talabalar:talabalar")
     
-class DeleteTalaba(JWTLoginRequiredMixin, View):
+class DeleteTalaba(JWTLoginRequiredMixin, AdminOnlyMixin, View):
     def post(self, request: HttpRequest, talaba_id: int)-> HttpResponse:
 
         talaba = Talabalar.objects.filter(id = talaba_id).first()
@@ -136,7 +136,7 @@ class DeleteTalaba(JWTLoginRequiredMixin, View):
         return redirect("talabalar:talabalar")
     
 
-class TalabaUpdateView(JWTLoginRequiredMixin, View):
+class TalabaUpdateView(JWTLoginRequiredMixin, AdminOnlyMixin, View):
 
     def get(self, request: HttpRequest, talaba_id: int) -> HttpResponse:
 

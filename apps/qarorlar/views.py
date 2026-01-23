@@ -8,13 +8,13 @@ from datetime import timedelta
 
 from apps.login.models import Registration
 from .models import PQaror
-from apps.login.mixins import JWTLoginRequiredMixin
+from apps.login.mixins import JWTLoginRequiredMixin, AdminOnlyMixin
 
-class QarorlarView(JWTLoginRequiredMixin,View):
+class QarorlarView(JWTLoginRequiredMixin, AdminOnlyMixin, View):
     def get(self, request):
         return render(request=request, template_name="qarorlar/qarorlar.html")
     
-class PQarorlar(JWTLoginRequiredMixin, View):
+class PQarorlar(JWTLoginRequiredMixin, AdminOnlyMixin, View):
     def get(self, request: HttpRequest) -> HttpResponse:
         
 
@@ -47,7 +47,7 @@ class PQarorlar(JWTLoginRequiredMixin, View):
             "qarorlar/prezident_qarorlari/index.html",
             context
         )
-class QarorQoshish(JWTLoginRequiredMixin, View):
+class QarorQoshish(JWTLoginRequiredMixin, AdminOnlyMixin, View):
     def get(self, request:HttpRequest)->HttpResponse:
         return render(request=request, template_name="qarorlar/prezident_qarorlari/qaror_qoshish.html")
     
@@ -86,7 +86,7 @@ class QarorQoshish(JWTLoginRequiredMixin, View):
         new_qaror.save()
         return redirect("qarorlar:prezident_qarorlari")
 
-class QarorView(JWTLoginRequiredMixin, View):
+class QarorView(JWTLoginRequiredMixin, AdminOnlyMixin, View):
     def post(self,request:HttpRequest, pk)-> HttpResponse:        
         qaror_delete = PQaror.objects.get(id = pk)
         if not qaror_delete:
@@ -111,7 +111,7 @@ class QarorView(JWTLoginRequiredMixin, View):
             context=context
         )
     
-class QarorTahrirlash(JWTLoginRequiredMixin, View):
+class QarorTahrirlash(JWTLoginRequiredMixin, AdminOnlyMixin, View):
     def get(self, request:HttpRequest, pk)->HttpResponse:
 
         qaror = PQaror.objects.get(id = pk)
@@ -162,7 +162,7 @@ from .models_vazir import VQaror
 
 
 
-class VQarorlar(JWTLoginRequiredMixin, View):
+class VQarorlar(JWTLoginRequiredMixin, AdminOnlyMixin, View):
     def get(self, request: HttpRequest) -> HttpResponse:
 
         q = request.GET.get("q")         
@@ -196,7 +196,7 @@ class VQarorlar(JWTLoginRequiredMixin, View):
         )
 
 
-class VQarorQoshish(JWTLoginRequiredMixin, View):
+class VQarorQoshish(JWTLoginRequiredMixin, AdminOnlyMixin, View):
     def get(self, request:HttpRequest)->HttpResponse:
         return render(request=request, template_name="qarorlar/vazirlik_qarorlari/qaror_qoshish.html")
     
@@ -238,7 +238,7 @@ class VQarorQoshish(JWTLoginRequiredMixin, View):
     
 
 
-class VQarorView(JWTLoginRequiredMixin, View):
+class VQarorView(JWTLoginRequiredMixin, AdminOnlyMixin, View):
     def post(self,request:HttpRequest, pk)-> HttpResponse:
         
         qaror_delete = VQaror.objects.get(id = pk)
@@ -265,7 +265,7 @@ class VQarorView(JWTLoginRequiredMixin, View):
         )
     
 
-class VQarorTahrirlash(JWTLoginRequiredMixin, View):
+class VQarorTahrirlash(JWTLoginRequiredMixin, AdminOnlyMixin, View):
     def get(self, request:HttpRequest, pk)->HttpResponse:
         
         qaror = VQaror.objects.get(id = pk)
@@ -312,7 +312,7 @@ class VQarorTahrirlash(JWTLoginRequiredMixin, View):
 
 from .models_hokim import HQaror
 
-class HQarorlar(JWTLoginRequiredMixin, View):
+class HQarorlar(JWTLoginRequiredMixin, AdminOnlyMixin, View):
     def get(self, request: HttpRequest) -> HttpResponse:
 
         q = request.GET.get("q")         
@@ -346,7 +346,7 @@ class HQarorlar(JWTLoginRequiredMixin, View):
         )
 
 
-class HQarorQoshish(JWTLoginRequiredMixin, View):
+class HQarorQoshish(JWTLoginRequiredMixin, AdminOnlyMixin, View):
     def get(self, request:HttpRequest)->HttpResponse:
 
         return render(request=request, template_name="qarorlar/hokim_qarorlari/qaror_add.html")
@@ -389,7 +389,7 @@ class HQarorQoshish(JWTLoginRequiredMixin, View):
     
 
 
-class HQarorView(JWTLoginRequiredMixin, View):
+class HQarorView(JWTLoginRequiredMixin, AdminOnlyMixin, View):
     def post(self,request:HttpRequest, pk)-> HttpResponse:
         
         qaror_delete = HQaror.objects.get(id = pk)
@@ -416,7 +416,7 @@ class HQarorView(JWTLoginRequiredMixin, View):
         )
     
 
-class HQarorTahrirlash(JWTLoginRequiredMixin, View):
+class HQarorTahrirlash(JWTLoginRequiredMixin, AdminOnlyMixin, View):
     def get(self, request:HttpRequest, pk)->HttpResponse:
 
         qaror = HQaror.objects.get(id = pk)
@@ -468,7 +468,7 @@ class HQarorTahrirlash(JWTLoginRequiredMixin, View):
 
 from .models_direktor import DQaror
 
-class DQarorlar(JWTLoginRequiredMixin, View):
+class DQarorlar(JWTLoginRequiredMixin, AdminOnlyMixin, View):
     def get(self, request: HttpRequest) -> HttpResponse:
 
         q = request.GET.get("q")         
@@ -502,7 +502,7 @@ class DQarorlar(JWTLoginRequiredMixin, View):
         )
 
 
-class DQarorQoshish(JWTLoginRequiredMixin, View):
+class DQarorQoshish(JWTLoginRequiredMixin, AdminOnlyMixin, View):
     def get(self, request:HttpRequest)->HttpResponse:
 
         return render(request=request, template_name="qarorlar/direktor_qarorlari/qaror_qoshish.html")
@@ -547,11 +547,11 @@ class DQarorQoshish(JWTLoginRequiredMixin, View):
             description = description
         )
         new_qaror.save()
-        return redirect("qarorlar:direktor_qarorlari")
+        return redirect("qadirektorrorlar:direktor_qarorlari")
     
 
 
-class DQarorView(JWTLoginRequiredMixin, View):
+class DQarorView(JWTLoginRequiredMixin, AdminOnlyMixin, View):
     def post(self,request:HttpRequest, pk)-> HttpResponse:
         
         qaror_delete = DQaror.objects.get(id = pk)
@@ -578,7 +578,7 @@ class DQarorView(JWTLoginRequiredMixin, View):
         )
     
 
-class DQarorTahrirlash(JWTLoginRequiredMixin, View):
+class DQarorTahrirlash(JWTLoginRequiredMixin, AdminOnlyMixin, View):
     def get(self, request:HttpRequest, pk)->HttpResponse:
         
         qaror = DQaror.objects.get(id = pk)

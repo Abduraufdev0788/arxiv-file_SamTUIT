@@ -452,13 +452,13 @@
         /* Card Actions — tugmalar */
         .card-actions {
             display: flex;
-            justify-content: space-between;
+            justify-content: center; /* ❗ o‘rtaga */
             align-items: center;
             margin-top: auto;
             padding-top: 1.5rem;
             border-top: 1px solid var(--gray-200);
-            margin-left:-20px;
         }
+
 
         .download-btn {
             display: inline-flex;
@@ -489,42 +489,6 @@
             gap: 0.75rem;
         }
 
-        .edit-btn, .delete-btn {
-            padding: 0.65rem 1rem;
-            border-radius: 0.75rem;
-            font-size: 0.875rem;
-            font-weight: 600;
-            border: none;
-            cursor: pointer;
-            transition: all 0.2s;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .edit-btn {
-            background: var(--samtuit-blue);
-            color: white;
-        }
-
-        .edit-btn:hover {
-            background: var(--samtuit-blue-light);
-        }
-
-        .delete-btn {
-            background: var(--red-500);
-            color: white;
-            padding:300px, 20px;
-        }
-
-        .delete-btn:hover {
-            background: var(--red-600);
-        }
-
-        .edit-btn svg, .delete-btn svg {
-            width: 16px;
-            height: 16px;
-        }
 
         /* Footer */
         .footer {
@@ -662,6 +626,38 @@
                 justify-content: center;
             }
         }
+        .menu-toggle {
+            display: none;
+            font-size: 1.75rem;
+            font-weight: 800;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        @media (max-width: 768px) {
+            .nav {
+                display: none;
+                flex-direction: column;
+                gap: 1rem;
+                background: white;
+                position: absolute;
+                top: 5rem;
+                right: 1.5rem;
+                padding: 1.5rem;
+                border-radius: 1rem;
+                box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+            }
+
+            .nav.active {
+                display: flex;
+            }
+
+            .menu-toggle {
+                display: block;
+            }
+        }
+
     </style>
 </head>
 <body>
@@ -677,18 +673,20 @@
                 </div>
             </a>
             <nav class="nav">
-                <a href="{% url 'index:home_page' %}">Asosiy</a>
+                <a href="{% url 'user:user_home' %}">Asosiy</a>
                 <a href="{% url 'qarorlar:vazirlik_qarorlari' %}">Vazirlik qarorlari</a>
                 <a href="{% url 'qarorlar:hokim_qarorlari' %}">Hokim qarorlari</a>
                 <a href="{% url 'qarorlar:direktor_qarorlari' %}">Direktor qarorlari</a>
             </nav>
+            <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+
         </div>
     </header>
 
     <!-- Hero Section -->
     <section class="hero">
         <div class="hero-container">
-            <a href="{% url 'qarorlar:qarorlar_bosh' %}" class="back-link">
+            <a href="{% url 'user:qarorlar' %}" class="back-link">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
                 </svg>
@@ -717,27 +715,18 @@
 
             <div class="controls-right">
                 <div class="filter-group">
-                    <a href="{% url 'qarorlar:prezident_qarorlari' %}"
+                    <a href="{% url 'user:prezident' %}"
                     class="filter-btn {% if not request.GET.new %}active{% endif %}">
                         Barchasi
                     </a>
 
-                    <a href="{% url 'qarorlar:prezident_qarorlari' %}?new=1"
+                    <a href="{% url 'user:prezident' %}?new=1"
                     class="filter-btn {% if request.GET.new %}active{% endif %}">
                         Yangilari
                         
                     </a>
                 </div>
 
-
-                <a href="{% url 'qarorlar:qaror_add' %}" style="text-decoration:none">
-                    <button class="add-btn">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
-                        </svg>
-                        <span>Qaror qo'shish</span>
-                    </button>
-                </a>
             </div>
         </div>
     </section>
@@ -793,28 +782,6 @@
                         </svg>
                         Yuklash
                     </a>
-
-                    <form method="GET" action="{% url 'qarorlar:qaror_edit' data.id %}" style="display:inline;">
-                        <button type="submit" class="edit-btn">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
-                                    d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
-                            </svg>
-                            Tahrirlash
-                        </button>
-                    </form>
-
-
-                    <form method="POST" action="{% url 'qarorlar:qaror_delete' data.id %}" style="display:inline;">
-                        {% csrf_token %}
-                        <button type="submit" class="delete-btn" style = "padding:13px;">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
-                                    d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
-                            </svg>
-                            O‘chirish
-                        </button>
-                    </form>
                 </div>
             </div>
             {% empty %}
@@ -854,6 +821,12 @@
             </div>
         </div>
     </footer>
+    <script>
+    function toggleMenu() {
+        document.querySelector('.nav').classList.toggle('active');
+    }
+    </script>
+
 
 </body>
 </html>

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Prezident Qarorlari - SamTUIT</title>
+    <title>Direktor Farmonlari va Buyruqlari - SamTUIT</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
         * {
@@ -17,7 +17,9 @@
             --samtuit-blue-light: #004d99;
             --samtuit-emerald: #059669;
             --samtuit-emerald-dark: #047857;
-            --president-blue: #2563eb;
+            --director-purple: #7c3aed;        /* Asosiy rang */
+            --director-purple-light: #9f67ff;
+            --director-purple-dark: #6d28d9;
             --gray-50: #f9fafb;
             --gray-100: #f3f4f6;
             --gray-200: #e5e7eb;
@@ -118,7 +120,7 @@
 
         /* Hero Section */
         .hero {
-            background: linear-gradient(135deg, var(--samtuit-blue) 0%, var(--samtuit-blue-light) 100%);
+            background: linear-gradient(135deg, var(--director-purple) 0%, var(--director-purple-light) 100%);
             color: white;
             padding: 3rem 1.5rem;
         }
@@ -224,8 +226,8 @@
 
         .search-input:focus {
             outline: none;
-            border-color: var(--samtuit-blue);
-            box-shadow: 0 0 0 3px rgba(0, 51, 102, 0.1);
+            border-color: var(--director-purple);
+            box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.1);
             background: white;
         }
 
@@ -273,25 +275,12 @@
             height: 16px;
         }
 
-        .badge {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            background: var(--samtuit-emerald);
-            color: white;
-            font-size: 0.75rem;
-            font-weight: 700;
-        }
-
         .add-btn {
             display: flex;
             align-items: center;
             gap: 0.5rem;
             padding: 0.75rem 1.25rem;
-            background: var(--samtuit-emerald);
+            background: var(--director-purple);
             color: white;
             border: none;
             border-radius: 0.75rem;
@@ -299,11 +288,11 @@
             font-size: 0.875rem;
             cursor: pointer;
             transition: all 0.2s;
-            box-shadow: 0 4px 14px rgba(5, 150, 105, 0.3);
+            box-shadow: 0 4px 14px rgba(124, 58, 237, 0.3);
         }
 
         .add-btn:hover {
-            background: var(--samtuit-emerald-dark);
+            background: var(--director-purple-dark);
             transform: translateY(-1px);
         }
 
@@ -371,7 +360,7 @@
         .card-icon {
             width: 48px;
             height: 48px;
-            background: rgba(37, 99, 235, 0.1);
+            background: rgba(124, 58, 237, 0.1);
             border-radius: 0.75rem;
             display: flex;
             align-items: center;
@@ -381,13 +370,13 @@
         .card-icon svg {
             width: 24px;
             height: 24px;
-            color: var(--president-blue);
+            color: var(--director-purple);
         }
 
         .card-number {
             font-size: 0.75rem;
             font-weight: 700;
-            color: var(--president-blue);
+            color: var(--director-purple);
             text-transform: uppercase;
             letter-spacing: 0.05em;
         }
@@ -406,7 +395,6 @@
             height: 16px;
         }
 
-        /* Sarlavha — to‘liq ko‘rinadi */
         .card-title {
             font-size: 1.125rem;
             font-weight: 700;
@@ -416,9 +404,8 @@
             word-wrap: break-word;
         }
 
-        /* Tavsif — faqat 2 qator ko‘rinadi + scroll */
         .description-container {
-            max-height: 5.5rem; /* Taxminan 2-3 qator */
+            max-height: 5.5rem;
             overflow-y: auto;
             padding-right: 0.5rem;
             margin-bottom: 1.5rem;
@@ -449,23 +436,22 @@
             word-wrap: break-word;
         }
 
-        /* Card Actions — tugmalar */
         .card-actions {
             display: flex;
-            justify-content: space-between;
+            justify-content: center; /* ❗ o‘rtaga */
             align-items: center;
             margin-top: auto;
             padding-top: 1.5rem;
             border-top: 1px solid var(--gray-200);
-            margin-left:-20px;
         }
+
 
         .download-btn {
             display: inline-flex;
             align-items: center;
             gap: 0.5rem;
             padding: 0.65rem 1.1rem;
-            background: var(--samtuit-emerald);
+            background: var(--director-purple);
             color: white;
             border: none;
             border-radius: 0.75rem;
@@ -476,7 +462,7 @@
         }
 
         .download-btn:hover {
-            background: var(--samtuit-emerald-dark);
+            background: var(--director-purple-dark);
         }
 
         .download-btn svg {
@@ -487,43 +473,6 @@
         .action-buttons {
             display: flex;
             gap: 0.75rem;
-        }
-
-        .edit-btn, .delete-btn {
-            padding: 0.65rem 1rem;
-            border-radius: 0.75rem;
-            font-size: 0.875rem;
-            font-weight: 600;
-            border: none;
-            cursor: pointer;
-            transition: all 0.2s;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .edit-btn {
-            background: var(--samtuit-blue);
-            color: white;
-        }
-
-        .edit-btn:hover {
-            background: var(--samtuit-blue-light);
-        }
-
-        .delete-btn {
-            background: var(--red-500);
-            color: white;
-            padding:300px, 20px;
-        }
-
-        .delete-btn:hover {
-            background: var(--red-600);
-        }
-
-        .edit-btn svg, .delete-btn svg {
-            width: 16px;
-            height: 16px;
         }
 
         /* Footer */
@@ -656,12 +605,68 @@
                 width: 100%;
                 justify-content: stretch;
             }
+        }
+        .menu-toggle {
+            display: none;
+            font-size: 1.75rem;
+            font-weight: 800;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
 
-            .edit-btn, .delete-btn {
-                flex: 1;
-                justify-content: center;
+        @media (max-width: 768px) {
+            .nav {
+                display: none;
+                flex-direction: column;
+                gap: 1rem;
+                background: white;
+                position: absolute;
+                top: 5rem;
+                right: 1.5rem;
+                padding: 1.5rem;
+                border-radius: 1rem;
+                box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+            }
+
+            .nav.active {
+                display: flex;isplay: none;
+                font-size: 1.75rem;
+                font-weight: 800;
+                background: none;
+                border: none;
+                cursor: pointer;
+        }
+
+        @media (max-width: 768px) {
+            .nav {
+                display: none;
+                flex-direction: column;
+                gap: 1rem;
+                background: white;
+                position: absolute;
+                top: 5rem;
+                right: 1.5rem;
+                padding: 1.5rem;
+                border-radius: 1rem;
+                box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+            }
+
+            .nav.active {
+                display: flex;
+            }
+
+            .menu-toggle {
+                display: block;
+            }
+        
+            }
+
+            .menu-toggle {
+                display: block;
             }
         }
+
     </style>
 </head>
 <body>
@@ -677,28 +682,29 @@
                 </div>
             </a>
             <nav class="nav">
-                <a href="{% url 'index:home_page' %}">Asosiy</a>
+                <a href="{% url 'user:user_home' %}">Asosiy</a>
                 <a href="{% url 'qarorlar:vazirlik_qarorlari' %}">Vazirlik qarorlari</a>
                 <a href="{% url 'qarorlar:hokim_qarorlari' %}">Hokim qarorlari</a>
                 <a href="{% url 'qarorlar:direktor_qarorlari' %}">Direktor qarorlari</a>
             </nav>
+            <button class="menu-toggle" onclick="toggleMenu()">☰</button>
         </div>
     </header>
 
     <!-- Hero Section -->
     <section class="hero">
         <div class="hero-container">
-            <a href="{% url 'qarorlar:qarorlar_bosh' %}" class="back-link">
+            <a href="{% url 'user:user_home' %}" class="back-link">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
                 </svg>
                 Orqaga qaytish
             </a>
             <div class="hero-content">
-                <div class="hero-icon">🏛️</div>
+                <div class="hero-icon">📜</div>
                 <div class="hero-text">
-                    <h2>Prezident qarorlari</h2>
-                    <p>O'zbekiston Respublikasi Prezidenti tomonidan qabul qilingan qarorlar</p>
+                    <h2>Direktor farmonlari va buyruqlari</h2>
+                    <p>SamTUIT direktori tomonidan chiqarilgan farmonlar va buyruqlar</p>
                 </div>
             </div>
         </div>
@@ -711,33 +717,22 @@
                 <input type="text"
                     name="q"
                     class="search-input"
-                    placeholder="Qaror raqami yoki kalit so'z..."
+                    placeholder="Raqam yoki kalit so'z..."
                     value="{{ request.GET.q }}">
             </form>
 
             <div class="controls-right">
                 <div class="filter-group">
-                    <a href="{% url 'qarorlar:prezident_qarorlari' %}"
+                    <a href="{% url 'user:direktor' %}"
                     class="filter-btn {% if not request.GET.new %}active{% endif %}">
                         Barchasi
                     </a>
 
-                    <a href="{% url 'qarorlar:prezident_qarorlari' %}?new=1"
+                    <a href="{% url 'user:direktor' %}?new=1"
                     class="filter-btn {% if request.GET.new %}active{% endif %}">
                         Yangilari
-                        
                     </a>
                 </div>
-
-
-                <a href="{% url 'qarorlar:qaror_add' %}" style="text-decoration:none">
-                    <button class="add-btn">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
-                        </svg>
-                        <span>Qaror qo'shish</span>
-                    </button>
-                </a>
             </div>
         </div>
     </section>
@@ -745,7 +740,7 @@
     <!-- Main Content - Cardlar -->
     <div class="main-content">
         <div class="results-info">
-            Jami <span>{{ len }}</span> ta qaror topildi
+            Jami <span>{{ len }}</span> ta hujjat topildi
         </div>
 
         <div class="cards-grid">
@@ -772,10 +767,8 @@
                     </div>
                 </div>
 
-                <!-- To'liq sarlavha -->
                 <h3 class="card-title">{{ data.title }}</h3>
 
-                <!-- Tavsif — 2 qator + scroll -->
                 {% if data.description %}
                 <div class="description-container">
                     <p class="card-description">{{ data.description }}</p>
@@ -784,7 +777,6 @@
                 <p class="card-description" style="color: var(--gray-400); font-style: italic;">Tavsif mavjud emas</p>
                 {% endif %}
 
-                <!-- Tugmalar -->
                 <div class="card-actions">
                     <a href="{{ data.file.url }}" class="download-btn" target="_blank" download>
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -793,33 +785,11 @@
                         </svg>
                         Yuklash
                     </a>
-
-                    <form method="GET" action="{% url 'qarorlar:qaror_edit' data.id %}" style="display:inline;">
-                        <button type="submit" class="edit-btn">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
-                                    d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
-                            </svg>
-                            Tahrirlash
-                        </button>
-                    </form>
-
-
-                    <form method="POST" action="{% url 'qarorlar:qaror_delete' data.id %}" style="display:inline;">
-                        {% csrf_token %}
-                        <button type="submit" class="delete-btn" style = "padding:13px;">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
-                                    d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
-                            </svg>
-                            O‘chirish
-                        </button>
-                    </form>
                 </div>
             </div>
             {% empty %}
             <div style="grid-column: 1 / -1; text-align: center; padding: 4rem; color: var(--gray-500); font-size: 1.125rem;">
-                Hozircha qarorlar mavjud emas
+                Hozircha farmon va buyruqlar mavjud emas
             </div>
             {% endfor %}
         </div>
@@ -854,6 +824,12 @@
             </div>
         </div>
     </footer>
+    <script>
+    function toggleMenu() {
+        document.querySelector('.nav').classList.toggle('active');
+    }
+    </script>
+
 
 </body>
 </html>

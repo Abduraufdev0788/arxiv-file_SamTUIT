@@ -4,8 +4,8 @@ from django.db import models
 class Talabalar(models.Model):
 
     CHOISE_FACULTY = (
-        ('Kompyuter', 'Kompyuter injiniring'),
-        ('Axborot', 'Axborot texnologiyalar'),
+        ('Kompyuter inginiring', 'Kompyuter injiniring'),
+        ('Axborot texnologiyalari', 'Axborot texnologiyalar'),
     )
 
     CHOISE_STATUS = (

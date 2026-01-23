@@ -49,6 +49,8 @@ INSTALLED_APPS = [
     "apps.oqituvchilar.apps.OqituvchilarConfig",
     "apps.professorlar.apps.ProfessorlarConfig",
     "apps.qarorlar.apps.QarorlarConfig",
+    "apps.Customuser.apps.CustomuserConfig",
+
 
     "rest_framework"
 ]

@@ -1,4 +1,3 @@
-# apps/login/middleware.py
 from .jwt_utils import decode_token
 from .models import Registration
 

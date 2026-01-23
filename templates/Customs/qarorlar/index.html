@@ -480,12 +480,12 @@
                 </div>
             </div>
             <nav class="nav">
-                <a href="{% url "index:home_page" %}">Asosiy</a>
-                <a href="{% url "qarorlar:qarorlar_bosh" %}">Qarorlar</a>
-                <a href="{% url "talabalar:talabalar" %}">Talabalar</a>
-                <a href="{% url "bitiruv:bmi" %}">Bitiruv ishlari</a>
-                <a href="{% url "teachers:teacher_list" %}">Xodimlar</a>
-                <a href="{% url "professors:professor_list" %}">Professorlar</a>
+                <a href="{% url "user:user_home" %}">Asosiy</a>
+                <a href="{% url "user:qarorlar" %}">Qarorlar</a>
+                <a href="{% url "user:talabalar" %}">Talabalar</a>
+                <a href="{% url "user:bmi" %}">Bitiruv ishlari</a>
+                <a href="{% url "user:xodimlar" %}">Xodimlar</a>
+                <a href="{% url "user:professors" %}">Professorlar</a>
                 <a href="{% url "index:contacts" %}">Bog'lanish</a>
             </nav>
         </div>
@@ -505,7 +505,7 @@
         <h1 class="section-title">Qaror va farmoyishlar</h1>
 
         <div class="cards">
-            <a href = "{% url "qarorlar:prezident_qarorlari" %}" style = "text-decoration:none">
+            <a href = "{% url "user:prezident" %}" style = "text-decoration:none">
                 <div class="card president">
                     <div class="icon">🏛️</div>
                     <h3>Prezident qarori</h3>
@@ -517,7 +517,7 @@
             </a>
 
             
-            <a href = "{% url "qarorlar:vazirlik_qarorlari" %}" style = "text-decoration:none">
+            <a href = "{% url "user:vazir" %}" style = "text-decoration:none">
                 <div class="card vazirlik">
                     <div class="icon">📄</div>
                     <h3>Vazirlik qarori</h3>
@@ -528,7 +528,7 @@
                 </div>
             </a>
 
-            <a href = "{% url "qarorlar:hokim_qarorlari" %}" style = "text-decoration:none">
+            <a href = "{% url "user:hokim" %}" style = "text-decoration:none">
                 <div class="card viloyat">
                     <div class="icon">🏢</div>
                     <h3>Viloyat hokimi qarori</h3>
@@ -539,7 +539,7 @@
                 </div>
             </a>
 
-            <a href = "{% url "qarorlar:direktor_qarorlari" %}" style = "text-decoration:none">
+            <a href = "{% url "user:direktor" %}" style = "text-decoration:none">
                 <div class="card filial">
                     <div class="icon">📝</div>
                     <h3>Filial direktori farmoyishi</h3>
