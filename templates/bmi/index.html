@@ -191,9 +191,9 @@
         </a>
 
         <nav class="samtuit-nav">
-            <a href="#" class="active">Talabalar</a>
-            <a href="#">Xodimlar</a>
-            <a href="#">Qarorlar</a>
+            <a href="{% url 'talabalar:talabalar' %}" class="active">Talabalar</a>
+            <a href="{% url 'teachers:teacher_list' %}">Xodimlar</a>
+            <a href="{% url 'qarorlar:qarorlar_bosh' %}">Qarorlar</a>
         </nav>
 
         <form method="GET" class="header-search">

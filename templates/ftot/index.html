@@ -42,9 +42,9 @@
         <div class="hidden md:flex items-center gap-8">
             <a href="{% url "index:home_page" %}" class="font-semibold text-slate-600 hover:text-[#0f4c81]">Asosiy</a>
             <a href="{% url "qarorlar:qarorlar_bosh" %}" class="font-semibold text-slate-600 hover:text-[#0f4c81]">Qarorlar</a>
-            <a href="#" class="font-semibold text-[#0f4c81] border-b-2 border-[#0f4c81] pb-1">Talabalar</a>
-            <a href="#" class="font-semibold text-slate-600 hover:text-[#0f4c81]">Xodimlar</a>
-            <a href="#" class="font-semibold text-slate-600 hover:text-[#0f4c81]">Bog‘lanish</a>
+            <a href="{% url "talabalar:talabalar" %}" class="font-semibold text-[#0f4c81] border-b-2 border-[#0f4c81] pb-1">Talabalar</a>
+            <a href="{% url "teachers:teacher_list" %}" class="font-semibold text-slate-600 hover:text-[#0f4c81]">Xodimlar</a>
+            <a href="{% url "index:contacts" %}" class="font-semibold text-slate-600 hover:text-[#0f4c81]">Bog‘lanish</a>
         </div>
     </div>
 </nav>
