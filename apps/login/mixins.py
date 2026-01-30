@@ -23,18 +23,3 @@ class AdminOnlyMixin:
             return HttpResponseForbidden("Bu admin panel ❌")
 
         return super().dispatch(request, *args, **kwargs)
-
-
-
-
-class CustomOnlyMixin:
-    def dispatch(self, request, *args, **kwargs):
-        user = getattr(request, "user_jwt", None)
-
-        if not user:
-            return redirect("login")
-
-        if user.role != "Custom":
-            return HttpResponseForbidden("Bu foydalanuvchi paneli ❌")
-
-        return super().dispatch(request, *args, **kwargs)

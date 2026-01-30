@@ -26,104 +26,85 @@
     </p>
 </section>
 
-<!-- ================= CONTACT INFO ================= -->
+<!-- ================= CONTACT SECTION ================= -->
 <section class="max-w-7xl mx-auto px-6 py-20">
     <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
 
-        <!-- LEFT: INFO -->
+        <!-- LEFT INFO -->
         <div class="space-y-8">
+            <h2 class="text-2xl font-black">Aloqa ma’lumotlari</h2>
 
-            <h2 class="text-2xl font-black text-slate-900">Aloqa ma’lumotlari</h2>
-
-            <!-- Address -->
             <div class="flex gap-4">
-                <div class="w-12 h-12 rounded-xl bg-blue-100 text-blue-600 flex items-center justify-center">
-                    📍
-                </div>
+                <div class="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center">📍</div>
                 <div>
                     <h4 class="font-bold">Manzil</h4>
-                    <p class="text-slate-600 text-sm">
-                        Samarqand shahri, Shoxrux ko‘chasi, 37-uy
-                    </p>
+                    <p class="text-sm text-slate-600">Samarqand shahri, Shoxrux ko‘chasi, 37-uy</p>
                 </div>
             </div>
 
-            <!-- Phone -->
             <div class="flex gap-4">
-                <div class="w-12 h-12 rounded-xl bg-emerald-100 text-emerald-600 flex items-center justify-center">
-                    ☎️
-                </div>
+                <div class="w-12 h-12 bg-emerald-100 rounded-xl flex items-center justify-center">☎️</div>
                 <div>
                     <h4 class="font-bold">Telefon</h4>
-                    <p class="text-slate-600 text-sm">
-                        +998 (66) 232-29-29
-                    </p>
+                    <p class="text-sm text-slate-600">+998 (66) 232-29-29</p>
                 </div>
             </div>
 
-            <!-- Email -->
             <div class="flex gap-4">
-                <div class="w-12 h-12 rounded-xl bg-purple-100 text-purple-600 flex items-center justify-center">
-                    ✉️
-                </div>
+                <div class="w-12 h-12 bg-purple-100 rounded-xl flex items-center justify-center">✉️</div>
                 <div>
                     <h4 class="font-bold">Email</h4>
-                    <p class="text-slate-600 text-sm">
-                        info@samtuit.uz
-                    </p>
+                    <p class="text-sm text-slate-600">info@samtuit.uz</p>
                 </div>
             </div>
-
-            <!-- Time -->
-            <div class="flex gap-4">
-                <div class="w-12 h-12 rounded-xl bg-amber-100 text-amber-600 flex items-center justify-center">
-                    🕒
-                </div>
-                <div>
-                    <h4 class="font-bold">Ish vaqti</h4>
-                    <p class="text-slate-600 text-sm">
-                        Dushanba – Juma: 09:00 – 18:00
-                    </p>
-                </div>
-            </div>
-
         </div>
 
-        <!-- RIGHT: FORM -->
-        <div class="bg-white rounded-3xl shadow-lg p-8 border border-slate-100">
+        <!-- RIGHT FORM -->
+        <div class="bg-white rounded-3xl shadow-lg p-8 border">
 
-            <h3 class="text-xl font-black mb-6">Xabar yuborish</h3>
+            <h3 class="text-xl font-black mb-4">Xabar yuborish</h3>
+
+            <!-- ✅ SUCCESS / ERROR MESSAGE -->
+            {% if messages %}
+              {% for message in messages %}
+                <div id="{% if message.tags == 'success' %}successBox{% endif %}"
+                     class="mb-6 px-4 py-3 rounded-xl text-sm font-semibold text-center
+                     {% if message.tags == 'success' %}
+                        bg-emerald-100 text-emerald-700
+                     {% else %}
+                        bg-red-100 text-red-700
+                     {% endif %}">
+                    {{ message }}
+                </div>
+              {% endfor %}
+            {% endif %}
 
             <form method="post" class="space-y-5">
                 {% csrf_token %}
 
                 <div>
-                    <label class="text-sm font-semibold text-slate-600">Ismingiz</label>
-                    <input type="text" name="name"
-                           class="w-full mt-2 px-4 h-11 border border-slate-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-none"
-                           placeholder="Ismingizni kiriting">
+                    <label class="text-sm font-semibold">Ismingiz</label>
+                    <input type="text" name="name" required
+                           class="w-full mt-2 px-4 h-11 border rounded-xl focus:ring-2 focus:ring-blue-500">
                 </div>
 
                 <div>
-                    <label class="text-sm font-semibold text-slate-600">Email</label>
-                    <input type="email" name="email"
-                           class="w-full mt-2 px-4 h-11 border border-slate-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-none"
-                           placeholder="Email manzilingiz">
+                    <label class="text-sm font-semibold">Email</label>
+                    <input type="email" name="email" required
+                           class="w-full mt-2 px-4 h-11 border rounded-xl focus:ring-2 focus:ring-blue-500">
                 </div>
 
                 <div>
-                    <label class="text-sm font-semibold text-slate-600">Xabar</label>
-                    <textarea name="message" rows="4"
-                              class="w-full mt-2 px-4 py-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-none"
-                              placeholder="Xabaringizni yozing..."></textarea>
+                    <label class="text-sm font-semibold">Xabar</label>
+                    <textarea name="message" rows="4" required
+                              class="w-full mt-2 px-4 py-3 border rounded-xl focus:ring-2 focus:ring-blue-500"></textarea>
                 </div>
 
                 <button type="submit"
-                        class="w-full h-11 bg-gradient-to-r from-emerald-500 to-teal-500 text-white rounded-xl font-bold hover:from-emerald-600 hover:to-teal-600 transition-all">
+                        class="w-full h-11 bg-gradient-to-r from-emerald-500 to-teal-500 text-white rounded-xl font-bold hover:opacity-90">
                     Xabar yuborish
                 </button>
             </form>
-
         </div>
     </div>
 </section>
@@ -132,6 +113,34 @@
 <footer class="bg-slate-900 text-slate-400 text-center py-6 text-sm">
     © 2025 SamTUIT | Barcha huquqlar himoyalangan
 </footer>
+
+<!-- ✅ AUTO REDIRECT AFTER SUCCESS -->
+{% if request.user.is_authenticated and request.user.is_staff %}
+<script>
+    window.IS_ADMIN = true;
+</script>
+{% else %}
+<script>
+    window.IS_ADMIN = false;
+</script>
+{% endif %}
+
+<script>
+    const successBox = document.getElementById("successBox");
+
+    if (successBox) {
+        setTimeout(() => {
+            if (window.IS_ADMIN) {
+                window.location.href = "{% url 'user:user_home' %}";
+            } else {
+                window.location.href = "{% url 'index:home_page' %}";
+            }
+        }, 2000);
+    }
+</script>
+
+
+
 
 </body>
 </html>

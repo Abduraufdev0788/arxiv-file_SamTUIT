@@ -1,8 +1,6 @@
 from django.shortcuts import render
 from django.views import View
-from apps.login.mixins import CustomOnlyMixin
 from apps.bmi.models import BmiTalaba
-from apps.login.mixins import JWTLoginRequiredMixin, CustomOnlyMixin
 from apps.professorlar.models import Professor
 from django.http import HttpRequest, HttpResponse
 from django.db.models import Q
@@ -17,13 +15,11 @@ from apps.qarorlar.models_direktor import DQaror
 from django.utils import timezone
 from datetime import timedelta
 
-class HomeView(CustomOnlyMixin, View):
+class HomeView(View):
     def get(self, request):
-        return render(request, "Customs/home/home.html", {
-            "user": request.user_jwt
-        })
+        return render(request, "Customs/home/home.html")
     
-class TableView(JWTLoginRequiredMixin, CustomOnlyMixin, View):
+class TableView(View):
     def get(self, request: HttpRequest) -> HttpResponse:
         q = request.GET.get("q", "").strip()
 
@@ -62,7 +58,7 @@ class TableView(JWTLoginRequiredMixin, CustomOnlyMixin, View):
         return render(request, "Customs/bmi/index.html", context)
 
 
-class ProfessorListView(JWTLoginRequiredMixin, CustomOnlyMixin, ListView):
+class ProfessorListView(ListView):
     model = Professor
     template_name = 'Customs/professors/index.html'
     context_object_name = 'professors'
@@ -106,7 +102,7 @@ class ProfessorListView(JWTLoginRequiredMixin, CustomOnlyMixin, ListView):
         return context
 
 
-class TeacherListView(JWTLoginRequiredMixin, CustomOnlyMixin, ListView):
+class TeacherListView(ListView):
     model = Teacher
     template_name = 'Customs/xodimlar/index.html'
     context_object_name = 'teachers'
@@ -152,7 +148,7 @@ class TeacherListView(JWTLoginRequiredMixin, CustomOnlyMixin, ListView):
         context["lavozimlar"] = Teacher.choises_lavozimi
         return context
     
-class TalabalarView(JWTLoginRequiredMixin, CustomOnlyMixin, View):
+class TalabalarView(View):
     def get(self, request: HttpRequest) -> HttpResponse:
 
         talabalar = Talabalar.objects.only(
@@ -189,12 +185,12 @@ class TalabalarView(JWTLoginRequiredMixin, CustomOnlyMixin, View):
             "filters": request.GET
         })
 
-class QarorlarView(JWTLoginRequiredMixin, CustomOnlyMixin, View):
+class QarorlarView(View):
     def get(self, request:HttpRequest)->HttpResponse:
         return render(request=request, template_name="Customs/qarorlar/index.html")
 
 
-class PQarorlar(JWTLoginRequiredMixin, CustomOnlyMixin, View):
+class PQarorlar(View):
     def get(self, request: HttpRequest) -> HttpResponse:
         
 
@@ -227,7 +223,7 @@ class PQarorlar(JWTLoginRequiredMixin, CustomOnlyMixin, View):
             context
         )
     
-class HQarorlar(JWTLoginRequiredMixin, CustomOnlyMixin, View):
+class HQarorlar(View):
     def get(self, request: HttpRequest) -> HttpResponse:
 
         q = request.GET.get("q")         
@@ -260,7 +256,7 @@ class HQarorlar(JWTLoginRequiredMixin, CustomOnlyMixin, View):
             context
         )
     
-class VQarorlar(JWTLoginRequiredMixin, CustomOnlyMixin, View):
+class VQarorlar(View):
     def get(self, request: HttpRequest) -> HttpResponse:
 
         q = request.GET.get("q")         
@@ -293,7 +289,7 @@ class VQarorlar(JWTLoginRequiredMixin, CustomOnlyMixin, View):
             context
         )
     
-class DQarorlar(JWTLoginRequiredMixin, CustomOnlyMixin, View):
+class DQarorlar(View):
     def get(self, request: HttpRequest) -> HttpResponse:
 
         q = request.GET.get("q")         

@@ -121,7 +121,6 @@ form.addEventListener("submit", async (e) => {
             return;
         }
 
-        // 🔥 ROLE BO‘YICHA YO‘NALTIRISH
         if (data.role === "Admin") {
             window.location.href = "{% url 'index:home_page' %}";
         } else if (data.role === "Custom") {

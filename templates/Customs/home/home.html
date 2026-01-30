@@ -37,6 +37,19 @@
                 font-size: 2rem;
             }
         }
+        .btn-login {
+            border: 1px solid #e5e7eb;
+            background: transparent;
+        }
+
+        .btn {
+            padding: .6rem 1.25rem;
+            border-radius: 6px;
+            font-weight: 500;
+            cursor: pointer;
+            border: none;
+            transition: .3s;
+        }
     </style>
 </head>
 <body class="bg-slate-50 text-slate-900">
@@ -54,14 +67,14 @@
                 </div>
             </div>
             <div class="hidden md:flex items-center gap-8">
-                <a href="{% url "index:home_page" %}" class="text-sm font-semibold text-slate-600 hover:text-[#0f4c81] transition-colors">Abdurauf</a>
-                <a href="{% url "qarorlar:qarorlar_bosh" %}" class="text-sm font-semibold text-slate-600 hover:text-[#0f4c81] transition-colors">Qarorlar</a>
-                <a href="{% url "talabalar:talabalar" %}" class="text-sm font-semibold text-slate-600 hover:text-[#0f4c81] transition-colors">Talabalar</a>
+                <a href="{% url "user:user_home" %}" class="text-sm font-semibold text-slate-600 hover:text-[#0f4c81] transition-colors">Abdurauf</a>
+                <a href="{% url "user:qarorlar" %}" class="text-sm font-semibold text-slate-600 hover:text-[#0f4c81] transition-colors">Qarorlar</a>
+                <a href="{% url "user:talabalar" %}" class="text-sm font-semibold text-slate-600 hover:text-[#0f4c81] transition-colors">Talabalar</a>
                 <a href="{% url "user:bmi" %}" class="text-sm font-semibold text-slate-600 hover:text-[#0f4c81] transition-colors">Bitiruv Ishlari</a>
-                <a href="{% url "teachers:teacher_list" %}" class="text-sm font-semibold text-slate-600 hover:text-[#0f4c81] transition-colors">Xodimlar</a>
-                <a href="{% url "professors:professor_list" %}" class="text-sm font-semibold text-slate-600 hover:text-[#0f4c81] transition-colors">Professorlar</a>
+                <a href="{% url "user:xodimlar" %}" class="text-sm font-semibold text-slate-600 hover:text-[#0f4c81] transition-colors">Xodimlar</a>
+                <a href="{% url "user:professors" %}" class="text-sm font-semibold text-slate-600 hover:text-[#0f4c81] transition-colors">Professorlar</a>
                 <a href="{% url "index:contacts" %}" class="text-sm font-semibold text-slate-600 hover:text-[#0f4c81] transition-colors">Bog'lanish</a>
-                <a href="{% url 'registratsiya:logout' %}" class="text-sm font-semibold text-red-600 hover:text-red-700 transition-colors">Chiqish</a>
+                <nav id="authButtons" class="flex gap-3"></nav>
 
             </div>
             
@@ -291,6 +304,37 @@
             </div>
         </div>
     </footer>
+
+
+    <script>
+function getToken() {
+    return localStorage.getItem("access_token");
+}
+
+function logout() {
+    localStorage.removeItem("access_token");
+    localStorage.removeItem("refresh_token");
+    location.reload();
+}
+
+function goStart() {
+    if (getToken()) {
+        window.location.href = "/dashboard/";
+    } else {
+        window.location.href = "{% url 'registratsiya:register' %}";
+    }
+}
+
+function renderHeader() {
+    const el = document.getElementById("authButtons");
+     el.innerHTML = `
+        <button class="btn btn-login" onclick="location.href='{% url 'registratsiya:login' %}'">Kirish</button>
+    `;
+    
+}
+
+renderHeader();
+</script>
 
 </body>
 </html>

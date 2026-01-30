@@ -34,11 +34,11 @@
 
         <!-- Desktop Menu -->
         <div class="hidden md:flex gap-6 font-semibold text-slate-600">
-            <a href="{% url 'index:home_page' %}" class="block">Asosiy</a>
-            <a href="{% url 'qarorlar:qarorlar_bosh' %}" class="block">Qarorlar</a>
+            <a href="{% url "user:user_home" %}" class="block">Asosiy</a>
+            <a href="{% url "user:qarorlar" %}" class="block">Qarorlar</a>
             <a href="{% url "user:bmi" %}" class="block">Bitiruv Ishlari</a>
-            <a href="{% url "user:bmi" %}" class="block">Talabalar</a>
-            <a href="{% url "user:bmi" %}" class="block">Xodimlar</a>
+            <a href="{% url "user:talabalar" %}" class="block">Talabalar</a>
+            <a href="{% url "user:xodimlar" %}" class="block">Xodimlar</a>
             <a href="{% url "user:professors" %}" class="block font-black text-blue-700">Professorlar</a>
             <a href="#" class="block">Bog‘lanish</a>
         </div>
