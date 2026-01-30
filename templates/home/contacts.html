@@ -100,10 +100,14 @@
                               class="w-full mt-2 px-4 py-3 border rounded-xl focus:ring-2 focus:ring-blue-500"></textarea>
                 </div>
 
-                <button type="submit"
-                        class="w-full h-11 bg-gradient-to-r from-emerald-500 to-teal-500 text-white rounded-xl font-bold hover:opacity-90">
-                    Xabar yuborish
-                </button>
+                
+                <div class="flex gap-3">
+                    <button type="submit" class="flex-1 ...">Xabar yuborish</button>
+                    <button type="button" onclick="window.history.back()" class="flex-1 ...">
+                        ← Orqaga
+                    </button>
+                </div>
+
             </form>
         </div>
     </div>
@@ -115,29 +119,17 @@
 </footer>
 
 <!-- ✅ AUTO REDIRECT AFTER SUCCESS -->
-{% if request.user.is_authenticated and request.user.is_staff %}
 <script>
-    window.IS_ADMIN = true;
-</script>
-{% else %}
-<script>
-    window.IS_ADMIN = false;
-</script>
-{% endif %}
+    const msg = document.getElementById("flash-message");
 
-<script>
-    const successBox = document.getElementById("successBox");
-
-    if (successBox) {
+    if (msg) {
         setTimeout(() => {
-            if (window.IS_ADMIN) {
-                window.location.href = "{% url 'user:user_home' %}";
-            } else {
-                window.location.href = "{% url 'index:home_page' %}";
-            }
-        }, 2000);
+            msg.style.opacity = "0";
+            setTimeout(() => msg.remove(), 500);
+        }, 2000); // 2 soniyadan keyin yo‘qoladi
     }
 </script>
+
 
 
 

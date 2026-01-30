@@ -234,7 +234,7 @@ class UpdatePassword(View):
 
 class LogoutView(View):
     def get(self, request):
-        response = redirect("registratsiya:login")
+        response = redirect("user:user_home")
 
         response.delete_cookie("access_token")
 

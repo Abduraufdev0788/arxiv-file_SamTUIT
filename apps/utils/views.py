@@ -16,8 +16,9 @@ class IndexView(View):
 class HomeView(AdminOnlyMixin, View):
     def get(self, request):
         return render(request, "home/home.html", {
-            "user": request.user_jwt
+            "user": getattr(request, "user_jwt", None)
         })
+
 
 
 class ContactView(View):
